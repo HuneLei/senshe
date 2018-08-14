@@ -1,0 +1,5 @@
+src/router/*
+/build/
+/config/
+/dist/
+/*.js

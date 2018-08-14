@@ -1,0 +1,47 @@
+stages:
+  - stop
+  - deploy
+  
+prd_remove:
+  stage: stop
+  tags:
+    - senshe
+  script:
+    - docker stop senshe-fe-$CI_COMMIT_REF_NAME
+    - docker rm -f senshe-fe-$CI_COMMIT_REF_NAME
+  allow_failure: true
+
+prd_develop:
+  stage: deploy
+  tags:
+    - senshe
+  only:
+    - develop
+  script:
+    - rm -rf /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME/src
+    - cp -rf ./. /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME/
+    - cd /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME
+    - npm install
+    - npm run develop
+    - ls -a
+    - docker login -u gpo -p 3b91abbc3e33d909 docker.yaoling.io
+    - docker build -t docker.yaoling.io/$CI_PROJECT_NAME:$CI_PIPELINE_ID -t docker.yaoling.io/$CI_PROJECT_NAME:latest .
+    - docker run -d --network senshe --name pww-h5-develop docker.yaoling.io/$CI_PROJECT_NAME:latest
+
+
+prd_master:
+  stage: deploy
+  tags:
+    - senshe
+  only:
+    - master
+  script:
+    - rm -rf /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME/src
+    - cp -rf ./. /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME/
+    - cd /data/build/$CI_COMMIT_REF_NAME/$CI_PROJECT_NAME
+    - npm install
+    - npm run master
+    - ls -a
+    - docker login -u gpo -p 3b91abbc3e33d909 docker.yaoling.io
+    - docker build -t docker.yaoling.io/$CI_PROJECT_NAME:$CI_PIPELINE_ID -t docker.yaoling.io/$CI_PROJECT_NAME:latest .
+    - docker run -d --network pinwanwan --name pww-h5-master docker.yaoling.io/$CI_PROJECT_NAME:latest
