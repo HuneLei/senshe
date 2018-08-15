@@ -44,6 +44,8 @@ module.exports = {
     'comma-dangle': [0, 'never'],
     // 禁止不必要的分号
     semi: [0, 'always'],
+    // 禁用特定的全局变量
+    'no-restricted-globals': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-console': 0,
