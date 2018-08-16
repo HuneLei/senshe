@@ -26,7 +26,7 @@ prd_develop:
     - ls -a
     - docker login -u gpo -p 3b91abbc3e33d909 docker.yaoling.io
     - docker build -t docker.yaoling.io/$CI_PROJECT_NAME:$CI_PIPELINE_ID -t docker.yaoling.io/$CI_PROJECT_NAME:latest .
-    - docker run -d --network senshe --name pww-h5-develop docker.yaoling.io/$CI_PROJECT_NAME:latest
+    - docker run -d --network senshe --name senshe-fe-webapp docker.yaoling.io/$CI_PROJECT_NAME:latest
 
 
 prd_master:
@@ -44,4 +44,4 @@ prd_master:
     - ls -a
     - docker login -u gpo -p 3b91abbc3e33d909 docker.yaoling.io
     - docker build -t docker.yaoling.io/$CI_PROJECT_NAME:$CI_PIPELINE_ID -t docker.yaoling.io/$CI_PROJECT_NAME:latest .
-    - docker run -d --network pinwanwan --name pww-h5-master docker.yaoling.io/$CI_PROJECT_NAME:latest
+    - docker run -d --network senshe --name senshe-fe-webapp docker.yaoling.io/$CI_PROJECT_NAME:latest

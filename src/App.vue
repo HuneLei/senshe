@@ -10,13 +10,25 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
+/**
+* vux-1px-l 左边框
+* vux-1px-r 右边框
+* vux-1px-t 上边框
+* vux-1px-b 下边框
+* vux-1px-tb 上下边框
+* vux-1px 全边框
+* vux-close 关闭图标主要应用于弹窗(dialog)关闭按钮以及弹窗(popup)头部的关闭按钮。
+*/
+@import '~vux/src/styles/1px.less'; /*no*/
+@import '~vux/src/styles/close.less';
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  background-color: #f8f8f8;
 }
 </style>

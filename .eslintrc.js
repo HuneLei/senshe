@@ -46,8 +46,11 @@ module.exports = {
     semi: [0, 'always'],
     // 禁用特定的全局变量
     'no-restricted-globals': 0,
+    // 禁止给参数重新赋值
+    'no-param-reassign': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    "import/newline-after-import": 0,
     'no-console': 0,
     'linebreak-style': 0,
     'no-unused-vars': 0,
