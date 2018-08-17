@@ -8,7 +8,6 @@ import router from './router';
 import config from './config';
 
 import './vux-ui';
-import './assets/css/reset.css';
 import store from './vuex/store';
 
 /* eslint-disable no-new */

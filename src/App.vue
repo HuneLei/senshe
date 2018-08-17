@@ -21,7 +21,8 @@ export default {
 * vux-close 关闭图标主要应用于弹窗(dialog)关闭按钮以及弹窗(popup)头部的关闭按钮。
 */
 @import '~vux/src/styles/1px.less'; /*no*/
-@import '~vux/src/styles/close.less';
+@import '~vux/src/styles/close.less'; /*no*/
+@import './assets/css/reset.less'; /*no*/
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
