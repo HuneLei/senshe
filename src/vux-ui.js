@@ -42,7 +42,7 @@ import {
   // SwipeoutItem,
   // SwipeoutButton,
   // Search,
-  // XInput,
+  XInput,
   // XTextarea,
   // XTable,
   // XNumber,
@@ -102,7 +102,7 @@ Vue.component('x-button', XButton);
 // Vue.component('Card', Card);
 // Vue.component('Flexbox', Flexbox);
 // Vue.component('FlexboxItem', FlexboxItem);
-// Vue.component('XInput', XInput);
+Vue.component('XInput', XInput);
 // Vue.component('XTextarea', XTextarea);
 // Vue.component('Icon', Icon);
 // Vue.component('Tab', Tab);

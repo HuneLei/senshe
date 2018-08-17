@@ -8,6 +8,7 @@ import router from './router';
 import config from './config';
 
 import './vux-ui';
+import './assets/css/iconfont/iconfont.css'; // 图标字体
 import './assets/css/reset.css';
 import store from './vuex/store';
 

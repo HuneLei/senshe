@@ -23,6 +23,11 @@ export default {
 @import '~vux/src/styles/1px.less'; /*no*/
 @import '~vux/src/styles/close.less';
 
+/* icon size设置 */
+.icon {
+  font-size: 0.4rem /*px*/
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
