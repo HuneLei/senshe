@@ -32,6 +32,7 @@ body {
 
 
 input,
+button,
 select,
 textarea,
 label {
@@ -92,4 +93,10 @@ time,
 video {
   margin: 0;
   padding: 0;
+}
+
+/* 粗字体颜色size设置 */
+.gray_font_color {
+  color: #7A7A7A;
+  font-size: 15px; /*px*/
 }
