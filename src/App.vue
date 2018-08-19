@@ -22,11 +22,20 @@ export default {
 */
 @import '~vux/src/styles/1px.less'; /*no*/
 @import '~vux/src/styles/close.less'; /*no*/
-@import './assets/css/reset.less'; /*no*/
 
 /* icon size设置 */
 .icon {
-  font-size: 0.4rem /*px*/
+  font-size: 15px /*px*/;
+}
+
+// tab切换页icon设置
+.tab_icon {
+  font-size: 25px /*px*/;
+}
+
+// tab切换页字体设置
+.tab_font {
+  font-size: 12px /*px*/;
 }
 
 #app {

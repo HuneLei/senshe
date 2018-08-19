@@ -1,16 +1,10 @@
 <!-- 登录页面 -->
 <template>
   <div class="login_center">
-<<<<<<< HEAD
-    <div class="login_logo">
-      <img class="border_center" src="https://wx.qlogo.cn/mmopen/vi_32/1M0IXDDhAU1o6tQbJ4OF5aZ6D4ibhpTe4QvGUh250P0yZzdLalBicfeoicLbSjFo7unVpbrWvQ8Gkr8R53Sibwhs1g/132" alt="">
-      <div>森舍会员登录</div>
-=======
     <!-- 登录logo和文字 -->
     <div class="login_logo">
       <img src="https://wx.qlogo.cn/mmopen/vi_32/1M0IXDDhAU1o6tQbJ4OF5aZ6D4ibhpTe4QvGUh250P0yZzdLalBicfeoicLbSjFo7unVpbrWvQ8Gkr8R53Sibwhs1g/132" alt="">
       <div class="login_font">森舍会员登录</div>
->>>>>>> e607f00adba08c1db047f49479d2392ec3e5bf38
     </div>
     <!-- 登录手机和密码 -->
     <div class="login_input">
@@ -33,20 +27,6 @@ export default {
   computed: {},
   components: {},
   data() {
-<<<<<<< HEAD
-    return {};
-  },
-  methods: {}
-};
-</script>
-
-<style scoped lang="less">
-@color: red;
-
-.login_center() {
-  text-align: center;
-  padding-top: 40px;
-=======
     return {
       phone_value: '', // 手机号码
       passwd_value: '', // 登录密码
@@ -72,7 +52,6 @@ export default {
 .login_center {
   display: flex;
   padding-top: 90px;
->>>>>>> e607f00adba08c1db047f49479d2392ec3e5bf38
   color: #7a7a7a;
   flex-direction: column;
   align-items: center;
@@ -84,43 +63,6 @@ export default {
 }
 
 .login_logo img {
-<<<<<<< HEAD
-  width: 100px /*px*/;
-  height: 100px /*no*/;
-  font-size: 26px /*no*/;
-  border-radius: 50%;
-}
-
-.border(@width:5px; @style: solid; @color: #000) {
-  // border: @width @style @color;
-  border: @arguments;
-}
-
-.triangle(top; @border_width: 5px; @border_color: #000;) {
-  border: @border_width solid transparent;
-  border-bottom-color: @border_color;
-}
-.triangle(bottom; @border_width: 5px; @border_color: #000;) {
-  border: @border_width solid transparent;
-  border-top-color: @border_color;
-}
-.triangle(left; @border_width: 5px; @border_color: #000;) {
-  border: @border_width solid transparent;
-  border-right-color: @border_color;
-}
-.triangle(right; @border_width: 5px; @border_color: #000;) {
-  border: @border_width solid transparent;
-  border-left-color: @border_color;
-}
-// 默认执行(无论是否匹配，都会执行)
-.triangle(@_; @border_width: 5px; @border_color: #000;) {
-  width: 0px;
-  height: 0px;
-  overflow: hidden;
-}
-.box {
-  .triangle(top);
-=======
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -136,6 +78,7 @@ export default {
   margin: 10px 0;
   width: 280px;
   position: static;
+  padding-left: 10px;
   border-radius: 6px;
   background-color: white;
   border: 0.5px solid rgba(165, 165, 165, 0.2); /*no*/
@@ -162,13 +105,12 @@ export default {
 <style>
 /* 登录时候输入手机和密码label的宽度 */
 .login_input .weui-label {
-  width: 50px;
+  width: 60px;
   padding-right: 10px;
 }
 
 .login_input .weui-input {
   font-size: 14px;
->>>>>>> e607f00adba08c1db047f49479d2392ec3e5bf38
 }
 </style>
 

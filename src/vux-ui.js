@@ -1,9 +1,9 @@
 import Vue from 'vue';
-
 import {
   // Icon,
   // Badge,
   XButton,
+  XHeader,
   // Divider,
   // Flexbox,
   // FlexboxItem,
@@ -51,8 +51,8 @@ import {
   // MarqueeItem,
   // Panel,
   // Qrcode,
-  // Swiper,
-  // SwiperItem,
+  Swiper,
+  SwiperItem,
   // XProgress,
   // Actionsheet,
   // Alert,
@@ -66,10 +66,10 @@ import {
   // XDialog,
   // ButtonTab,
   // ButtonTabItem,
-  // Tab,
-  // TabItem,
+  Tab,
+  TabItem,
   Tabbar,
-  // TabbarItem,
+  TabbarItem,
   // VChart,
   // VLine,
   // VArea,
@@ -87,11 +87,16 @@ import {
   // ToastPlugin,
 } from 'vux';
 
+import MyCom from './components'; // 引入公共组件
+Vue.component('TabHead', MyCom.TabHead); // 顶部导航组件
+Vue.component('TabSwit', MyCom.TabSwit); // Tab页面切换组件
+
 // Vue.use(ConfirmPlugin);
 // Vue.use(ToastPlugin);
 
 Vue.component('Tabbar', Tabbar); // 底部导航
-// Vue.component('TabbarItem', TabbarItem);
+Vue.component('TabbarItem', TabbarItem);
+Vue.component('XHeader', XHeader);
 // Vue.component('Marquee', Marquee); // 公告
 // Vue.component('MarqueeItem', MarqueeItem);
 // Vue.component('Cell', Cell);
@@ -105,8 +110,8 @@ Vue.component('x-button', XButton);
 Vue.component('XInput', XInput);
 // Vue.component('XTextarea', XTextarea);
 // Vue.component('Icon', Icon);
-// Vue.component('Tab', Tab);
-// Vue.component('TabItem', TabItem);
+Vue.component('Tab', Tab);
+Vue.component('TabItem', TabItem);
 // Vue.component('Grid', Grid);
 // Vue.component('GridItem', GridItem);
 
@@ -126,8 +131,8 @@ Vue.component('XInput', XInput);
 // Vue.component('Flexbox', Flexbox);
 // Vue.component('FlexboxItem', FlexboxItem);
 // Vue.component('Sticky', Sticky);
-// Vue.component('Swiper', Swiper);
-// Vue.component('SwiperItem', SwiperItem);
+Vue.component('Swiper', Swiper);
+Vue.component('SwiperItem', SwiperItem);
 // Vue.component('Checker', Checker);
 // Vue.component('CheckerItem', CheckerItem);
 // Vue.component('XDialog', XDialog);
