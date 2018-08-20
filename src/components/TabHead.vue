@@ -2,8 +2,7 @@
 <template>
   <div>
     <x-header @on-click-back="clickBack" :left-options="{backText: '', preventGoBack: isBack}" :title="header_name">
-      <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon}`"
-      @click="rightClick(item.name)"></span>
+      <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon}`" @click="rightClick(item.name)"></span>
     </x-header>
   </div>
 </template>
@@ -28,8 +27,8 @@ export default {
       default: true,
     }
   },
-  created() {},
-  mounted() {},
+  created() { },
+  mounted() { },
   data() {
     return {};
   },

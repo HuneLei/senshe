@@ -2,38 +2,36 @@
 <template>
   <div class="tab_swit">
     <tab :line-width=5 active-color='#fff' default-color='#fff' :custom-bar-width="barWidth" v-model="index">
-      <tab-item active-class="tab_active" v-for="(item, index) in tabList" @on-item-click="tabClick" :key="index">{{item}}</tab-item>
+      <tab-item active-class="tab_active" v-for="(item, index) in tabList" @on-item-click="tabClick" :key="index">{{item.name}}</tab-item>
     </tab>
     <swiper v-model="index" height="600px" :show-dots="false">
       <swiper-item v-for="(item, index) in tabList" :key="index">
-        <div class="tab-swiper vux-center">{{item}} Container</div>
+        <slot :name="item.slot"></slot>
       </swiper-item>
     </swiper>
   </div>
 </template>
 
 <script>
+let that = {};
 export default {
   components: {},
-  computed: {
-    itIndex: {
-      get: () => this.initIndex,
-      set: (index) => {
-        console.log('index', index)
-        this.initIndex = index;
-      }
+  watch: {
+    // 当tab页面切换的时候监听方法
+    index: (val) => {
+      that.$emit('index-change', val);
     }
   },
   props: {
     // 顶部tab组
     tabList: {
       type: Array,
-      default: () => ['精选', '美食', '电影', '酒店']
+      default: () => []
     },
     // 底部bar的长度
     barWidth: {
       type: String,
-      default: '90px',
+      default: '2rem',
     },
     // 默认选中的tab
     initIndex: {
@@ -41,8 +39,12 @@ export default {
       default: 0,
     }
   },
-  created() {},
-  mounted() {},
+  created() {
+    // 保存this的值和赋值当前页面
+    that = this;
+    this.index = this.initIndex;
+  },
+  mounted() { },
   data() {
     return {
       index: 0,
@@ -57,20 +59,20 @@ export default {
 };
 </script>
 <style scoped>
-  /* tab选中时候的class */
-  .tab_active {
-    font-size: 19px !important;
-  }
+/* tab选中时候的class */
+.tab_active {
+  font-size: 19px !important;
+}
 </style>
 
 <style>
-  /* tab切换的背景颜色 */
-  .tab_swit .vux-tab {
-    background-color: #07BC99;
-  }
-  /* tab选中下边条样式 */
-  .tab_swit .vux-tab-ink-bar {
-    margin-bottom: 6px;
-  }
+/* tab切换的背景颜色 */
+.tab_swit .vux-tab {
+  background-color: #07bc99;
+}
+/* tab选中下边条样式 */
+.tab_swit .vux-tab-ink-bar {
+  margin-bottom: 6px;
+}
 </style>
 

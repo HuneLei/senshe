@@ -2,7 +2,9 @@
 <template>
   <div>
     <!-- tab页面切换组件 -->
-    <tab-swit></tab-swit>
+    <tab-swit :initIndex=0 :tabList="tabList" @index-change="rightClick">
+      <h1 v-for="(item, index) in tabList" :key="index" :slot="item.slot">{{item.name}}</h1>
+    </tab-swit>
     <!-- 头部导航组件 -->
     <!-- <tab-head :header_name="headerName" :slotRight="slotRight" @right-click="rightClick"></tab-head> -->
     <!-- 底部导航组件 -->
@@ -21,6 +23,8 @@ export default {
   mounted() { },
   data() {
     return {
+      // tab页面切换
+      tabList: [{ name: '我的商品', slot: 'myGoods' }, { name: '我的客户', slot: 'myClient' }, { name: '我的指标', slot: 'myIndex' }],
       // 导航标题
       headerName: '我的',
       // 右边图标样式组
