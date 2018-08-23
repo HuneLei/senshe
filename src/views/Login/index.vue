@@ -1,6 +1,6 @@
 <!-- 登录页面 -->
 <template>
-  <div class="login_center">
+  <div class="login_center" :style="`height:${WinHeight}px`">
     <!-- 登录logo和文字 -->
     <div class="login_logo">
       <img src="https://wx.qlogo.cn/mmopen/vi_32/1M0IXDDhAU1o6tQbJ4OF5aZ6D4ibhpTe4QvGUh250P0yZzdLalBicfeoicLbSjFo7unVpbrWvQ8Gkr8R53Sibwhs1g/132" alt="">
@@ -22,9 +22,12 @@
 
 <script>
 export default {
-  created() {},
-  mounted() {},
-  computed: {},
+  created() { },
+  computed: {
+    // 屏幕高度
+    WinHeight: () => document.documentElement.clientHeight
+  },
+  mounted() { },
   components: {},
   data() {
     return {
@@ -51,15 +54,19 @@ export default {
 /* 登录logo和文字 */
 .login_center {
   display: flex;
-  padding-top: 90px;
   color: #7a7a7a;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 
 .login_font {
   color: #3b3b3b;
   font-size: 26px; /*px*/
+}
+
+.login_logo {
+  padding-top: 90px;
 }
 
 .login_logo img {

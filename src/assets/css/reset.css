@@ -15,7 +15,8 @@ body {
   overflow-x: hidden;
   color: #222222;
   font-size: 14px;
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
+  background-color: #FFFFFF;
 }
 
 input,

@@ -1,18 +1,23 @@
-<!-- 我的 -->
+<!-- 我的信息 -->
 <template>
-  <div>
-    <x-button type="primary" mini>你好啊</x-button>
-  </div>
+  <!-- router链接 -->
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
 </template>
 
 <script>
+
 export default {
-  name: 'HelloWorld',
+  created() { },
+  mounted() { },
+  computed: {},
+  components: {},
   data() {
-    return {
-    }
-  }
-}
+    return {}
+  },
+  methods: {},
+};
 </script>
 
 <style scoped>

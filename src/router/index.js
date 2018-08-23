@@ -13,7 +13,6 @@ import Login from './Login';
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash',
   routes: [
     User,
     Login,

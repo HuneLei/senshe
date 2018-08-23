@@ -9,7 +9,7 @@ import config from './config';
 
 import './vux-ui';
 import './assets/css/iconfont/iconfont.css'; // 图标字体
-import './/assets/css/reset.css';
+import './assets/css/reset.css';
 import store from './vuex/store';
 
 /* eslint-disable no-new */
@@ -21,12 +21,14 @@ new Vue({
 
 // 路由进来时开启isLoading载入
 router.beforeEach((to, from, next) => {
+  console.log('router正在跳转')
   store.commit('updateLoadingStatus', { isLoading: true })
   next()
 })
 
 // 路由出去时关闭isLoading载入
 router.afterEach((to) => {
+  console.log('router关闭了')
   store.commit('updateLoadingStatus', { isLoading: false })
 })
 

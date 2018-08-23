@@ -1,9 +1,10 @@
-<!-- 新的留言 -->
+<!-- 修改密码 -->
 <template>
-  <div class="new_message">
-    <!-- 输入留言 -->
+  <div class="edit_password">
+    <!-- 输入密码 -->
     <group gutter='0' style="width: 100%">
-      <x-textarea :max="200" placeholder="请输入留言内容" :height="300" v-model="textValue"></x-textarea>
+      <x-input type="password" placeholder="请输入新密码" v-model="newPassWord"></x-input>
+      <x-input type="password" placeholder="再次输入新密码" v-model="ageinPassWord"></x-input>
     </group>
     <!-- 确认提交 -->
     <div class="submit_button">
@@ -21,14 +22,16 @@ export default {
   components: {},
   data() {
     return {
-      textValue: '', // 留言内容
+      newPassWord: '123', // 新密码
+      ageinPassWord: '134', // 再次输入的新密码
       submitLoading: false, // 提交时候的loading
     };
   },
   methods: {
+    // 确认提交
     submitClick() {
-      if (!this.textValue) {
-        this.$vux.toast.text('请输入留言内容', 'top');
+      if (this.newPassWord !== this.ageinPassWord) {
+        this.$vux.toast.text('两次密码不一致', 'top');
       }
     }
   },
@@ -36,8 +39,8 @@ export default {
 </script>
 
 <style scoped>
-/* 新建留言 */
-.new_message {
+/* 修改密码 */
+.edit_password {
   display: flex;
   color: #7a7a7a;
   flex-direction: column;

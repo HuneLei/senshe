@@ -1,7 +1,7 @@
 <!-- 顶部导航组件 -->
 <template>
   <div>
-    <x-header @on-click-back="clickBack" :left-options="{backText: '', preventGoBack: isBack}" :title="header_name">
+    <x-header @on-click-back="clickBack" :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
       <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon}`" @click="rightClick(item.name)"></span>
     </x-header>
   </div>
@@ -23,6 +23,11 @@ export default {
     },
     // 是否禁止点击返回按钮
     isBack: {
+      type: Boolean,
+      default: true,
+    },
+    // 是否显示返回文字
+    isShowBack: {
       type: Boolean,
       default: true,
     }

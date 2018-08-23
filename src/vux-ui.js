@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import {
   // Icon,
-  // Badge,
+  Badge,
   XButton,
   XHeader,
   // Divider,
@@ -14,7 +14,7 @@ import {
   // Calendar,
   // CellBox,
   // CellFormPreview,
-  // Cell,
+  Cell,
   // Card,
   // CheckIcon,
   // Checker,
@@ -24,7 +24,7 @@ import {
   // DatetimeRange,
   // Datetime,
   // FormPreview,
-  // Group,
+  Group,
   // GroupTitle,
   // InlineXSwitch,
   // InlineXNumber,
@@ -43,7 +43,7 @@ import {
   // SwipeoutButton,
   // Search,
   XInput,
-  // XTextarea,
+  XTextarea,
   // XTable,
   // XNumber,
   // XAddress,
@@ -84,7 +84,7 @@ import {
   // XCircle,
   // Scroller,
   // ConfirmPlugin,
-  // ToastPlugin,
+  ToastPlugin,
 } from 'vux';
 
 import MyCom from './components'; // 引入公共组件
@@ -92,15 +92,15 @@ Vue.component('TabHead', MyCom.TabHead); // 顶部导航组件
 Vue.component('TabSwit', MyCom.TabSwit); // Tab页面切换组件
 
 // Vue.use(ConfirmPlugin);
-// Vue.use(ToastPlugin);
+Vue.use(ToastPlugin);
 
 Vue.component('Tabbar', Tabbar); // 底部导航
 Vue.component('TabbarItem', TabbarItem);
 Vue.component('XHeader', XHeader);
 // Vue.component('Marquee', Marquee); // 公告
 // Vue.component('MarqueeItem', MarqueeItem);
-// Vue.component('Cell', Cell);
-// Vue.component('Group', Group);
+Vue.component('Cell', Cell);
+Vue.component('Group', Group);
 Vue.component('x-button', XButton);
 // Vue.component('ViewBox', ViewBox);
 // Vue.component('CellBox', CellBox);
@@ -108,7 +108,7 @@ Vue.component('x-button', XButton);
 // Vue.component('Flexbox', Flexbox);
 // Vue.component('FlexboxItem', FlexboxItem);
 Vue.component('XInput', XInput);
-// Vue.component('XTextarea', XTextarea);
+Vue.component('XTextarea', XTextarea);
 // Vue.component('Icon', Icon);
 Vue.component('Tab', Tab);
 Vue.component('TabItem', TabItem);
@@ -142,7 +142,7 @@ Vue.component('SwiperItem', SwiperItem);
 // Vue.component('Checklist', Checklist);
 // Vue.component('CheckIcon', CheckIcon);
 // Vue.component('Selector', Selector);
-// Vue.component('Badge', Badge);
+Vue.component('Badge', Badge);
 // Vue.component('Search', Search);
 // Vue.component('LoadMore', LoadMore);
 // Vue.component('Toast', Toast);

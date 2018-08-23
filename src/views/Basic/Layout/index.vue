@@ -1,26 +1,39 @@
 <!-- 底部导航 -->
 <template>
   <div>
+    <!-- 头部导航组件 -->
+    <tab-head :header_name="baseList.name" :slotRight="baseList.slotRight" :isShowBack="baseList.isShowBack" @right-click="rightClick" v-if="baseList.isTab"></tab-head>
     <!-- tab页面切换组件 -->
-    <tab-swit :initIndex=0 :tabList="tabList" @index-change="rightClick">
+    <tab-swit :initIndex=0 :tabList="tabList" @index-change="rightClick" v-if="baseList.isSwit">
       <h1 v-for="(item, index) in tabList" :key="index" :slot="item.slot">{{item.name}}</h1>
     </tab-swit>
-    <!-- 头部导航组件 -->
-    <!-- <tab-head :header_name="headerName" :slotRight="slotRight" @right-click="rightClick"></tab-head> -->
+    <!-- router链接 -->
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
     <!-- 底部导航组件 -->
     <tab-bar></tab-bar>
   </div>
 </template>
 
 <script>
+import baseList from '../../../utils/baseList' // 导航页面的配置
 import TabBar from './TabBar.vue' // 引入底部导航组件
 
 export default {
   components: {
     TabBar,
   },
+  computed: {
+    // 根据router选择显示内容
+    baseList() {
+      return baseList[this.$route.path]
+    }
+  },
   created() { },
-  mounted() { },
+  mounted() {
+    console.log(this.baseList);
+  },
   data() {
     return {
       // tab页面切换
