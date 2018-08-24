@@ -9,6 +9,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import User from './User';
 import Login from './Login';
+import DateCenter from './DateCenter';
 
 Vue.use(Router)
 
@@ -16,5 +17,6 @@ export default new Router({
   routes: [
     User,
     Login,
+    DateCenter,
   ]
 })

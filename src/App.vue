@@ -38,6 +38,12 @@ export default {
   font-size: 12px /*px*/;
 }
 
+// 信息图标icon设置
+.info_icon {
+  font-size: 20px /*px*/;
+}
+
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -21,11 +21,15 @@
 </template>
 
 <script>
+let that = this;
 export default {
-  created() { },
+  created() {
+    // 保存this的值和赋值当前页面
+    that = this;
+  },
   computed: {
     // 屏幕高度
-    WinHeight: () => document.documentElement.clientHeight
+    WinHeight: () => that.$countHeight()
   },
   mounted() { },
   components: {},

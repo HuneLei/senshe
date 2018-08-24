@@ -41,7 +41,7 @@ import {
   // Swipeout,
   // SwipeoutItem,
   // SwipeoutButton,
-  // Search,
+  Search,
   XInput,
   XTextarea,
   // XTable,
@@ -143,7 +143,7 @@ Vue.component('SwiperItem', SwiperItem);
 // Vue.component('CheckIcon', CheckIcon);
 // Vue.component('Selector', Selector);
 Vue.component('Badge', Badge);
-// Vue.component('Search', Search);
+Vue.component('Search', Search);
 // Vue.component('LoadMore', LoadMore);
 // Vue.component('Toast', Toast);
 // Vue.component('XTable', XTable);
@@ -155,4 +155,25 @@ Vue.component('Badge', Badge);
 // Vue.component('Rater', Rater);
 
 // 全局方法的引入
-Vue.prototype.$method = () => { };
+// 计算屏幕剩余高度
+Vue.prototype.$countHeight = (array) => {
+  let h = 0;
+  let data = [];
+  if (typeof array !== 'object') {
+    data = [array];
+  } else {
+    data = array;
+  }
+  for (let i = 0; i < data.length; i += 1) {
+    const item = data[i];
+    try {
+      const $e = document.querySelector(item);
+      if ($e !== null) {
+        h += $e.clientHeight;
+      }
+    } catch (e) {
+      h += parseFloat(item) || 0;
+    }
+  }
+  return window.innerHeight - h;
+};

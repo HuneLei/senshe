@@ -1,13 +1,16 @@
 <!-- 数据中心 -->
 <template>
-  <div>数据中心</div>
+  <!-- router链接 -->
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
 </template>
 
 <script>
 
 export default {
-  created() {},
-  mounted() {},
+  created() { },
+  mounted() { },
   computed: {},
   components: {},
   data() {
