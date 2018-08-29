@@ -12,6 +12,13 @@
 
 export default {
   created() { },
+  watch: {
+    $route(to, from) {
+      if (to.path === '/DateCenter') {
+        this.$store.commit('updateTabSwitStatus', { status: true })
+      }
+    }
+  },
   mounted() {
     this.winTop = document.querySelector('.vux-header').clientHeight;
   },
@@ -59,6 +66,7 @@ export default {
   methods: {
     // 去列表详情页面
     goCellItem(id) {
+      this.$router.push(`/DateCenter/IndexItem?id=${id}`);
       console.log(`点击的id是${id}`)
     }
   },

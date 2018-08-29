@@ -3,18 +3,9 @@
   <div>
     <!-- 头部导航组件 -->
     <tab-head :header_name="baseList.name" :slotRight="baseList.slotRight" :isShowBack="baseList.isShowBack" @right-click="rightClick" v-show="baseList.isTab"></tab-head>
-    <!-- tab页面切换组件 -->
-    <tab-swit :winHeight="winHeight" :initIndex=baseList.initIndex :tabList="tabList" @index-change="rightClick" v-show="baseList.isSwit">
-      <div v-for="(item, index) in baseList.tabList" :slot="item.slot" :key="index">
-        <!-- router链接 -->
-        <keep-alive>
-          <router-view></router-view>
-        </keep-alive>
-      </div>
-    </tab-swit>
     <!-- router链接 -->
-    <div :style="`margin-top: ${winTop}px;`">
-      <keep-alive v-if="!baseList.isSwit">
+    <div>
+      <keep-alive>
         <router-view></router-view>
       </keep-alive>
     </div>
@@ -35,15 +26,12 @@ export default {
     },
   },
   mounted() {
-    // 屏幕高度
-    this.winHeight = this.$countHeight(['.weui-tabbar', '.vux-tab']);
     // 导航栏高度
     this.winTop = document.querySelector('.vux-header').clientHeight;
   },
   data() {
     return {
       winTop: 0, // 导航栏高度
-      winHeight: 0, // 屏幕高度
       // tab页面切换
       tabList: [{ name: '我的商品', slot: 'myGoods' }, { name: '我的客户', slot: 'myClient' }, { name: '我的指标', slot: 'myIndex' }],
       headerName: '我的', // 导航标题
@@ -63,6 +51,10 @@ export default {
       console.log('this.baseList', this.baseList)
       console.log('我过来了', this.baseList.slotRight[e].path);
       this.$router.push({ path: this.baseList.slotRight[e].path });
+    },
+    indexChange(e) {
+      console.log('e', this.baseList.tabList[e].path);
+      this.$router.push({ path: this.baseList.tabList[e].path });
     }
   },
 };

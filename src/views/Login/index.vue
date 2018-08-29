@@ -90,7 +90,6 @@ export default {
     // 忘记密码
     forgetPass() {
       console.log('忘记密码了');
-      that.$router.push('/User?id=1');
     }
   },
 };

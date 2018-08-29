@@ -40,6 +40,8 @@ export default {
     // 去相应的客户页面
     goClient(data) {
       console.log(`我点击了${data}`)
+      this.$router.push(`/DateCenter/IndexClass?index=${data}`);
+      this.$store.commit('updateTabSwitStatus', { status: false })
     }
   },
 };
