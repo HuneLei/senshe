@@ -42,6 +42,7 @@ export default {
     // 点击留言信息
     clickMsg(index) {
       console.log(`我点击了这条留言${index}`);
+      this.$router.push(`/User/leaveMessage?id=${index}`);
     }
   },
 };

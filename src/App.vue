@@ -10,6 +10,7 @@ export default {
 };
 </script>
 
+
 <style lang="less">
 /**
 * vux-1px-l 左边框
@@ -43,12 +44,80 @@ export default {
   font-size: 20px /*px*/;
 }
 
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   background-color: #f8f8f8;
+}
+
+// Picker组件样式修改
+.scroller-component {
+  display: block;
+  position: relative;
+  height: 238px !important;
+  overflow: hidden;
+  width: 100%;
+}
+
+.scroller-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+.scroller-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  margin: 0 auto;
+  width: 100%;
+  z-index: 3;
+  transform: translateZ(0px) !important;
+  background-image: -webkit-linear-gradient(
+      top,
+      rgba(255, 255, 255, 0.95),
+      rgba(255, 255, 255, 0.6)
+    ),
+    -webkit-linear-gradient(bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)) !important;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)),
+    linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.6)) !important;
+  background-position: top, bottom;
+  background-size: 100% 102px !important;
+  background-repeat: no-repeat;
+}
+
+.scroller-item {
+  text-align: center;
+  font-size: 16px !important;
+  height: 34px !important;
+  line-height: 34px !important;
+  color: #000;
+}
+
+.scroller-indicator {
+  width: 100%;
+  height: 34px !important;
+  position: absolute;
+  left: 0;
+  top: 102px !important;
+  z-index: 3;
+  background-image: -webkit-linear-gradient(top, #d0d0d0, #d0d0d0, transparent, transparent),
+    -webkit-linear-gradient(bottom, #d0d0d0, #d0d0d0, transparent, transparent) !important;
+  background-image: linear-gradient(to bottom, #d0d0d0, #d0d0d0, transparent, transparent),
+    linear-gradient(to top, #d0d0d0, #d0d0d0, transparent, transparent) !important;
+  background-position: top, bottom !important;
+  background-size: 100% 1px !important;
+  background-repeat: no-repeat;
+}
+
+.scroller-item {
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

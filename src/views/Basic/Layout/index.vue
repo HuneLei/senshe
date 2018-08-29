@@ -2,9 +2,9 @@
 <template>
   <div>
     <!-- 头部导航组件 -->
-    <tab-head :header_name="baseList.name" :slotRight="baseList.slotRight" :isShowBack="baseList.isShowBack" @right-click="rightClick" v-if="baseList.isTab"></tab-head>
+    <tab-head :header_name="baseList.name" :slotRight="baseList.slotRight" :isShowBack="baseList.isShowBack" @right-click="rightClick" v-show="baseList.isTab"></tab-head>
     <!-- tab页面切换组件 -->
-    <tab-swit :winHeight="winHeight" :initIndex=baseList.initIndex :tabList="tabList" @index-change="rightClick" v-if="baseList.isSwit">
+    <tab-swit :winHeight="winHeight" :initIndex=baseList.initIndex :tabList="tabList" @index-change="rightClick" v-show="baseList.isSwit">
       <div v-for="(item, index) in baseList.tabList" :slot="item.slot" :key="index">
         <!-- router链接 -->
         <keep-alive>
@@ -19,18 +19,15 @@
       </keep-alive>
     </div>
     <!-- 底部导航组件 -->
-    <tab-bar></tab-bar>
+    <tab-bar :initIndex="baseList.barIndex" v-show="baseList.isBar"></tab-bar>
   </div>
 </template>
 
 <script>
 import baseList from '../../../utils/baseList' // 导航页面的配置
-import TabBar from './TabBar.vue' // 引入底部导航组件
 
 export default {
-  components: {
-    TabBar,
-  },
+  components: {},
   computed: {
     // 根据router选择显示内容
     baseList() {
@@ -63,8 +60,9 @@ export default {
   methods: {
     // 点击右边图片时触发
     rightClick(e) {
-      console.log('我过来了', this.baseList.tabList[e].path);
-      this.$router.push({ path: this.baseList.tabList[e].path });
+      console.log('this.baseList', this.baseList)
+      console.log('我过来了', this.baseList.slotRight[e].path);
+      this.$router.push({ path: this.baseList.slotRight[e].path });
     }
   },
 };

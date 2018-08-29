@@ -1,7 +1,7 @@
 <!-- 我的信息 -->
 <template>
   <div>
-    <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;">
+    <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;" @click="clickInfo(index)">
       <div :class="`infor_icon ${!item.type || 'infor_icon_yes'}`">
         <span :class="`info_icon iconfont ${item.type ? 'icon-shouji' : 'icon-mima'}`"></span>
       </div>
@@ -45,7 +45,13 @@ export default {
       }]
     };
   },
-  methods: {},
+  methods: {
+    // 系统消息详情
+    clickInfo(index) {
+      console.log(`我点击了这条消息${index}`);
+      this.$router.push(`/User/systemInfo?id=${index}`);
+    }
+  },
 };
 </script>
 
@@ -69,7 +75,7 @@ export default {
 }
 
 .infor_icon_yes {
-  background-color: #CCCCCC;
+  background-color: #cccccc;
 }
 
 .system_infor {

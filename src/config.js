@@ -59,7 +59,7 @@ const authorization = () => {
   return base.Authorization;
 };
 
-const tokenName = 'h5_token';
+const tokenName = 'ss_token';
 
 //  设置 当前用户的access_token
 const setToken = (token) => {

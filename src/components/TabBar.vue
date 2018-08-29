@@ -2,8 +2,7 @@
 <template>
   <div>
     <tabbar class="tab_view" v-model="tab_index" @on-index-change="indexChange">
-      <tabbar-item v-for="(item, index) in tab_item" :key="index" :link="item.tabLink" :badge="item.tabBadge"
-        :show-dot="item.tabShowdot">
+      <tabbar-item v-for="(item, index) in tab_item" :key="index" :link="item.tabLink" :badge="badgeList[index]" :show-dot="item.tabShowdot">
         <span slot="icon" :class='`tab_icon ${item.tabIcon}`'></span>
         <span slot="label" class="tab_font">{{item.tabName}}</span>
       </tabbar-item>
@@ -14,12 +13,26 @@
 <script>
 export default {
   components: {},
-  created() {},
-  mounted() {},
+  created() {
+    this.tab_index = this.initIndex;
+  },
+  mounted() { },
+  props: {
+    // 顶部badge组
+    badgeList: {
+      type: Array,
+      default: () => ['', '', '']
+    },
+    // 默认选中的tab
+    initIndex: {
+      type: Number,
+      default: 1,
+    },
+  },
   data() {
     return {
       // 默认选项
-      tab_index: 0,
+      tab_index: 2,
       // tab切换链接
       tab_item: [
         {
@@ -34,7 +47,7 @@ export default {
           tabLink: '?',
           tabName: '工作管理',
           tabIcon: 'iconfont icon-shouji',
-          tabShowdot: true,
+          tabShowdot: false,
           tabBadge: '',
           selected: false,
         },
@@ -53,6 +66,19 @@ export default {
     // tab切换时候触发
     indexChange(index) {
       console.log('在切换tab', index);
+      switch (index) {
+        case 0:
+          this.$router.push('/DateCenter');
+          break;
+        case 1:
+          this.$router.push('/JobControl');
+          break;
+        case 2:
+          this.$router.push('/User?id=1');
+          break;
+        default:
+          break;
+      }
     },
   }
 };
@@ -61,11 +87,11 @@ export default {
 <style scoped>
 </style>
 <style>
-  .tab_view .weui-tabbar__item {
-    padding: 8px 0 0 0;
-  }
-  .tab_view .weui-tabbar__icon > sup {
-    top: -5px;
-  }
+.tab_view .weui-tabbar__item {
+  padding: 8px 0 0 0;
+}
+.tab_view .weui-tabbar__icon > sup {
+  top: -5px;
+}
 </style>
 

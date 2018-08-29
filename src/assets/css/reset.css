@@ -102,3 +102,13 @@ video {
   width: 100%;
   position: fixed !important;
 }
+
+/* 上边框 */
+.border_top {
+  border-top: 1px solid #C7C7C7;
+}
+
+/* 下边框 */
+.border_bottom {
+  border-bottom: 1px solid #C7C7C7;
+}

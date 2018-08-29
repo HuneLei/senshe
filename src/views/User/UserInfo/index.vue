@@ -79,6 +79,7 @@ export default {
     goRouter(name) {
       const pathname = name;
       console.log(`我要去的是${pathname}`);
+      this.$router.push(`/User/${pathname}`);
     }
   },
 };

@@ -20,7 +20,15 @@ const DateCenter = {
 }
 
 // 工作管理
-const JobControl = {}
+const JobControl = {
+  JobControl: '/JobControl',
+  CreatPlan: '/JobControl/CreatPlan',
+  ControlPlan: '/JobControl/ControlPlan',
+  ControlPlanOne: '/JobControl/ControlPlanOne',
+  ControlPlanTwo: '/JobControl/ControlPlanTwo',
+  CreatInvoic: '/JobControl/CreatInvoic',
+  CreatInvoicOne: '/JobControl/CreatInvoicOne'
+}
 
 /**
  * name 导航页面的名字
@@ -30,17 +38,79 @@ const JobControl = {}
  * slotRight 右边图标样式组
  * tabList tab页面切换列表
  * initIndex tab的默认页面
+ * barIndex bar的默认选项
  */
 const baseList = {
+  // 工作管理
+  [JobControl.CreatInvoicOne]: {
+    name: '进销存录入',
+    isSwit: false,
+    isTab: true,
+    isShowBack: false,
+    isUserShow: true,
+    slotRight: []
+  },
+  [JobControl.CreatInvoic]: {
+    name: '进销存录入',
+    isSwit: false,
+    isTab: true,
+    isShowBack: false,
+    isUserShow: true,
+    slotRight: []
+  },
+  [JobControl.JobControl]: {
+    name: '工作管理',
+    isSwit: false,
+    isTab: true,
+    isBar: true,
+    isShowBack: false,
+    isUserShow: true,
+    barIndex: 1,
+    slotRight: []
+  },
+  [JobControl.ControlPlan]: {
+    name: '客户规划',
+    isSwit: false,
+    isTab: true,
+    isShowBack: false,
+    isUserShow: true,
+    slotRight: []
+  },
+  [JobControl.CreatPlan]: {
+    name: '添加客户计划',
+    isSwit: false,
+    isTab: true,
+    isShowBack: false,
+    isUserShow: true,
+    slotRight: []
+  },
+  [JobControl.ControlPlanOne]: {
+    name: '客户规划三级',
+    isSwit: false,
+    isTab: true,
+    isShowBack: false,
+    isUserShow: true,
+    slotRight: []
+  },
+  [JobControl.ControlPlanTwo]: {
+    name: '客户规划四级',
+    isSwit: false,
+    isTab: true,
+    isShowBack: false,
+    isUserShow: true,
+    slotRight: []
+  },
   // 数据中心
   [DateCenter.dateCenter]: {
     name: '数据中心',
     isSwit: true,
     isTab: false,
+    isBar: true,
     isShowBack: false,
     isUserShow: true,
     slotRight: [],
     initIndex: 0,
+    barIndex: 0,
     tabList: [
       { name: '我的商品', slot: 'myGoods', path: '/DateCenter' },
       { name: '我的客户', slot: 'myClient', path: '/DateCenter/MyClient' },
@@ -90,37 +160,47 @@ const baseList = {
     isTab: true,
     isShowBack: false,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    barIndex: 2,
+    isBar: true,
   },
   [userPath.editPassword]: {
     name: '修改密码',
     isSwit: false,
     isTab: true,
     isShowBack: true,
-    slotRight: []
+    slotRight: [],
+    barIndex: 2,
+    isBar: false,
   },
   [userPath.leaveMessage]: {
     name: '留言详情',
     isSwit: false,
     isTab: true,
     isShowBack: true,
-    slotRight: []
+    slotRight: [],
+    barIndex: 2,
+    isBar: false,
   },
   [userPath.myInformation]: {
     name: '我的信息',
     isSwit: false,
     isTab: true,
     isShowBack: true,
-    slotRight: []
+    slotRight: [],
+    barIndex: 2,
+    isBar: false,
   },
   [userPath.myMessage]: {
     name: '我的留言',
     isSwit: false,
     isTab: true,
     isShowBack: true,
+    barIndex: 2,
+    isBar: false,
     slotRight: [{
       icon: 'iconfont icon-shouji',
-      name: 'shouji1'
+      path: 'newMessage'
     }]
   },
   [userPath.newMessage]: {
@@ -128,6 +208,8 @@ const baseList = {
     isSwit: false,
     isTab: true,
     isShowBack: true,
+    barIndex: 2,
+    isBar: false,
     slotRight: []
   },
   [userPath.systemInfo]: {
@@ -135,7 +217,9 @@ const baseList = {
     isSwit: false,
     isTab: true,
     isShowBack: true,
-    slotRight: []
+    slotRight: [],
+    barIndex: 2,
+    isBar: false,
   }
 };
 

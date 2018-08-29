@@ -1,6 +1,9 @@
 <!-- 工作管理 -->
 <template>
-  <div>工作管理</div>
+  <!-- router链接 -->
+  <keep-alive>
+    <router-view></router-view>
+  </keep-alive>
 </template>
 
 <script>

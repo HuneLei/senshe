@@ -1,4 +1,6 @@
+/* eslint-disable */
 import Vue from 'vue';
+
 import {
   // Icon,
   Badge,
@@ -22,7 +24,7 @@ import {
   // Checklist,
   // DatetimeView,
   // DatetimeRange,
-  // Datetime,
+  Datetime,
   // FormPreview,
   Group,
   // GroupTitle,
@@ -31,7 +33,7 @@ import {
   // InlineCalendar,
   // Popup,
   // Popover,
-  // PopupPicker,
+  PopupPicker,
   // PopupRadio,
   // Picker,
   // Rater,
@@ -44,7 +46,7 @@ import {
   Search,
   XInput,
   XTextarea,
-  // XTable,
+  XTable,
   // XNumber,
   // XAddress,
   // Marquee,
@@ -90,6 +92,7 @@ import {
 import MyCom from './components'; // 引入公共组件
 Vue.component('TabHead', MyCom.TabHead); // 顶部导航组件
 Vue.component('TabSwit', MyCom.TabSwit); // Tab页面切换组件
+Vue.component('TabBar', MyCom.TabBar); // 底部导航组件
 
 // Vue.use(ConfirmPlugin);
 Vue.use(ToastPlugin);
@@ -97,6 +100,7 @@ Vue.use(ToastPlugin);
 Vue.component('Tabbar', Tabbar); // 底部导航
 Vue.component('TabbarItem', TabbarItem);
 Vue.component('XHeader', XHeader);
+Vue.component('PopupPicker', PopupPicker); // PopupPicker底部弹窗
 // Vue.component('Marquee', Marquee); // 公告
 // Vue.component('MarqueeItem', MarqueeItem);
 Vue.component('Cell', Cell);
@@ -146,12 +150,12 @@ Vue.component('Badge', Badge);
 Vue.component('Search', Search);
 // Vue.component('LoadMore', LoadMore);
 // Vue.component('Toast', Toast);
-// Vue.component('XTable', XTable);
+Vue.component('XTable', XTable);
 // Vue.component('XNumber', XNumber);
 // Vue.component('GroupTitle', GroupTitle);
 // Vue.component('Loading', Loading);
 // Vue.component('Confirm', Confirm);
-// Vue.component('Datetime', Datetime);
+Vue.component('Datetime', Datetime);
 // Vue.component('Rater', Rater);
 
 // 全局方法的引入
@@ -177,3 +181,6 @@ Vue.prototype.$countHeight = (array) => {
   }
   return window.innerHeight - h;
 };
+
+import validator from './utils/validator'; //  数据校验
+window.validator = validator;

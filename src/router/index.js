@@ -10,13 +10,19 @@ import Router from 'vue-router';
 import User from './User';
 import Login from './Login';
 import DateCenter from './DateCenter';
+import JobControl from './JobControl';
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/',
+      redirect: '/login',
+    },
     User,
     Login,
     DateCenter,
+    JobControl,
   ]
 })

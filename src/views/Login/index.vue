@@ -21,8 +21,15 @@
 </template>
 
 <script>
+import config from '../../config';
+
 let that = this;
 export default {
+  beforeRouteEnter(to, from, next) {
+    const token = config.getToken();
+    if (token) next({ path: '/User', replace: true });
+    next();
+  },
   created() {
     // 保存this的值和赋值当前页面
     that = this;
@@ -44,11 +51,46 @@ export default {
     // 登录操作
     loginClick() {
       console.log('登录操作');
-      this.loginLoading = !this.loginLoading;
+      // 校验手机号
+      if (!this.phone_value) {
+        this.$vux.toast.text('请输入手机号码', 'middle');
+        return;
+      }
+      if (!window.validator.regPhone.test(this.phone_value)) {
+        this.$vux.toast.text('请输入正确的手机号', 'middle');
+        return;
+      }
+      // 校验密码
+      if (!this.passwd_value) {
+        this.$vux.toast.text('请输入密码', 'middle');
+        return;
+      }
+      this.checkPass(this.passwd_value, (state) => {
+        this.loginLoading = false;
+        if (!state) {
+          that.$vux.toast.text('密码错误', 'middle');
+          return;
+        }
+        // this.$router.replace('/User?id=1');
+        that.$router.push('/User?id=1');
+        config.setToken('Hune');
+      })
+    },
+    // 校验密码是否正确
+    checkPass(value, callBack) {
+      this.loginLoading = true;
+      setTimeout(() => {
+        if (value !== '123') {
+          callBack(false)
+          return;
+        }
+        callBack(true)
+      }, 1000);
     },
     // 忘记密码
     forgetPass() {
       console.log('忘记密码了');
+      that.$router.push('/User?id=1');
     }
   },
 };

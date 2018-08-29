@@ -48,12 +48,14 @@ export default {
 <style scoped>
 .my_client {
   display: flex;
-  padding-top: 20px;
+  padding-top: 10px;
   text-align: center;
+  flex-wrap: wrap;
 }
 
 .client_view {
   display: flex;
+  width: 33.33%;
   flex-direction: column;
   align-items: center;
 }

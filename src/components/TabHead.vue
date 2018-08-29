@@ -2,7 +2,7 @@
 <template>
   <div>
     <x-header @on-click-back="clickBack" :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
-      <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon}`" @click="rightClick(item.name)"></span>
+      <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon}`" @click="rightClick(index)"></span>
     </x-header>
   </div>
 </template>
@@ -41,6 +41,7 @@ export default {
     // 点击返回按钮时候触发
     clickBack() {
       console.log('我在点击返回')
+      this.$router.back()
     },
     // 点击右侧按钮时候触发
     rightClick(e) {
