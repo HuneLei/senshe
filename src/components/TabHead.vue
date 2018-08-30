@@ -1,8 +1,8 @@
 <!-- 顶部导航组件 -->
 <template>
   <div>
-    <x-header @on-click-back="clickBack" :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
-      <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon}`" @click="rightClick(index)"></span>
+    <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
+      <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
     </x-header>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
     // 是否禁止点击返回按钮
     isBack: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     // 是否显示返回文字
     isShowBack: {
@@ -38,11 +38,6 @@ export default {
     return {};
   },
   methods: {
-    // 点击返回按钮时候触发
-    clickBack() {
-      console.log('我在点击返回')
-      this.$router.back()
-    },
     // 点击右侧按钮时候触发
     rightClick(e) {
       console.log('我点击了右侧按钮', e)
@@ -53,5 +48,8 @@ export default {
 </script>
 
 <style scoped>
+  .icon_view {
+    padding-left: 10px
+  }
 </style>
 

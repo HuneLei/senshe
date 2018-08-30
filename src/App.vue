@@ -26,7 +26,7 @@ export default {
 
 /* icon size设置 */
 .icon {
-  font-size: 15px /*px*/;
+  font-size: 18px /*px*/;
 }
 
 // tab切换页icon设置
@@ -41,7 +41,7 @@ export default {
 
 // 信息图标icon设置
 .info_icon {
-  font-size: 20px /*px*/;
+  font-size: 19px /*px*/;
 }
 
 #app {

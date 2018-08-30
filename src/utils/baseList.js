@@ -53,10 +53,10 @@ const baseList = {
     isShowBack: true,
     isUserShow: true,
     slotRight: [{
-      icon: 'iconfont icon-shouji',
+      icon: 'iconfont icon-jiahao',
       path: 'CreatInvoic'
     }, {
-      icon: 'iconfont icon-shouji',
+      icon: 'iconfont icon-bianji',
       path: 'CreatPlan'
     }]
   },
@@ -89,14 +89,14 @@ const baseList = {
     isShowBack: true,
     isUserShow: true,
     slotRight: [{
-      icon: 'iconfont icon-shouji',
+      icon: 'iconfont icon-jiahao',
       path: 'CreatPlan'
     }]
   },
   [JobControl.QueryInvoic]: {
     name: '进销存查询(末次)',
     isTab: true,
-    isBar: true,
+    isBar: false,
     isShowBack: true,
     isUserShow: true,
     barIndex: 1,
@@ -105,7 +105,7 @@ const baseList = {
   [JobControl.QueryInvoicItem]: {
     name: '进销存查询(末次)',
     isTab: true,
-    isBar: true,
+    isBar: false,
     isShowBack: true,
     isUserShow: true,
     barIndex: 1,
@@ -229,7 +229,7 @@ const baseList = {
     barIndex: 2,
     isBar: false,
     slotRight: [{
-      icon: 'iconfont icon-shouji',
+      icon: 'iconfont icon-jiahao',
       path: 'newMessage'
     }]
   },

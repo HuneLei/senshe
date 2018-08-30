@@ -4,7 +4,7 @@
     <div class="leave_smg_div">
       <div class="msg_content">
         <div>
-          <span class="info_icon iconfont icon-mima"></span> {{systeminfo.title}}</div>
+          <span class="info_icon iconfont icon-xinfeng1"></span> {{systeminfo.title}}</div>
         <div class="msg_time">{{systeminfo.time}}</div>
       </div>
       <div class="msg_text">{{systeminfo.content}}</div>

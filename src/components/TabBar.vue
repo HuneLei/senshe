@@ -38,7 +38,7 @@ export default {
         {
           tabLink: '?',
           tabName: '数据中心',
-          tabIcon: 'iconfont icon-shouji',
+          tabIcon: 'iconfont icon-shujuzhongxin',
           tabShowdot: false,
           tabBadge: '',
           selected: true,
@@ -46,7 +46,7 @@ export default {
         {
           tabLink: '?',
           tabName: '工作管理',
-          tabIcon: 'iconfont icon-shouji',
+          tabIcon: 'iconfont icon-gongzuoguanli',
           tabShowdot: false,
           tabBadge: '',
           selected: false,
@@ -54,7 +54,7 @@ export default {
         {
           tabLink: '?',
           tabName: '我的',
-          tabIcon: 'iconfont icon-shouji',
+          tabIcon: 'iconfont icon-denglu',
           tabShowdot: false,
           tabBadge: '1',
           selected: false,
@@ -85,6 +85,9 @@ export default {
 </script>
 
 <style scoped>
+  .tab_view {
+    background-color: #ffffff
+  }
 </style>
 <style>
 .tab_view .weui-tabbar__item {

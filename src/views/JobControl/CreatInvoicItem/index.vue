@@ -1,22 +1,29 @@
 <!-- 进销存录入 -->
 <template>
   <div class="index_class" :style="`margin-top: ${winTop}px;`">
-    <search :top="`${winTop}px`" placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
-    <div class="invoic_index border_top border_bottom">
-      <div class="invoic_one" >
-        <div class="client_name vux-1px-r">客户名称</div>
-        <div class="client_view">销售</div>
-        <div class="client_view">库存</div>
-        <div class="client_view">陈列照片</div>
-        <div class="client_view vux-1px-t">进货</div>
-      </div>
-      <div class="invoic_one border_top">
-        <div class="client_name vux-1px-r">客户名称</div>
-        <div class="client_view">销售</div>
-        <div class="client_view">库存</div>
-        <div class="client_view">陈列照片</div>
-        <div class="client_view">进货</div>
-      </div>
+    <search :top="`${winTop}px`" placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false'></search>
+
+    <div class="incoic_table">
+      <x-table :cell-bordered="false">
+        <thead>
+          <tr>
+            <th class="table_longth table_border">客户名称</th>
+            <th>进货</th>
+            <th>销售</th>
+            <th>库存</th>
+            <th class="table_img">陈列照片</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(item, index) in incoicList" :key="index">
+            <td class="table_border">{{item.date}}<br>{{item.name}}</td>
+            <td>{{item.stock}}</td>
+            <td>{{item.market}}</td>
+            <td>{{item.inventory}}</td>
+            <td>{{item.imgurl}}</td>
+          </tr>
+        </tbody>
+      </x-table>
     </div>
 
   </div>
@@ -29,15 +36,41 @@ export default {
   mounted() {
     this.winTop = document.querySelector('.vux-header').clientHeight;
   },
-  computed: {
-    // 屏幕宽度
-    WinWidth: () => window.innerWidth
-  },
+  computed: {},
   components: {},
   data() {
     return {
       winTop: 0, // 自动固定时距离顶部的距离
       searchValue: '', // 搜索的值
+      incoicList: [{
+        date: '2018-06-01',
+        name: '上药科泽（上海）医药有限公司',
+        stock: 50000,
+        market: 45000,
+        inventory: 5000,
+        imgurl: '1'
+      }, {
+        date: '2018-06-01',
+        name: '上药科泽（上海）医药有限公司',
+        stock: 50000,
+        market: 45000,
+        inventory: 5000,
+        imgurl: '1'
+      }, {
+        date: '2018-06-01',
+        name: '上药科泽（上海）医药有限公司',
+        stock: 50000,
+        market: 45000,
+        inventory: 5000,
+        imgurl: '1'
+      }, {
+        date: '2018-06-01',
+        name: '上药科泽（上海）医药有限公司',
+        stock: 50000,
+        market: 45000,
+        inventory: 5000,
+        imgurl: '1'
+      }]
     };
   },
   methods: {},
@@ -45,28 +78,40 @@ export default {
 </script>
 
 <style scoped>
-.client_view {
-  width: 80px;
+/* 表格样式 */
+.table_border:after {
+  border-right: 0.02667rem solid #c7c7c7 !important;
 }
-.client_name {
-  width: 200px;
+
+.table_img {
+  width: 60px !important;
 }
-.invoic_index {
-  overflow-x: auto;
+
+.incoic_table table {
+  width: 420px;
+}
+
+.table_longth {
+  width: 120px !important;
+}
+.incoic_table {
+  overflow-y: auto;
   background-color: #ffffff;
 }
-.invoic_one {
-  display: flex;
-  font-weight: 600;
-  color: #4d4d4d;
-  width: 100%;
+.incoic_table table th {
+  width: 30px;
+  color: #222222;
+  text-align: left;
   font-size: 15px;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
+  padding-left: 10px;
 }
-.invoic_one div {
-  flex-shrink: 0;
+
+.incoic_table table td {
+  color: #666666;
+  text-align: left;
+  font-size: 14px;
+  padding: 5px 5px 5px 10px;
+  line-height: 22px;
 }
 
 /* 搜索 */

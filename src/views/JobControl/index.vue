@@ -1,7 +1,7 @@
 <!-- 工作管理 -->
 <template>
   <!-- router链接 -->
-  <div :style="`margin-top: ${winTop}px;`">
+  <div class="margin-bottom: 200px;" :style="`margin-top: ${winTop}px;`">
     <keep-alive>
       <router-view></router-view>
     </keep-alive>

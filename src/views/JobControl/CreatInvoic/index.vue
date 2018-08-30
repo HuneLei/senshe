@@ -2,7 +2,7 @@
 <template>
   <div>
     <group gutter='0'>
-      <datetime v-model="dataValue" @on-change="changeValue" title="日期:" clear-text="清除" @on-clear="clearValue" @on-cancel="log('cancel')" @on-confirm="onConfirm"></datetime>
+      <datetime v-model="dataValue" @on-change="changeValue" title="日期:" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
       <x-input title='进货:' v-model="stockValue" text-align='right'></x-input>
       <x-input title='销售:' v-model="marketValue" text-align='right'></x-input>
       <x-input title='库存:' v-model="repertoryValue" text-align='right'></x-input>
