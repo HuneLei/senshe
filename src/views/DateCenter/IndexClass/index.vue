@@ -1,7 +1,7 @@
 <!-- 商级 -->
 <template>
   <div class="index_class" :style="`margin-top: ${winTop}px;`">
-    <search :top="`${winTop}px`" placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
+    <search :top="`${winTop}px`" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
     <group gutter='0'>
       <cell v-for="(item, index) in cellList" :key="index" :title="item.title" is-link @click.native="goCellItem(item.id)"></cell>
     </group>
@@ -12,13 +12,6 @@
 
 export default {
   created() { },
-  watch: {
-    $route(to, from) {
-      if (to.path === '/DateCenter') {
-        this.$store.commit('updateTabSwitStatus', { status: true })
-      }
-    }
-  },
   mounted() {
     this.winTop = document.querySelector('.vux-header').clientHeight;
   },
@@ -66,7 +59,7 @@ export default {
   methods: {
     // 去列表详情页面
     goCellItem(id) {
-      this.$router.push(`/DateCenter/IndexItem?id=${id}`);
+      this.$router.push(`/DateCenter/ClientItem?id=${id}`);
       console.log(`点击的id是${id}`)
     }
   },

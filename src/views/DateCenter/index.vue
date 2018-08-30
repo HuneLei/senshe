@@ -1,18 +1,18 @@
 <!-- 数据中心 -->
 <template>
-<div :style="`margin-top: -${winTop}px`">
-  <!-- tab页面切换组件 -->
+  <div class="data_center">
+    <!-- tab页面切换组件 -->
     <tab-swit :winHeight="winHeight" :initIndex="initIndex" :tabList="tabList" @index-change="indexChange" v-show="isTabSwit">
       <div v-for="(item, index) in tabList" :slot="item.slot" :key="index">
         <!-- router链接 -->
         <component :is="item.slot"></component>
       </div>
     </tab-swit>
-     <!-- router链接 -->
-  <keep-alive>
-    <router-view></router-view>
-  </keep-alive>
-</div>
+    <!-- router链接 -->
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+  </div>
 </template>
 
 <script>
@@ -21,7 +21,15 @@ import myClient from './MyClient/index.vue'; // 我的客户
 import myIndex from './MyIndex/index.vue'; // 我的指标
 
 export default {
+  watch: {
+    $route(to, from) {
+      if (to.path === '/DateCenter') {
+        this.$store.commit('updateTabSwitStatus', { status: true })
+      }
+    }
+  },
   created() {
+    this.$store.commit('updateTabSwitStatus', { status: true })
   },
   mounted() {
     // 屏幕高度
@@ -29,7 +37,6 @@ export default {
     // 导航栏高度
     this.winTop = document.querySelector('.vux-header').clientHeight;
   },
-  watch: { },
   computed: {
     isTabSwit() {
       return this.$store.getters.getTabSwit
@@ -62,4 +69,7 @@ export default {
 </script>
 
 <style scoped>
+.data_center {
+  background-color: #ffffff;
+}
 </style>

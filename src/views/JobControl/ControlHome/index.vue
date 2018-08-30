@@ -24,22 +24,22 @@ export default {
         icon: 'iconfont icon-shouji',
         title: '客户规划',
         color: '#07bc99',
-        path: '1',
+        path: 'ControlPlan',
       }, {
         icon: 'iconfont icon-shouji',
         title: '进度查询',
         color: '#07A5BC',
-        path: '2',
-      }, {
-        icon: 'iconfont icon-shouji',
-        title: '进销存录入',
-        color: '#3477E5',
-        path: '3',
+        path: 'FollowUp',
       }, {
         icon: 'iconfont icon-shouji',
         title: '进销存查询',
         color: '#E68A07',
-        path: '4',
+        path: 'QueryInvoic',
+      }, {
+        icon: 'iconfont icon-shouji',
+        title: '进销存录入',
+        color: '#3477E5',
+        path: 'InvoicList',
       }]
     };
   },
@@ -47,6 +47,7 @@ export default {
     // 去相应的客户页面
     goClient(data) {
       console.log(`我点击了${data}`)
+      this.$router.push(`/JobControl/${data}`);
     }
   },
 };

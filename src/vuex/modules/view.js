@@ -1,6 +1,6 @@
 const state = {
   isLoading: false, // router切换loading
-  isTabSwit: true // tab切换页是否显示
+  isTabSwit: false // tab切换页是否显示
 };
 
 const getters = {

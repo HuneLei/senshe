@@ -16,7 +16,9 @@
       <x-button :show-loading="loginLoading" text="登录" @click.native="loginClick"></x-button>
     </div>
     <!-- 忘记密码 -->
-    <div class="forget_passwd" @click="forgetPass">忘记密码 ?</div>
+    <div class="forget_passwd">
+      <span @click="forgetPass"> 忘记密码 ?</span>
+    </div>
   </div>
 </template>
 

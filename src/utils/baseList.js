@@ -15,18 +15,25 @@ const userPath = {
 const DateCenter = {
   dateCenter: '/DateCenter',
   IndexClass: '/DateCenter/IndexClass',
-  IndexItem: '/DateCenter/IndexItem'
+  IndexItem: '/DateCenter/IndexItem',
+  clientItem: '/DateCenter/ClientItem'
 }
 
 // 工作管理
 const JobControl = {
   JobControl: '/JobControl',
   CreatPlan: '/JobControl/CreatPlan',
+  QueryInvoic: '/JobControl/QueryInvoic',
+  QueryInvoicItem: '/JobControl/QueryInvoicItem',
   ControlPlan: '/JobControl/ControlPlan',
-  ControlPlanOne: '/JobControl/ControlPlanOne',
-  ControlPlanTwo: '/JobControl/ControlPlanTwo',
+  ControlPlanList: '/JobControl/ControlPlanList',
+  ControlPlanItem: '/JobControl/ControlPlanItem',
   CreatInvoic: '/JobControl/CreatInvoic',
-  CreatInvoicOne: '/JobControl/CreatInvoicOne'
+  CreatInvoicItem: '/JobControl/CreatInvoicItem',
+  FollowUp: '/JobControl/FollowUp',
+  FollowUpList: '/JobControl/FollowUpList',
+  FollowUpItem: '/JobControl/FollowUpItem',
+  InvoicList: '/JobControl/InvoicList'
 }
 
 /**
@@ -40,17 +47,30 @@ const JobControl = {
  */
 const baseList = {
   // 工作管理
-  [JobControl.CreatInvoicOne]: {
+  [JobControl.CreatInvoicItem]: {
     name: '进销存录入',
     isTab: true,
-    isShowBack: false,
+    isShowBack: true,
+    isUserShow: true,
+    slotRight: [{
+      icon: 'iconfont icon-shouji',
+      path: 'CreatInvoic'
+    }, {
+      icon: 'iconfont icon-shouji',
+      path: 'CreatPlan'
+    }]
+  },
+  [JobControl.InvoicList]: {
+    name: '进销存录入',
+    isTab: true,
+    isShowBack: true,
     isUserShow: true,
     slotRight: []
   },
   [JobControl.CreatInvoic]: {
     name: '进销存录入',
     isTab: true,
-    isShowBack: false,
+    isShowBack: true,
     isUserShow: true,
     slotRight: []
   },
@@ -66,28 +86,70 @@ const baseList = {
   [JobControl.ControlPlan]: {
     name: '客户规划',
     isTab: true,
-    isShowBack: false,
+    isShowBack: true,
     isUserShow: true,
+    slotRight: [{
+      icon: 'iconfont icon-shouji',
+      path: 'CreatPlan'
+    }]
+  },
+  [JobControl.QueryInvoic]: {
+    name: '进销存查询(末次)',
+    isTab: true,
+    isBar: true,
+    isShowBack: true,
+    isUserShow: true,
+    barIndex: 1,
+    slotRight: []
+  },
+  [JobControl.QueryInvoicItem]: {
+    name: '进销存查询(末次)',
+    isTab: true,
+    isBar: true,
+    isShowBack: true,
+    isUserShow: true,
+    barIndex: 1,
     slotRight: []
   },
   [JobControl.CreatPlan]: {
     name: '添加客户计划',
     isTab: true,
-    isShowBack: false,
+    isShowBack: true,
     isUserShow: true,
     slotRight: []
   },
-  [JobControl.ControlPlanOne]: {
-    name: '客户规划三级',
+  [JobControl.ControlPlanList]: {
+    name: '客户规划',
     isTab: true,
-    isShowBack: false,
+    isShowBack: true,
     isUserShow: true,
     slotRight: []
   },
-  [JobControl.ControlPlanTwo]: {
-    name: '客户规划四级',
+  [JobControl.ControlPlanItem]: {
+    name: '客户规划',
     isTab: true,
-    isShowBack: false,
+    isShowBack: true,
+    isUserShow: true,
+    slotRight: []
+  },
+  [JobControl.FollowUp]: {
+    name: '进度查询',
+    isTab: true,
+    isShowBack: true,
+    isUserShow: true,
+    slotRight: []
+  },
+  [JobControl.FollowUpList]: {
+    name: '进度查询',
+    isTab: true,
+    isShowBack: true,
+    isUserShow: true,
+    slotRight: []
+  },
+  [JobControl.FollowUpItem]: {
+    name: '进度查询',
+    isTab: true,
+    isShowBack: true,
     isUserShow: true,
     slotRight: []
   },
@@ -108,6 +170,7 @@ const baseList = {
     isShowBack: true,
     isUserShow: true,
     slotRight: [],
+    barIndex: 0,
   },
   [DateCenter.IndexItem]: {
     name: '指标详情',
@@ -115,6 +178,15 @@ const baseList = {
     isShowBack: true,
     isUserShow: true,
     slotRight: [],
+    barIndex: 0,
+  },
+  [DateCenter.clientItem]: {
+    name: '客户详情',
+    isTab: true,
+    isShowBack: true,
+    isUserShow: true,
+    slotRight: [],
+    barIndex: 0,
   },
   // 我的
   [userPath.user]: {

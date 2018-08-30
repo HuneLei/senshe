@@ -13,9 +13,9 @@ export default {
       component: DateCenter,
       children: [
         {
-          path: '/',
+          path: 'ClientItem',
           component: ClientItem,
-          name: '数据中心',
+          name: '客户详情',
         },
         {
           path: 'IndexClass',
