@@ -1,7 +1,7 @@
 <!-- 顶部导航组件 -->
 <template>
   <div>
-    <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
+    <x-header id="header" :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
       <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
     </x-header>
   </div>
@@ -48,8 +48,8 @@ export default {
 </script>
 
 <style scoped>
-  .icon_view {
-    padding-left: 10px
-  }
+.icon_view {
+  padding-left: 10px;
+}
 </style>
 

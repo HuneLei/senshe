@@ -6,7 +6,7 @@
     <!-- router链接 -->
     <div>
       <keep-alive>
-        <router-view></router-view>
+        <router-view class="animated bounceInUp bounce"></router-view>
       </keep-alive>
     </div>
     <!-- 底部导航组件 -->
@@ -28,6 +28,7 @@ export default {
   mounted() {
     // 导航栏高度
     this.winTop = document.querySelector('.vux-header').clientHeight;
+    this.$plusHeight()
   },
   data() {
     return {

@@ -2,6 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 
 import 'lib-flexible/flexible';
+import 'animate.css'; // 动画库
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -33,6 +34,6 @@ router.afterEach((to) => {
 })
 
 // 移除移动端页面点击延迟
-// const FastClick = require('fastclick');
-// FastClick.attach(document.body);
+const FastClick = require('fastclick');
+FastClick.attach(document.body);
 

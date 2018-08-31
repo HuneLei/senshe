@@ -182,5 +182,42 @@ Vue.prototype.$countHeight = (array) => {
   return window.innerHeight - h;
 };
 
+Vue.prototype.$plusHeight = () => {
+  if (window.plus) {
+    document.addEventListener('plusready', function () {
+      console.log("Immersed-UserAgent: " + navigator.userAgent);
+    }, false);
+
+    var immersed = 0;
+    console.log('navigator.userAgent', navigator.userAgent)
+    var ms = (/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if (ms && ms.length >= 3) {
+      immersed = parseFloat(ms[2]) / 75;
+    }
+    window.immersed = immersed;
+
+    if (!immersed) {
+      return;
+    }
+    var t = document.getElementById('header');
+    t && (t.style.paddingTop = immersed + 'rem', t.style.background = '#07BC99', t.style.color = '#FFFFFF');
+    t = document.getElementById('content');
+    t && (t.style.marginTop = immersed + 'rem');
+    t = document.getElementById('scontent');
+    t && (t.style.marginTop = immersed + 'rem');
+    t = document.getElementById('dcontent');
+    t && (t.style.marginTop = immersed + 'rem');
+    t = document.getElementById('map');
+    t && (t.style.marginTop = immersed + 'rem');
+  }
+}
+
+if (window.plus) {
+  Vue.prototype.$plus = plus;
+  console.log('plus', plus)
+} else {
+  console.log('nulnulnul')
+}
+
 import validator from './utils/validator'; //  数据校验
 window.validator = validator;

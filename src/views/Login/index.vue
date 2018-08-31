@@ -54,29 +54,29 @@ export default {
     loginClick() {
       console.log('登录操作');
       // 校验手机号
-      if (!this.phone_value) {
-        this.$vux.toast.text('请输入手机号码', 'middle');
-        return;
-      }
-      if (!window.validator.regPhone.test(this.phone_value)) {
-        this.$vux.toast.text('请输入正确的手机号', 'middle');
-        return;
-      }
+      // if (!this.phone_value) {
+      //   this.$vux.toast.text('请输入手机号码', 'middle');
+      //   return;
+      // }
+      // if (!window.validator.regPhone.test(this.phone_value)) {
+      //   this.$vux.toast.text('请输入正确的手机号', 'middle');
+      //   return;
+      // }
       // 校验密码
-      if (!this.passwd_value) {
-        this.$vux.toast.text('请输入密码', 'middle');
-        return;
-      }
-      this.checkPass(this.passwd_value, (state) => {
-        this.loginLoading = false;
-        if (!state) {
-          that.$vux.toast.text('密码错误', 'middle');
-          return;
-        }
-        // this.$router.replace('/User?id=1');
-        that.$router.push('/User?id=1');
-        config.setToken('Hune');
-      })
+      // if (!this.passwd_value) {
+      //   this.$vux.toast.text('请输入密码', 'middle');
+      //   return;
+      // }
+      // this.checkPass(this.passwd_value, (state) => {
+      //   this.loginLoading = false;
+      //   if (!state) {
+      //     that.$vux.toast.text('密码错误', 'middle');
+      //     return;
+      //   }
+      // this.$router.replace('/User?id=1');
+      that.$router.push('/User?id=1');
+      //   config.setToken('Hune');
+      // })
     },
     // 校验密码是否正确
     checkPass(value, callBack) {
