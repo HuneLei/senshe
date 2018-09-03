@@ -1,6 +1,6 @@
 <!-- 指标详情 -->
 <template>
-  <div class="index_class" :style="`margin-top: ${winTop}px;`">
+  <div class="index_class">
     <search :top="`${winTop}px`" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
     <group gutter='0'>
       <x-table :cell-bordered="false" class="index_table">

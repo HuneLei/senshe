@@ -1,10 +1,10 @@
 const state = {
   isLoading: false, // router切换loading
-  isTabSwit: false // tab切换页是否显示
+  winHeight: 0 // tab切换页的高度
 };
 
 const getters = {
-  getTabSwit: (state) => state.isTabSwit,
+  getWinHeight: (state) => state.winHeight,
 };
 
 const actions = {};
@@ -13,8 +13,9 @@ const mutations = {
   updateLoadingStatus(state, payload) {
     state.isLoading = payload.isLoading;
   },
-  updateTabSwitStatus(state, payload) {
-    state.isTabSwit = payload.status;
+  updateWinHeight(state, payload) {
+    console.log(1111111)
+    state.winHeight = payload.height;
   }
 };
 

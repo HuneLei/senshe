@@ -1,6 +1,6 @@
 <!-- 商级 -->
 <template>
-  <div class="index_class" :style="`margin-top: ${winTop}px;`">
+  <div class="index_class">
     <search :top="`${winTop}px`" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
     <group gutter='0'>
       <cell v-for="(item, index) in cellList" :key="index" :title="item.title" is-link @click.native="goCellItem(item.id)"></cell>
@@ -12,9 +12,7 @@
 
 export default {
   created() { },
-  mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight;
-  },
+  mounted() { },
   computed: {},
   components: {},
   data() {

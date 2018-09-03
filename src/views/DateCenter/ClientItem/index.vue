@@ -1,6 +1,6 @@
 <!-- 客户详情 -->
 <template>
-  <div :style="`margin-top: ${winTop}px;`">
+  <div>
     <group gutter='0'>
       <cell title="名称：">
         <div slot="title">
@@ -31,9 +31,7 @@
 
 export default {
   created() { },
-  mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight;
-  },
+  mounted() { },
   computed: {},
   components: {},
   data() {

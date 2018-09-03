@@ -2,7 +2,6 @@
 <template>
   <div class="index_class" :style="`margin-top: ${winTop}px;`">
     <search :top="`${winTop}px`" placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false'></search>
-
     <div class="incoic_table">
       <x-table :cell-bordered="false">
         <thead>

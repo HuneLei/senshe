@@ -22,6 +22,7 @@ new Vue({
 
 // 路由进来时开启isLoading载入
 router.beforeEach((to, from, next) => {
+  console.log('config.getToken()', config.getToken())
   console.log('router正在跳转')
   store.commit('updateLoadingStatus', { isLoading: true })
   next()
@@ -35,5 +36,6 @@ router.afterEach((to) => {
 
 // 移除移动端页面点击延迟
 const FastClick = require('fastclick');
-FastClick.attach(document.body);
-
+if (window.plus) {
+  FastClick.attach(document.body);
+}

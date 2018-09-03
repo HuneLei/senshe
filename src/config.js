@@ -1,3 +1,4 @@
+/* eslint-disable */
 // 配置文件
 // (地址配置均以/结尾，后续无需再加)
 
@@ -63,15 +64,26 @@ const tokenName = 'ss_token';
 
 //  设置 当前用户的access_token
 const setToken = (token) => {
+  if (window.plus) {
+    plus.storage.setItem(tokenName, token);
+  }
   sessionStorage.setItem(tokenName, token);
 };
 
 //  获取 当前用户的access_token
-const getToken = () => sessionStorage.getItem(tokenName);
+const getToken = () => {
+  if (window.plus) {
+    return plus.storage.getItem(tokenName);
+  }
+  return sessionStorage.getItem(tokenName)
+};
 
 //  删除 当前用户的access_token
 const removeToken = () => {
   sessionStorage.removeItem(tokenName);
+  if (window.plus) {
+    plus.storage.removeItem(tokenName);
+  }
 };
 
 console.log(process.env.NODE_ENV);

@@ -46,6 +46,36 @@ export default {
       }, {
         name: '2017年度',
         id: 8
+      }, {
+        name: '2017年度',
+        id: 7
+      }, {
+        name: '2017年度',
+        id: 8
+      }, {
+        name: '2017年度',
+        id: 7
+      }, {
+        name: '2017年度',
+        id: 8
+      }, {
+        name: '2017年度',
+        id: 7
+      }, {
+        name: '2017年度',
+        id: 8
+      }, {
+        name: '2017年度',
+        id: 7
+      }, {
+        name: '2017年度',
+        id: 8
+      }, {
+        name: '2017年度',
+        id: 7
+      }, {
+        name: '2017年度',
+        id: 8
       }], // 当前指标列表
     };
   },
@@ -58,7 +88,6 @@ export default {
     CellClick(id) {
       console.log('id', id);
       this.$router.push(`/DateCenter/IndexItem?id=${id}`);
-      this.$store.commit('updateTabSwitStatus', { status: false })
     }
   },
 };

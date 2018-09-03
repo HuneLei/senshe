@@ -14,7 +14,8 @@ export default {
   created() { },
   mounted() {
     // 导航栏高度
-    this.winTop = document.querySelector('.vux-header').clientHeight;
+    console.log("document.querySelector('.vux-header').clientHeight", document.querySelector('.vux-header').clientHeight)
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
   },
   computed: {},
   components: {},

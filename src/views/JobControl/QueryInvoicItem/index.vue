@@ -1,15 +1,6 @@
 <!-- 进销存详情 -->
 <template>
   <div class="incoic_item">
-    <x-header :line-width=50 title="slot:overwrite-title" :left-options="{backText: ''}">
-      <div slot="overwrite-title">
-        <tab class="" default-color='#fff' active-color='#fff' custom-bar-width="1rem">
-          <tab-item active-class="tab_active" selected>商业</tab-item>
-          <tab-item active-class="tab_active">连锁</tab-item>
-          <tab-item active-class="tab_active">门店</tab-item>
-        </tab>
-      </div>
-    </x-header>
     <div class="incoic_table">
       <x-table :cell-bordered="false">
         <thead>
@@ -41,11 +32,15 @@
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    // 导航栏高度
+    this.winTop = document.querySelector('.vux-header').clientHeight;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       incoicList: [{
         date: '2018-06-01',
         name: '上药科泽（上海）医药有限公司',
@@ -163,19 +158,3 @@ export default {
   line-height: 22px;
 }
 </style>
-
-<style>
-.incoic_item .vux-header-title-area,
-.vux-header .vux-header-title {
-  margin: 0 30px;
-}
-/* tab切换的背景颜色 */
-.incoic_item .vux-tab {
-  background-color: #07bc99;
-}
-/* tab选中下边条样式 */
-.incoic_item .vux-tab-ink-bar {
-  margin-bottom: 6px;
-}
-</style>
-

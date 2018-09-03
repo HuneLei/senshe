@@ -6,6 +6,7 @@ import {
   Badge,
   XButton,
   XHeader,
+  Previewer,
   // Divider,
   // Flexbox,
   // FlexboxItem,
@@ -72,6 +73,7 @@ import {
   TabItem,
   Tabbar,
   TabbarItem,
+  TransferDom,
   // VChart,
   // VLine,
   // VArea,
@@ -98,6 +100,8 @@ Vue.component('TabBar', MyCom.TabBar); // 底部导航组件
 Vue.use(ToastPlugin);
 
 Vue.component('Tabbar', Tabbar); // 底部导航
+Vue.component('Previewer', Previewer); // 图片预览
+Vue.component('TransferDom', TransferDom); // 图片预览
 Vue.component('TabbarItem', TabbarItem);
 Vue.component('XHeader', XHeader);
 Vue.component('PopupPicker', PopupPicker); // PopupPicker底部弹窗
@@ -158,6 +162,9 @@ Vue.component('XTable', XTable);
 Vue.component('Datetime', Datetime);
 // Vue.component('Rater', Rater);
 
+// 注册全局指令
+Vue.directive('transfer-dom', TransferDom)
+
 // 全局方法的引入
 // 计算屏幕剩余高度
 Vue.prototype.$countHeight = (array) => {
@@ -172,6 +179,7 @@ Vue.prototype.$countHeight = (array) => {
     const item = data[i];
     try {
       const $e = document.querySelector(item);
+      console.log('$e', $e)
       if ($e !== null) {
         h += $e.clientHeight;
       }
@@ -182,42 +190,40 @@ Vue.prototype.$countHeight = (array) => {
   return window.innerHeight - h;
 };
 
-Vue.prototype.$plusHeight = () => {
-  if (window.plus) {
-    document.addEventListener('plusready', function () {
-      console.log("Immersed-UserAgent: " + navigator.userAgent);
-    }, false);
-
-    var immersed = 0;
-    console.log('navigator.userAgent', navigator.userAgent)
-    var ms = (/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if (ms && ms.length >= 3) {
-      immersed = parseFloat(ms[2]) / 75;
-    }
-    window.immersed = immersed;
-
-    if (!immersed) {
-      return;
-    }
-    var t = document.getElementById('header');
-    t && (t.style.paddingTop = immersed + 'rem', t.style.background = '#07BC99', t.style.color = '#FFFFFF');
-    t = document.getElementById('content');
-    t && (t.style.marginTop = immersed + 'rem');
-    t = document.getElementById('scontent');
-    t && (t.style.marginTop = immersed + 'rem');
-    t = document.getElementById('dcontent');
-    t && (t.style.marginTop = immersed + 'rem');
-    t = document.getElementById('map');
-    t && (t.style.marginTop = immersed + 'rem');
-  }
-}
+let immersed = 0;
 
 if (window.plus) {
   Vue.prototype.$plus = plus;
   console.log('plus', plus)
+  plusHeight()
 } else {
-  console.log('nulnulnul')
+  console.log('nullnull')
+  // window.immersed = immersed;
+  immersed = 20
+  window.immersed = immersed;
+  var t = document.getElementById('head_state');
+  t && (t.style.display = 'block', t.style.height = immersed + 'px');
+}
+
+function plusHeight() {
+  if (window.plus) {
+    document.addEventListener('plusready', function () {
+      console.log("Immersed-UserAgent: " + navigator.userAgent);
+    }, false);
+    var ms = (/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
+    if (ms && ms.length >= 3) {
+      immersed = parseFloat(ms[2]) + 5;
+    }
+    if (!immersed) {
+      return;
+    }
+    window.immersed = immersed;
+    var t = document.getElementById('head_state');
+    t && (t.style.display = 'block', t.style.height = immersed + 'px');
+  }
 }
 
 import validator from './utils/validator'; //  数据校验
+import mobileNative from './utils/mobileNative'; //  手机共用方法
 window.validator = validator;
+window.mobileNative = mobileNative;

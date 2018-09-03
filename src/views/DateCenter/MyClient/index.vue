@@ -41,7 +41,6 @@ export default {
     goClient(data) {
       console.log(`我点击了${data}`)
       this.$router.push(`/DateCenter/IndexClass?index=${data}`);
-      this.$store.commit('updateTabSwitStatus', { status: false })
     }
   },
 };

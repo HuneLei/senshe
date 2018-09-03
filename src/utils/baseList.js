@@ -44,6 +44,7 @@ const JobControl = {
  * tabList tab页面切换列表
  * initIndex tab的默认页面
  * barIndex bar的默认选项
+ * isTabSiw 是否带有切换
  */
 const baseList = {
   // 工作管理
@@ -52,6 +53,7 @@ const baseList = {
     isTab: true,
     isShowBack: true,
     isUserShow: true,
+    headIndex: 0,
     slotRight: [{
       icon: 'iconfont icon-jiahao',
       path: 'CreatInvoic'
@@ -65,14 +67,16 @@ const baseList = {
     isTab: true,
     isShowBack: true,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [JobControl.CreatInvoic]: {
     name: '进销存录入',
     isTab: true,
     isShowBack: true,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [JobControl.JobControl]: {
     name: '工作管理',
@@ -81,7 +85,8 @@ const baseList = {
     isShowBack: false,
     isUserShow: true,
     barIndex: 1,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [JobControl.ControlPlan]: {
     name: '客户规划',
@@ -91,7 +96,8 @@ const baseList = {
     slotRight: [{
       icon: 'iconfont icon-jiahao',
       path: 'CreatPlan'
-    }]
+    }],
+    headIndex: 0,
   },
   [JobControl.QueryInvoic]: {
     name: '进销存查询(末次)',
@@ -100,69 +106,79 @@ const baseList = {
     isShowBack: true,
     isUserShow: true,
     barIndex: 1,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [JobControl.QueryInvoicItem]: {
     name: '进销存查询(末次)',
     isTab: true,
     isBar: false,
+    isTabSiw: true,
     isShowBack: true,
     isUserShow: true,
     barIndex: 1,
-    slotRight: []
+    slotRight: [],
+    headIndex: 1,
   },
   [JobControl.CreatPlan]: {
     name: '添加客户计划',
     isTab: true,
     isShowBack: true,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0
   },
   [JobControl.ControlPlanList]: {
     name: '客户规划',
     isTab: true,
     isShowBack: true,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [JobControl.ControlPlanItem]: {
     name: '客户规划',
     isTab: true,
     isShowBack: true,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [JobControl.FollowUp]: {
     name: '进度查询',
     isTab: true,
     isShowBack: true,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [JobControl.FollowUpList]: {
     name: '进度查询',
     isTab: true,
     isShowBack: true,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [JobControl.FollowUpItem]: {
     name: '进度查询',
     isTab: true,
     isShowBack: true,
     isUserShow: true,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   // 数据中心
   [DateCenter.dateCenter]: {
     name: '数据中心',
-    isTab: false,
+    isTab: true,
     isBar: true,
     isShowBack: false,
     isUserShow: true,
     slotRight: [],
     initIndex: 0,
     barIndex: 0,
+    headIndex: 2,
   },
   [DateCenter.IndexClass]: {
     name: '商级',
@@ -171,6 +187,7 @@ const baseList = {
     isUserShow: true,
     slotRight: [],
     barIndex: 0,
+    headIndex: 0,
   },
   [DateCenter.IndexItem]: {
     name: '指标详情',
@@ -179,6 +196,7 @@ const baseList = {
     isUserShow: true,
     slotRight: [],
     barIndex: 0,
+    headIndex: 0,
   },
   [DateCenter.clientItem]: {
     name: '客户详情',
@@ -187,6 +205,7 @@ const baseList = {
     isUserShow: true,
     slotRight: [],
     barIndex: 0,
+    headIndex: 0,
   },
   // 我的
   [userPath.user]: {
@@ -197,6 +216,7 @@ const baseList = {
     slotRight: [],
     barIndex: 2,
     isBar: true,
+    headIndex: 0,
   },
   [userPath.editPassword]: {
     name: '修改密码',
@@ -205,6 +225,7 @@ const baseList = {
     slotRight: [],
     barIndex: 2,
     isBar: false,
+    headIndex: 0,
   },
   [userPath.leaveMessage]: {
     name: '留言详情',
@@ -213,6 +234,7 @@ const baseList = {
     slotRight: [],
     barIndex: 2,
     isBar: false,
+    headIndex: 0,
   },
   [userPath.myInformation]: {
     name: '我的信息',
@@ -221,6 +243,7 @@ const baseList = {
     slotRight: [],
     barIndex: 2,
     isBar: false,
+    headIndex: 0,
   },
   [userPath.myMessage]: {
     name: '我的留言',
@@ -231,7 +254,8 @@ const baseList = {
     slotRight: [{
       icon: 'iconfont icon-jiahao',
       path: 'newMessage'
-    }]
+    }],
+    headIndex: 0,
   },
   [userPath.newMessage]: {
     name: '新建留言',
@@ -239,7 +263,8 @@ const baseList = {
     isShowBack: true,
     barIndex: 2,
     isBar: false,
-    slotRight: []
+    slotRight: [],
+    headIndex: 0,
   },
   [userPath.systemInfo]: {
     name: '系统信息',
@@ -248,6 +273,7 @@ const baseList = {
     slotRight: [],
     barIndex: 2,
     isBar: false,
+    headIndex: 0,
   }
 };
 

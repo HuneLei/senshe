@@ -2,7 +2,13 @@
 <template>
   <div>
     <!-- 头部导航组件 -->
-    <tab-head :header_name="baseList.name" :slotRight="baseList.slotRight" :isShowBack="baseList.isShowBack" @right-click="rightClick" v-show="baseList.isTab"></tab-head>
+    <tab-head
+     :header_name="baseList.name"
+     :slotRight="baseList.slotRight"
+     :isShowBack="baseList.isShowBack"
+     :headIndex="baseList.headIndex"
+     @right-click="rightClick"
+     v-show="baseList.isTab"></tab-head>
     <!-- router链接 -->
     <div>
       <keep-alive>
@@ -26,13 +32,11 @@ export default {
     },
   },
   mounted() {
-    // 导航栏高度
-    this.winTop = document.querySelector('.vux-header').clientHeight;
-    this.$plusHeight()
+    // 状态栏高度设置
+    // this.$plusHeight()
   },
   data() {
     return {
-      winTop: 0, // 导航栏高度
       // tab页面切换
       tabList: [{ name: '我的商品', slot: 'myGoods' }, { name: '我的客户', slot: 'myClient' }, { name: '我的指标', slot: 'myIndex' }],
       headerName: '我的', // 导航标题

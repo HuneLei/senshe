@@ -100,7 +100,6 @@ video {
   left: 0;
   z-index: 6;
   width: 100%;
-  position: fixed !important;
 }
 
 /* 上边框 */
@@ -129,4 +128,15 @@ video {
 
 .scontent:after {
   min-height: calc(100% + 1px)
+}
+
+/* 状态栏 */
+#head_state {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  display: none;
+  position: fixed;
+  background-color: #07BC99;
 }

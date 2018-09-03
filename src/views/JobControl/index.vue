@@ -14,13 +14,14 @@ export default {
   created() { },
   mounted() {
     // 导航栏高度
-    this.winTop = document.querySelector('.vux-header').clientHeight;
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
   },
   computed: {},
   components: {},
   data() {
     return {
       winTop: 0, // 导航栏高度
+      winHeight: 0, // 屏幕高度
     };
   },
   methods: {},

@@ -29,10 +29,12 @@ let that = this;
 export default {
   beforeRouteEnter(to, from, next) {
     const token = config.getToken();
+    console.log('token', token)
     if (token) next({ path: '/User', replace: true });
     next();
   },
   created() {
+    document.getElementById('head_state').style.backgroundColor = '#f8f8f8'
     // 保存this的值和赋值当前页面
     that = this;
   },
@@ -74,8 +76,9 @@ export default {
       //     return;
       //   }
       // this.$router.replace('/User?id=1');
+      document.getElementById('head_state').style.backgroundColor = '#07BC99'
       that.$router.push('/User?id=1');
-      //   config.setToken('Hune');
+      config.setToken('Hune');
       // })
     },
     // 校验密码是否正确
@@ -153,6 +156,10 @@ export default {
 .forget_passwd {
   padding: 20px;
   font-size: 15px;
+}
+
+.head_state {
+  background-color: #ffffff;
 }
 </style>
 
