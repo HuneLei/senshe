@@ -6,6 +6,7 @@ const state = {
 };
 
 const getters = {
+  getLoading: (state) => state.isLoading,
   getWinHeight: (state) => state.winHeight,
   getEnteAnima: (state) => state.enteAnima,
   getLeaveAnima: (state) => state.leaveAnima,

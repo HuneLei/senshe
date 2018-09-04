@@ -112,24 +112,6 @@ video {
   border-bottom: 1px solid #C7C7C7;
 }
 
-/* ios下拉效果 */
-.scontent {
-  width: 100%;
-  /* position: fixed; */
-  top: 44px;
-  bottom: 0px;
-  /* text-align: center; */
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-  -ms-touch-action: pan-y cross-slide-y;
-  -ms-scroll-chaining: none;
-  -ms-scroll-limit: 0 50 0 50;
-}
-
-.scontent:after {
-  min-height: calc(100% + 1px)
-}
-
 /* 状态栏 */
 #head_state {
   top: 0;

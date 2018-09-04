@@ -42,16 +42,6 @@ function compatibleAdjust() {
     return;
   }
   _adjust = true;
-  // iOS平台特效
-  if ('iOS' == plus.os.name) {
-    // document.getElementById('appAPP').className = 'scontent';	// 使用div的滚动条
-    console.log("navigator.userAgent.indexOf('StreamApp')", navigator.userAgent.indexOf('StreamApp'))
-    if (navigator.userAgent.indexOf('StreamApp') >= 0) {	// 在流应用模式下显示返回按钮
-      document.getElementById('back').style.visibility = 'visible';
-    }
-  }
-  // 预创建二级窗口
-  //	preateWebviews();
   // 关闭启动界面
   plus.navigator.setStatusBarBackground('#D74B28');
   setTimeout(function () {

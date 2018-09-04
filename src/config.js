@@ -54,12 +54,6 @@ const getUploadHost = () => {
   return uploadHost;
 };
 
-const authorization = () => {
-  const sessionConfig = window.sessionStorage.getItem(baseConfig);
-  const base = JSON.parse(sessionConfig);
-  return base.Authorization;
-};
-
 const tokenName = 'ss_token';
 
 //  设置 当前用户的access_token
@@ -93,7 +87,6 @@ export default {
   tokenName,
   refreshToken: 'refresh_token',
   client_id: config.client_id || '',
-  authorization,
   uploadHost,
   resource_id: config.resource_id || null,
   baseConfig,

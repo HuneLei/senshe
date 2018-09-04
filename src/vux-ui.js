@@ -8,6 +8,7 @@ import {
   XButton,
   XHeader,
   Previewer,
+  LoadingPlugin,
   // Divider,
   // Flexbox,
   // FlexboxItem,
@@ -62,7 +63,7 @@ import {
   // Alert,
   // Confirm,
   // InlineLoading,
-  // Loading,
+  Loading,
   // LoadMore,
   // Msg,
   // Spinner,
@@ -100,6 +101,7 @@ Vue.component('TabBar', MyCom.TabBar); // 底部导航组件
 // Vue.use(ConfirmPlugin);
 Vue.use(ToastPlugin);
 Vue.use(VueScroller)
+Vue.use(LoadingPlugin) // loading加载
 
 Vue.component('Tabbar', Tabbar); // 底部导航
 Vue.component('Previewer', Previewer); // 图片预览
@@ -159,7 +161,7 @@ Vue.component('Search', Search);
 Vue.component('XTable', XTable);
 // Vue.component('XNumber', XNumber);
 // Vue.component('GroupTitle', GroupTitle);
-// Vue.component('Loading', Loading);
+Vue.component('Loading', Loading);
 // Vue.component('Confirm', Confirm);
 Vue.component('Datetime', Datetime);
 // Vue.component('Rater', Rater);
@@ -196,15 +198,16 @@ let immersed = 0;
 
 if (window.plus) {
   Vue.prototype.$plus = plus;
-  console.log('plus', plus)
   plusHeight()
 } else {
-  console.log('nullnull')
-  // window.immersed = immersed;
   immersed = 20
   window.immersed = immersed;
   var t = document.getElementById('head_state');
-  t && (t.style.display = 'block', t.style.height = immersed + 'px');
+  if (window.location.href.indexOf('login') > 0) {
+    t && (t.style.display = 'block', t.style.height = immersed + 'px', t.style.backgroundColor = '#f8f8f8');
+  } else {
+    t && (t.style.display = 'block', t.style.height = immersed + 'px', t.style.backgroundColor = '#07BC99');
+  }
 }
 
 function plusHeight() {
@@ -221,7 +224,11 @@ function plusHeight() {
     }
     window.immersed = immersed;
     var t = document.getElementById('head_state');
-    t && (t.style.display = 'block', t.style.height = immersed + 'px');
+    if (window.location.href.indexOf('login') > 0) {
+      t && (t.style.display = 'block', t.style.height = immersed + 'px', t.style.backgroundColor = '#f8f8f8');
+    } else {
+      t && (t.style.display = 'block', t.style.height = immersed + 'px', t.style.backgroundColor = '#07BC99');
+    }
   }
 }
 

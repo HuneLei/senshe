@@ -23,7 +23,7 @@ new Vue({
 const toPath = [];
 const fromPath = [];
 
-// 路由进来时开启isLoading载入
+// 路由进来时开启动画效果
 router.beforeEach((to, from, next) => {
   const toLength = toPath.length - 1;
   const fromLength = fromPath.length - 1;
@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
 // 路由出去时关闭isLoading载入
 router.afterEach((to) => {
   console.log('router关闭了')
-  store.commit('updateLoadingStatus', { isLoading: false })
+  store.commit('updateLoadingStatus', { isLoading: true })
 })
 
 // 移除移动端页面点击延迟
