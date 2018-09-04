@@ -1,5 +1,6 @@
 /* eslint-disable */
 import Vue from 'vue';
+import VueScroller from 'vue-scroller'
 
 import {
   // Icon,
@@ -98,6 +99,7 @@ Vue.component('TabBar', MyCom.TabBar); // 底部导航组件
 
 // Vue.use(ConfirmPlugin);
 Vue.use(ToastPlugin);
+Vue.use(VueScroller)
 
 Vue.component('Tabbar', Tabbar); // 底部导航
 Vue.component('Previewer', Previewer); // 图片预览

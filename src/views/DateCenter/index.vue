@@ -2,7 +2,9 @@
 <template>
   <div class="data_center" :style="`margin-top: ${winTop}px`">
     <keep-alive>
-      <router-view></router-view>
+      <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+        <router-view></router-view>
+      </transition>
     </keep-alive>
   </div>
 </template>
@@ -22,6 +24,14 @@ export default {
     isTabSwit() {
       return this.$store.getters.getTabSwit
     },
+    // 离开时动画
+    leaveAnima() {
+      return this.$store.getters.getLeaveAnima;
+    },
+    // 进入时动画
+    enteAnima() {
+      return this.$store.getters.getEnteAnima;
+    }
   },
   components: {
     myIndex,

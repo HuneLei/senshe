@@ -1,6 +1,6 @@
 <!-- 我的留言 -->
 <template>
-  <div>
+  <scroller :style="`margin-top: ${winTop}px;`" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <div style="border-bottom: 1px solid #d9d9d9;" v-for="(item, index) in messageList" :key="index" :class="`message_list ${!item.type || 'no_color'}`" @click="clickMsg(index)">
       <div class="message_text">{{item.text}}</div>
       <div>
@@ -10,18 +10,21 @@
         </div>
       </div>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       // 留言列表
       messageList: [{
         text: '这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言',
@@ -43,6 +46,16 @@ export default {
     clickMsg(index) {
       console.log(`我点击了这条留言${index}`);
       this.$router.push(`/User/leaveMessage?id=${index}`);
+    },
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      console.log('done', done);
+      done(true)
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      console.log('done', done);
+      done(true)
     }
   },
 };

@@ -102,7 +102,7 @@ export default {
     rightClick(e) {
       console.log('我点击了右侧按钮', e)
       this.$emit('right-click', e);
-    }
+    },
   }
 };
 </script>

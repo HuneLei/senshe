@@ -120,4 +120,13 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+// 上拉刷新下拉加载
+._v-container > ._v-content > .loading-layer .spinner-holder .text,
+._v-container > ._v-content > .pull-to-refresh-layer .spinner-holder .text {
+  font-size: 10px !important;
+}
+._v-container > ._v-content > .loading-layer {
+  font-size: 12px !important;
+}
 </style>

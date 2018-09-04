@@ -1,6 +1,6 @@
 <!-- 客户规划三级 -->
 <template>
-  <div>
+  <scroller :style="`margin-top: ${winTop}px;`">
     <group gutter='0'>
       <cell title="通用名" class="common_name">
         <span class="client_type">客户类型</span>
@@ -9,18 +9,21 @@
         <span class="cell_type">{{item.value}}</span>
       </cell>
     </group>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       cellList: [
         { id: '1', name: '强力枇杷膏', value: '商业' },
         { id: '2', name: '强力枇杷膏', value: '商业' },

@@ -1,10 +1,14 @@
 const state = {
   isLoading: false, // router切换loading
-  winHeight: 0 // tab切换页的高度
+  winHeight: 0, // tab切换页的高度
+  enteAnima: 'fadeInRight faster', // 进来时候的动画
+  leaveAnima: 'fadeOutLeft faster', // 出去时候的动画
 };
 
 const getters = {
   getWinHeight: (state) => state.winHeight,
+  getEnteAnima: (state) => state.enteAnima,
+  getLeaveAnima: (state) => state.leaveAnima,
 };
 
 const actions = {};
@@ -14,8 +18,13 @@ const mutations = {
     state.isLoading = payload.isLoading;
   },
   updateWinHeight(state, payload) {
-    console.log(1111111)
     state.winHeight = payload.height;
+  },
+  updateEnteAnima(state, anima) {
+    state.enteAnima = anima;
+  },
+  updateLeaveAnima(state, anima) {
+    state.leaveAnima = anima;
   }
 };
 

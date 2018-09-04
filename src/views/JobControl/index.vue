@@ -3,9 +3,12 @@
   <!-- router链接 -->
   <div class="margin-bottom: 200px;" :style="`margin-top: ${winTop}px;`">
     <keep-alive>
-      <router-view></router-view>
+      <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+        <router-view></router-view>
+      </transition>
     </keep-alive>
   </div>
+
 </template>
 
 <script>
@@ -16,7 +19,16 @@ export default {
     // 导航栏高度
     this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
   },
-  computed: {},
+  computed: {
+    // 离开时动画
+    leaveAnima() {
+      return this.$store.getters.getLeaveAnima;
+    },
+    // 进入时动画
+    enteAnima() {
+      return this.$store.getters.getEnteAnima;
+    }
+  },
   components: {},
   data() {
     return {

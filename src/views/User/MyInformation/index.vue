@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-  <div>
+  <scroller :style="`margin-top: ${winTop}px;`" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;" @click="clickInfo(index)">
       <div :class="`infor_icon ${!item.type || 'infor_icon_yes'}`">
         <span :class="`info_icon iconfont ${item.type ? 'icon-xinfeng1' : 'icon-xinfeng'}`"></span>
@@ -13,18 +13,21 @@
         <div class="system_text" :style="`color:${!item.type || '#999999'}`">{{item.text}}</div>
       </div>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       // 信息列表
       infoList: [{
         type: 0,
@@ -50,6 +53,16 @@ export default {
     clickInfo(index) {
       console.log(`我点击了这条消息${index}`);
       this.$router.push(`/User/systemInfo?id=${index}`);
+    },
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      console.log('done', done);
+      done(true)
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      console.log('done', done);
+      done(true)
     }
   },
 };

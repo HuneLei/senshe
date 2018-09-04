@@ -1,32 +1,37 @@
 <!-- 我的信息 -->
 <template>
-  <div class="message_group">
-    <!-- 用户基本信息 -->
-    <group gutter='0'>
-      <cell v-for="(value, index) in userForm" :key="index" :title="value.name" :value="value.value"></cell>
-    </group>
-    <!-- 留言等信息 -->
-    <group gutter='0.26rem'>
-      <cell :title="value.name" is-link v-for="(value, index) in messageFrom" :key="index" @click.native="goRouter(value.path)">
-        <div class="badge-value">
-          <badge v-show="value.text" :text="value.text"></badge>
-        </div>
-      </cell>
-    </group>
-    <!-- 底部白底 -->
-    <div class="white_div"></div>
-  </div>
+  <scroller :style="`margin-top: ${winTop}px;`">
+    <div class="message_group">
+      <!-- 用户基本信息 -->
+      <group gutter='0'>
+        <cell v-for="(value, index) in userForm" :key="index" :title="value.name" :value="value.value"></cell>
+      </group>
+      <!-- 留言等信息 -->
+      <group gutter='0.26rem'>
+        <cell :title="value.name" is-link v-for="(value, index) in messageFrom" :key="index" @click.native="goRouter(value.path)">
+          <div class="badge-value">
+            <badge v-show="value.text" :text="value.text"></badge>
+          </div>
+        </cell>
+      </group>
+      <!-- 底部白底 -->
+      <div class="white_div"></div>
+    </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       // 留言等信息
       messageFrom: {
         myMessage: {
@@ -80,6 +85,16 @@ export default {
       const pathname = name;
       console.log(`我要去的是${pathname}`);
       this.$router.push(`/User/${pathname}`);
+    },
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      console.log('done', done);
+      done(true)
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      console.log('done', done);
+      done(true)
     }
   },
 };
@@ -89,6 +104,9 @@ export default {
 /* 底部白色div */
 .white_div {
   height: 10px;
+  background-color: #f8f8f8;
+}
+.message_group {
   background-color: #f8f8f8;
 }
 </style>
@@ -101,10 +119,10 @@ export default {
 
 /* 去掉cell组件的前后边框 */
 .message_group .weui-cells:after {
-  border-bottom: 0 solid #D9D9D9 !important;
+  border-bottom: 0 solid #d9d9d9 !important;
 }
 
 .message_group .weui-cells:before {
-  border-top: 0 solid #D9D9D9 !important;
+  border-top: 0 solid #d9d9d9 !important;
 }
 </style>

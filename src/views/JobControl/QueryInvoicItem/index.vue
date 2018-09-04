@@ -1,31 +1,33 @@
 <!-- 进销存详情 -->
 <template>
-  <div class="incoic_item">
-    <div class="incoic_table">
-      <x-table :cell-bordered="false">
-        <thead>
-          <tr>
-            <th class="table_longth table_border">客户名称</th>
-            <th>进货</th>
-            <th>进度%</th>
-            <th>销售</th>
-            <th>进度%</th>
-            <th>库存</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in incoicList" :key="index">
-            <td class="table_border">{{item.date}}<br>{{item.name}}</td>
-            <td>{{item.stock}}</td>
-            <td>{{item.scheduleOne}}</td>
-            <td>{{item.market}}</td>
-            <td>{{item.scheduleTwo}}</td>
-            <td>{{item.inventory}}</td>
-          </tr>
-        </tbody>
-      </x-table>
+  <scroller :style="`margin-top: ${winTop}px;`" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+    <div class="incoic_item">
+      <div class="incoic_table">
+        <x-table :cell-bordered="false">
+          <thead>
+            <tr>
+              <th class="table_longth table_border">客户名称</th>
+              <th>进货</th>
+              <th>进度%</th>
+              <th>销售</th>
+              <th>进度%</th>
+              <th>库存</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in incoicList" :key="index">
+              <td class="table_border">{{item.date}}<br>{{item.name}}</td>
+              <td>{{item.stock}}</td>
+              <td>{{item.scheduleOne}}</td>
+              <td>{{item.market}}</td>
+              <td>{{item.scheduleTwo}}</td>
+              <td>{{item.inventory}}</td>
+            </tr>
+          </tbody>
+        </x-table>
+      </div>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
@@ -34,7 +36,7 @@ export default {
   created() { },
   mounted() {
     // 导航栏高度
-    this.winTop = document.querySelector('.vux-header').clientHeight;
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
   },
   computed: {},
   components: {},
@@ -116,7 +118,18 @@ export default {
       }]
     };
   },
-  methods: {},
+  methods: {
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      console.log('done', done);
+      done(true)
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      console.log('done', done);
+      done(true)
+    }
+  },
 };
 </script>
 

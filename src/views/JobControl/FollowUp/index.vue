@@ -1,25 +1,30 @@
 <!-- 进度查询 -->
 <template>
-  <div class="my_index">
-    <div class="index_view vux-1px-b">
-      <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度进度</div>
-      <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度进度</div>
+  <scroller :style="`margin-top: ${winTop}px;`">
+    <div class="my_index">
+      <div class="index_view vux-1px-b">
+        <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度进度</div>
+        <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度进度</div>
+      </div>
+      <group gutter='0'>
+        <cell v-for="(item, index) in indexList" :key="index" :title="item.name" is-link @click.native="CellClick(item.id)"></cell>
+      </group>
     </div>
-    <group gutter='0'>
-      <cell v-for="(item, index) in indexList" :key="index" :title="item.name" is-link @click.native="CellClick(item.id)"></cell>
-    </group>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       // 当前选中的进度
       selectIndex: 1,
       indexList: [{

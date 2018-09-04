@@ -1,24 +1,29 @@
 <!-- 工作管理 -->
 <template>
-  <div class="my_client">
-    <div class="client_view" v-for="(item, index) in clientList" :key="index">
-      <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path)">
-        <i :class="`tab_icon ${item.icon}`"></i>
+  <scroller :style="`margin-top: ${winTop}px;`">
+    <div class="my_client">
+      <div class="client_view" v-for="(item, index) in clientList" :key="index">
+        <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path)">
+          <i :class="`tab_icon ${item.icon}`"></i>
+        </div>
+        <div class="client_title">{{item.title}}</div>
       </div>
-      <div class="client_title">{{item.title}}</div>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       // 工作管理列表
       clientList: [{
         icon: 'iconfont icon-guihuaxiangmu',

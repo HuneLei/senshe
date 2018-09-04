@@ -1,40 +1,45 @@
 <!-- 进度查询详情 -->
 <template>
-  <div class="index_class">
-    <group gutter='0'>
-      <x-table :cell-bordered="false" class="index_table">
-        <thead>
-          <tr>
-            <th class="first_th">客户名称</th>
-            <th>进货规划</th>
-            <th>进度(%)</th>
-            <th>销售规划</th>
-            <th>进度(%)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in indexList" :key="index">
-            <td class="first_td">{{item.name}}</td>
-            <td>{{item.project}}</td>
-            <td>{{item.scheduleOne}}</td>
-            <td>{{item.target}}</td>
-            <td>{{item.scheduleTwo}}</td>
-          </tr>
-        </tbody>
-      </x-table>
-    </group>
-  </div>
+  <scroller :style="`margin-top: ${winTop}px;`" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+    <div class="index_class">
+      <group gutter='0'>
+        <x-table :cell-bordered="false" class="index_table">
+          <thead>
+            <tr>
+              <th class="first_th">客户名称</th>
+              <th>进货规划</th>
+              <th>进度(%)</th>
+              <th>销售规划</th>
+              <th>进度(%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in indexList" :key="index">
+              <td class="first_td">{{item.name}}</td>
+              <td>{{item.project}}</td>
+              <td>{{item.scheduleOne}}</td>
+              <td>{{item.target}}</td>
+              <td>{{item.scheduleTwo}}</td>
+            </tr>
+          </tbody>
+        </x-table>
+      </group>
+    </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       indexList: [
         {
           id: 1,
@@ -79,7 +84,18 @@ export default {
       ], // 列表
     };
   },
-  methods: {},
+  methods: {
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      console.log('done', done);
+      done(true)
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      console.log('done', done);
+      done(true)
+    }
+  },
 };
 </script>
 

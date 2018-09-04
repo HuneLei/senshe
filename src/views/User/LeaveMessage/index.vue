@@ -1,6 +1,6 @@
 <!-- 留言详情 -->
 <template>
-  <div>
+  <scroller :style="`margin-top: ${winTop}px;`">
     <!-- 森舍回复 * 留言内容 -->
     <div class="leave_smg_div" v-for="(item, index) in messageList" :key="index">
       <div class="msg_content">
@@ -9,18 +9,21 @@
       </div>
       <div class="msg_text">{{item.content}}</div>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       // 留言信息和回复
       messageList: [{
         title: '留言内容:',

@@ -1,21 +1,24 @@
 <!-- 进销存查询 -->
 <template>
-  <div>
+  <scroller :style="`margin-top: ${winTop}px;`">
     <group gutter='0'>
       <cell v-for="(item, index) in indexList" :key="index" :title="item.name" is-link @click.native="CellClick(item.id)"></cell>
     </group>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       indexList: [{
         name: '江莱清润糖',
         id: 1

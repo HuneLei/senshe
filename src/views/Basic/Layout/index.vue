@@ -12,7 +12,7 @@
     <!-- router链接 -->
     <div>
       <keep-alive>
-        <router-view class="animated bounceInUp bounce"></router-view>
+        <router-view></router-view>
       </keep-alive>
     </div>
     <!-- 底部导航组件 -->
@@ -34,6 +34,8 @@ export default {
   mounted() {
     // 状态栏高度设置
     // this.$plusHeight()
+    this.$store.commit('updateEnteAnima', 'slideInRight')
+    this.$store.commit('updateLeaveAnima', 'slideOutLeft')
   },
   data() {
     return {

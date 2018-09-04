@@ -20,9 +20,22 @@ new Vue({
   render: (h) => h(App),
 }).$mount('#app');
 
+const toPath = [];
+const fromPath = [];
+
 // 路由进来时开启isLoading载入
 router.beforeEach((to, from, next) => {
-  console.log('config.getToken()', config.getToken())
+  const toLength = toPath.length - 1;
+  const fromLength = fromPath.length - 1;
+  if (toPath[toLength] === from.path && fromPath[fromLength] === to.path) {
+    store.commit('updateEnteAnima', 'fadeInLeft faster')
+    store.commit('updateLeaveAnima', 'fadeOutRight faster')
+    toPath.pop(); fromPath.pop();
+  } else {
+    toPath.push(to.path); fromPath.push(from.path);
+    store.commit('updateEnteAnima', 'fadeInRight faster')
+    store.commit('updateLeaveAnima', 'fadeOutLeft faster')
+  }
   console.log('router正在跳转')
   store.commit('updateLoadingStatus', { isLoading: true })
   next()

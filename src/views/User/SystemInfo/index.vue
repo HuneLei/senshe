@@ -1,6 +1,6 @@
 <!-- 系统信息 -->
 <template>
-  <div>
+  <scroller :style="`margin-top: ${winTop}px;`">
     <div class="leave_smg_div">
       <div class="msg_content">
         <div>
@@ -9,18 +9,21 @@
       </div>
       <div class="msg_text">{{systeminfo.content}}</div>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       // 系统信息
       systeminfo: {
         title: '系统信息',
