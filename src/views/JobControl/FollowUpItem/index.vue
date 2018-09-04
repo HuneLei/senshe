@@ -1,6 +1,6 @@
 <!-- 进度查询详情 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <div class="index_class">
       <group gutter='0'>
         <x-table :cell-bordered="false" class="index_table">
@@ -60,6 +60,86 @@ export default {
         {
           id: 3,
           name: '国药控股国大药房有限公司（集采）',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 4,
+          name: '上海余天成药业连锁有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 5,
+          name: '上海第一医药股份有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 4,
+          name: '上海余天成药业连锁有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 5,
+          name: '上海第一医药股份有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 4,
+          name: '上海余天成药业连锁有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 5,
+          name: '上海第一医药股份有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 4,
+          name: '上海余天成药业连锁有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 5,
+          name: '上海第一医药股份有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 4,
+          name: '上海余天成药业连锁有限公司',
+          project: 5000,
+          scheduleOne: 25.12,
+          target: 5000,
+          scheduleTwo: 25.12
+        },
+        {
+          id: 5,
+          name: '上海第一医药股份有限公司',
           project: 5000,
           scheduleOne: 25.12,
           target: 5000,

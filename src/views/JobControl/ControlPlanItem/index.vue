@@ -1,6 +1,6 @@
 <!-- 客户规划三级 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <div class="control_plan_two">
       <group gutter='0'>
         <cell title="客户名称" class="common_name">
@@ -34,6 +34,26 @@ export default {
       winTop: 0, // 导航栏高度
       // 规划列表
       planList: [
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
+        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
         { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
         { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
         { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },

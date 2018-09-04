@@ -1,14 +1,13 @@
 <!-- 工作管理 -->
 <template>
-  <!-- router链接 -->
-  <div class="margin-bottom: 200px;" :style="`margin-top: ${winTop}px;`">
+  <div :style="`margin-top: ${winTop}px;`">
     <keep-alive>
       <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+        <!-- router链接 -->
         <router-view></router-view>
       </transition>
     </keep-alive>
   </div>
-
 </template>
 
 <script>
@@ -33,7 +32,6 @@ export default {
   data() {
     return {
       winTop: 0, // 导航栏高度
-      winHeight: 0, // 屏幕高度
     };
   },
   methods: {},

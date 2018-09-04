@@ -1,6 +1,6 @@
 <!-- 进度查询列表 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <group gutter='0'>
       <cell title="通用名" class="common_name">
         <span class="client_type">客户类型</span>

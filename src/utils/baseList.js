@@ -45,6 +45,7 @@ const JobControl = {
  * initIndex tab的默认页面
  * barIndex bar的默认选项
  * isTabSiw 是否带有切换
+ * headIndex 头部导航的类型
  */
 const baseList = {
   // 工作管理
@@ -52,7 +53,6 @@ const baseList = {
     name: '进销存录入',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     headIndex: 0,
     slotRight: [{
       icon: 'iconfont icon-jiahao',
@@ -66,7 +66,6 @@ const baseList = {
     name: '进销存录入',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     headIndex: 0,
   },
@@ -74,16 +73,15 @@ const baseList = {
     name: '进销存录入',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     headIndex: 0,
+    isBar: false,
   },
   [JobControl.JobControl]: {
     name: '工作管理',
     isTab: true,
     isBar: true,
     isShowBack: false,
-    isUserShow: true,
     barIndex: 1,
     slotRight: [],
     headIndex: 0,
@@ -92,7 +90,6 @@ const baseList = {
     name: '客户规划',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [{
       icon: 'iconfont icon-jiahao',
       path: 'CreatPlan'
@@ -104,7 +101,6 @@ const baseList = {
     isTab: true,
     isBar: false,
     isShowBack: true,
-    isUserShow: true,
     barIndex: 1,
     slotRight: [],
     headIndex: 0,
@@ -115,7 +111,6 @@ const baseList = {
     isBar: false,
     isTabSiw: true,
     isShowBack: true,
-    isUserShow: true,
     barIndex: 1,
     slotRight: [],
     headIndex: 1,
@@ -124,7 +119,6 @@ const baseList = {
     name: '添加客户计划',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     headIndex: 0
   },
@@ -132,7 +126,6 @@ const baseList = {
     name: '客户规划',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     headIndex: 0,
   },
@@ -140,7 +133,6 @@ const baseList = {
     name: '客户规划',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     headIndex: 0,
   },
@@ -148,7 +140,6 @@ const baseList = {
     name: '进度查询',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     headIndex: 0,
   },
@@ -156,7 +147,6 @@ const baseList = {
     name: '进度查询',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     headIndex: 0,
   },
@@ -164,7 +154,6 @@ const baseList = {
     name: '进度查询',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     headIndex: 0,
   },
@@ -174,7 +163,6 @@ const baseList = {
     isTab: true,
     isBar: true,
     isShowBack: false,
-    isUserShow: true,
     slotRight: [],
     initIndex: 0,
     barIndex: 0,
@@ -184,7 +172,6 @@ const baseList = {
     name: '商级',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     barIndex: 0,
     headIndex: 0,
@@ -193,7 +180,6 @@ const baseList = {
     name: '指标详情',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     barIndex: 0,
     headIndex: 0,
@@ -202,7 +188,6 @@ const baseList = {
     name: '客户详情',
     isTab: true,
     isShowBack: true,
-    isUserShow: true,
     slotRight: [],
     barIndex: 0,
     headIndex: 0,
@@ -212,7 +197,6 @@ const baseList = {
     name: '我的',
     isTab: true,
     isShowBack: false,
-    isUserShow: true,
     slotRight: [],
     barIndex: 2,
     isBar: true,

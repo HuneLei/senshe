@@ -1,6 +1,6 @@
 <!-- 系统信息 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <div class="leave_smg_div">
       <div class="msg_content">
         <div>

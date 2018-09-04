@@ -1,6 +1,6 @@
 <!-- 工作管理 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <div class="my_client">
       <div class="client_view" v-for="(item, index) in clientList" :key="index">
         <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path)">

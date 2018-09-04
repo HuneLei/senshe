@@ -1,6 +1,6 @@
 <!-- 客户规划 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <div class="my_index">
       <div class="index_view vux-1px-b">
         <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
@@ -36,6 +36,36 @@ export default {
       }, {
         name: '2017年度',
         id: 3
+      }, {
+        name: '2017年度',
+        id: 4
+      }, {
+        name: '2017年度',
+        id: 5
+      }, {
+        name: '2017年度',
+        id: 6
+      }, {
+        name: '2017年度',
+        id: 7
+      }, {
+        name: '2017年度',
+        id: 8
+      }, {
+        name: '2017年度',
+        id: 4
+      }, {
+        name: '2017年度',
+        id: 5
+      }, {
+        name: '2017年度',
+        id: 6
+      }, {
+        name: '2017年度',
+        id: 7
+      }, {
+        name: '2017年度',
+        id: 8
       }, {
         name: '2017年度',
         id: 4

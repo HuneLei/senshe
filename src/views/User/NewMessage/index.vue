@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     submitClick() {
+      console.log('this.textValue', this.textValue)
       if (!this.textValue) {
         this.$vux.toast.text('请输入留言内容', 'top');
       }

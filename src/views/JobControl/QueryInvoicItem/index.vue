@@ -1,8 +1,7 @@
 <!-- 进销存详情 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
-    <div class="incoic_item">
-      <div class="incoic_table">
+         <!-- <scroller  :style="`overflow-y: auto;margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'> -->
+               <div class="incoic_table">
         <x-table :cell-bordered="false">
           <thead>
             <tr>
@@ -25,9 +24,8 @@
             </tr>
           </tbody>
         </x-table>
-      </div>
-    </div>
-  </scroller>
+       </div>
+                <!-- </scroller> -->
 </template>
 
 <script>
@@ -134,10 +132,6 @@ export default {
 </script>
 
 <style scoped>
-/* tab选中时候的class */
-.tab_active {
-  font-size: 19px !important;
-}
 
 /* 表格样式 */
 .table_border:after {

@@ -1,7 +1,6 @@
 <!-- 进度查询 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
-    <div class="my_index">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" class="my_index">
       <div class="index_view vux-1px-b">
         <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度进度</div>
         <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度进度</div>
@@ -9,7 +8,6 @@
       <group gutter='0'>
         <cell v-for="(item, index) in indexList" :key="index" :title="item.name" is-link @click.native="CellClick(item.id)"></cell>
       </group>
-    </div>
   </scroller>
 </template>
 

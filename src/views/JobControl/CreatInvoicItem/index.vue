@@ -1,7 +1,7 @@
 <!-- 进销存录入 -->
 <template>
-  <div class="index_class" :style="`margin-top: ${winTop}px;`">
-    <search :top="`${winTop}px`" placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false'></search>
+  <div class="index_class">
+    <search placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false'></search>
     <div class="incoic_table">
       <x-table :cell-bordered="false">
         <thead>
@@ -24,7 +24,6 @@
         </tbody>
       </x-table>
     </div>
-
   </div>
 </template>
 
@@ -32,14 +31,11 @@
 
 export default {
   created() { },
-  mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight;
-  },
+  mounted() { },
   computed: {},
   components: {},
   data() {
     return {
-      winTop: 0, // 自动固定时距离顶部的距离
       searchValue: '', // 搜索的值
       incoicList: [{
         date: '2018-06-01',

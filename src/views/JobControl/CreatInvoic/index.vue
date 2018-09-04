@@ -1,6 +1,6 @@
 <!-- 进销存录入 -->
 <template>
-  <div>
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <group gutter='0'>
       <datetime v-model="dataValue" @on-change="changeValue" title="日期:" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
       <x-input title='进货:' v-model="stockValue" text-align='left' type='number'></x-input>
@@ -29,18 +29,22 @@
     <div class="confirm_button">
       <x-button :show-loading="loginLoading" text="确定" @click.native="confirmClick"></x-button>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    // 导航栏高度
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       imgList: [{
         src: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',
         msrc: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',

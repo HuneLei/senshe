@@ -1,6 +1,6 @@
 <!-- 留言详情 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <!-- 森舍回复 * 留言内容 -->
     <div class="leave_smg_div" v-for="(item, index) in messageList" :key="index">
       <div class="msg_content">

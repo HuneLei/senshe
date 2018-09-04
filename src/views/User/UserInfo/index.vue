@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <div class="message_group">
       <!-- 用户基本信息 -->
       <group gutter='0'>
@@ -86,16 +86,6 @@ export default {
       console.log(`我要去的是${pathname}`);
       this.$router.push(`/User/${pathname}`);
     },
-    // 每当向上滑动的时候就让页数加1
-    infinite(done) {
-      console.log('done', done);
-      done(true)
-    },
-    // 这是向下滑动的时候请求最新的数据
-    refresh(done) {
-      console.log('done', done);
-      done(true)
-    }
   },
 };
 </script>

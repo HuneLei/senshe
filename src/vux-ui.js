@@ -183,7 +183,6 @@ Vue.prototype.$countHeight = (array) => {
     const item = data[i];
     try {
       const $e = document.querySelector(item);
-      console.log('$e', $e)
       if ($e !== null) {
         h += $e.clientHeight;
       }

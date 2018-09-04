@@ -1,11 +1,13 @@
 <!-- 顶部导航组件 -->
 <template>
   <div class="tab_head" :style="`top:${immersed}px`">
+    <!-- 导航顶部类型 -->
     <div v-if="headIndex == 0">
       <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
         <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
       </x-header>
     </div>
+    <!-- 带tab切换导航顶部类型 -->
     <div v-if="headIndex == 1" class="incoic_item">
       <x-header id="header" :line-width=50 title="slot:overwrite-title" :left-options="{backText: ''}">
         <div slot="overwrite-title">
@@ -17,11 +19,10 @@
         </div>
       </x-header>
     </div>
+    <!-- tab页面切换组件 -->
     <div v-if="headIndex == 2">
-      <!-- tab页面切换组件 -->
       <tab-swit id='data_center_container' :winHeight="winHeight" :initIndex="initIndex" :tabList="tabList" @index-change="indexChange">
         <div v-for="(item, index) in tabList" :slot="item.slot" :key="index" class="my_index_scroll">
-          <!-- router链接 -->
           <component :is="item.slot"></component>
         </div>
       </tab-swit>
@@ -39,10 +40,6 @@ export default {
     immersed() {
       return window.immersed
     },
-    // // 屏幕高度
-    // winHeight() {
-    //   return this.$store.getWinHeight
-    // }
   },
   components: {
     myGoods,
@@ -94,9 +91,9 @@ export default {
     };
   },
   methods: {
+    // tab页面切换的时候触发
     indexChange(e) {
       console.log('e', e);
-      // this.winHeight = this.$countHeight(['.weui-tabbar', '.vux-tab']) - window.immersed;
     },
     // 点击右侧按钮时候触发
     rightClick(e) {
@@ -126,6 +123,10 @@ export default {
   margin-bottom: 6px;
 }
 
+/* tab选中时候的class */
+.incoic_item .tab_active {
+  font-size: 19px !important;
+}
 /* 顶部导航样式 */
 .tab_head {
   position: fixed;

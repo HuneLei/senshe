@@ -1,6 +1,6 @@
 <!-- 进销存查询 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <group gutter='0'>
       <cell v-for="(item, index) in indexList" :key="index" :title="item.name" is-link @click.native="CellClick(item.id)"></cell>
     </group>
@@ -31,6 +31,54 @@ export default {
       }, {
         name: '福牌阿胶(250g)',
         id: 4
+      }, {
+        name: '爱捷康（感冒药）(20粒)',
+        id: 5
+      }, {
+        name: '红霉素眼膏(0.5%*2g)',
+        id: 6
+      }, {
+        name: '伏格列波糖(15粒*2板)',
+        id: 7
+      }, {
+        name: '白云山糖(2.5g*15片)',
+        id: 8
+      }, {
+        name: '爱捷康（感冒药）(20粒)',
+        id: 5
+      }, {
+        name: '红霉素眼膏(0.5%*2g)',
+        id: 6
+      }, {
+        name: '伏格列波糖(15粒*2板)',
+        id: 7
+      }, {
+        name: '白云山糖(2.5g*15片)',
+        id: 8
+      }, {
+        name: '爱捷康（感冒药）(20粒)',
+        id: 5
+      }, {
+        name: '红霉素眼膏(0.5%*2g)',
+        id: 6
+      }, {
+        name: '伏格列波糖(15粒*2板)',
+        id: 7
+      }, {
+        name: '白云山糖(2.5g*15片)',
+        id: 8
+      }, {
+        name: '爱捷康（感冒药）(20粒)',
+        id: 5
+      }, {
+        name: '红霉素眼膏(0.5%*2g)',
+        id: 6
+      }, {
+        name: '伏格列波糖(15粒*2板)',
+        id: 7
+      }, {
+        name: '白云山糖(2.5g*15片)',
+        id: 8
       }, {
         name: '爱捷康（感冒药）(20粒)',
         id: 5

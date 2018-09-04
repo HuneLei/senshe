@@ -1,6 +1,6 @@
 <!-- 客户规划三级 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
     <group gutter='0'>
       <cell title="通用名" class="common_name">
         <span class="client_type">客户类型</span>
@@ -25,6 +25,30 @@ export default {
     return {
       winTop: 0, // 导航栏高度
       cellList: [
+        { id: '1', name: '强力枇杷膏', value: '商业' },
+        { id: '2', name: '强力枇杷膏', value: '商业' },
+        { id: '3', name: '强力枇杷膏', value: '商业' },
+        { id: '4', name: '强力枇杷膏', value: '商业' },
+        { id: '1', name: '强力枇杷膏', value: '商业' },
+        { id: '2', name: '强力枇杷膏', value: '商业' },
+        { id: '3', name: '强力枇杷膏', value: '商业' },
+        { id: '4', name: '强力枇杷膏', value: '商业' },
+        { id: '1', name: '强力枇杷膏', value: '商业' },
+        { id: '2', name: '强力枇杷膏', value: '商业' },
+        { id: '3', name: '强力枇杷膏', value: '商业' },
+        { id: '4', name: '强力枇杷膏', value: '商业' },
+        { id: '1', name: '强力枇杷膏', value: '商业' },
+        { id: '2', name: '强力枇杷膏', value: '商业' },
+        { id: '3', name: '强力枇杷膏', value: '商业' },
+        { id: '4', name: '强力枇杷膏', value: '商业' },
+        { id: '1', name: '强力枇杷膏', value: '商业' },
+        { id: '2', name: '强力枇杷膏', value: '商业' },
+        { id: '3', name: '强力枇杷膏', value: '商业' },
+        { id: '4', name: '强力枇杷膏', value: '商业' },
+        { id: '1', name: '强力枇杷膏', value: '商业' },
+        { id: '2', name: '强力枇杷膏', value: '商业' },
+        { id: '3', name: '强力枇杷膏', value: '商业' },
+        { id: '4', name: '强力枇杷膏', value: '商业' },
         { id: '1', name: '强力枇杷膏', value: '商业' },
         { id: '2', name: '强力枇杷膏', value: '商业' },
         { id: '3', name: '强力枇杷膏', value: '商业' },

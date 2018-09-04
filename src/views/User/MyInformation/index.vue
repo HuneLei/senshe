@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;" @click="clickInfo(index)">
       <div :class="`infor_icon ${!item.type || 'infor_icon_yes'}`">
         <span :class="`info_icon iconfont ${item.type ? 'icon-xinfeng1' : 'icon-xinfeng'}`"></span>
