@@ -10,9 +10,13 @@
 
 <script>
 
+import dateCenter from '../../../api/dateCenter';
+
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.listcount();
+  },
   computed: {},
   components: {},
   data() {
@@ -37,6 +41,16 @@ export default {
     };
   },
   methods: {
+    // 我的客户统计
+    listcount() {
+      dateCenter.listcount().then((res) => {
+        console.log('res', res)
+        this.clientList[0].amount = res.data.oneCustomer;
+        this.clientList[1].amount = res.data.tweCustomer;
+        this.clientList[2].amount = res.data.threeCustomer;
+        console.log('clientList', this.clientList)
+      });
+    },
     // 去相应的客户页面
     goClient(data) {
       console.log(`我点击了${data}`)

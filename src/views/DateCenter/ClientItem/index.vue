@@ -1,6 +1,6 @@
 <!-- 客户详情 -->
 <template>
-  <div>
+  <scroller :style="`margin-top: ${winTop}px;`">
     <group gutter='0'>
       <cell title="名称：">
         <div slot="title">
@@ -24,14 +24,16 @@
         <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
       </cell>
     </group>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {

@@ -37,7 +37,7 @@ export default {
         myMessage: {
           name: '我的留言',
           path: 'myMessage',
-          text: '99'
+          text: '1'
         },
         myInformation: {
           name: '我的信息',
@@ -105,6 +105,8 @@ export default {
 /* badge居中显示 */
 .message_group .badge-value {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 去掉cell组件的前后边框 */

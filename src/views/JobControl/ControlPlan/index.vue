@@ -1,6 +1,6 @@
 <!-- 客户规划 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <div class="my_index">
       <div class="index_view vux-1px-b">
         <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
@@ -93,6 +93,16 @@ export default {
     CellClick(id) {
       console.log('id', id);
       this.$router.push(`/JobControl/ControlPlanList?id=${id}`);
+    },
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      console.log('done', done);
+      done(true)
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      console.log('done', done);
+      done(true)
     }
   },
 };

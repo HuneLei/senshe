@@ -16,18 +16,20 @@ const setConfig = (base) => {
   authHost = base.SSO_SERVER || `${location.protocol}//${location.host}/`;
 
   // 开发线上环境 (develop)
-  if (process.env.NODE_ENV && process.env.NODE_ENV === 'develop') {
-    apiHost = 'http://api.develop.iyaoling.com/';
-    uploadHost = 'http://api.develop.iyaoling.com/manage/aliyun/upload';
-    socketUrl = 'api.develop.iyaoling.com'; // socket地址
-  }
+  // if (process.env.NODE_ENV && process.env.NODE_ENV === 'develop') {
+  //   apiHost = 'http://api.develop.iyaoling.com/';
+  //   uploadHost = 'http://api.develop.iyaoling.com/manage/aliyun/upload';
+  //   socketUrl = 'api.develop.iyaoling.com'; // socket地址
+  // }
 
-  // 生产环境 （master）
+  // // 生产环境 （master）
   if (process.env.NODE_ENV && process.env.NODE_ENV === 'master') {
-    apiHost = 'http://api.master.iyaoling.com/';
+    // apiHost = 'http://172.18.91.113:9898/';
+    apiHost = `${location.protocol}//${location.host}/api/`;
     uploadHost = 'http://api.master.iyaoling.com/manage/aliyun/upload';
     socketUrl = 'api.master.iyaoling.com'; // socket地址
   }
+  console.log('apiHost', apiHost);
 };
 
 const baseConfig = 'baseConfig';

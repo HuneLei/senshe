@@ -3,6 +3,7 @@ const state = {
   winHeight: 0, // tab切换页的高度
   enteAnima: 'fadeInRight faster', // 进来时候的动画
   leaveAnima: 'fadeOutLeft faster', // 出去时候的动画
+  defaultIndex: 0, // 默认选中的tab
 };
 
 const getters = {
@@ -10,6 +11,7 @@ const getters = {
   getWinHeight: (state) => state.winHeight,
   getEnteAnima: (state) => state.enteAnima,
   getLeaveAnima: (state) => state.leaveAnima,
+  getDefaultIndex: (state) => state.defaultIndex
 };
 
 const actions = {};
@@ -26,6 +28,9 @@ const mutations = {
   },
   updateLeaveAnima(state, anima) {
     state.leaveAnima = anima;
+  },
+  updateDefaultIndex(state, index) {
+    state.defaultIndex = index;
   }
 };
 

@@ -119,6 +119,27 @@ video {
   width: 100%;
   z-index: 9999;
   display: none;
+  color: #ffffff;
   position: fixed;
   background-color: #07BC99;
+}
+
+/* 搜索组件样式 */
+.weui-search-bar__form:after {
+  background: #F8F8F8 !important;
+  border-radius: 20px !important;
+  border: 0px solid #E6E6EA !important;
+}
+
+.weui-search-bar__form {
+  background-color: #F8F8F8 !important;
+}
+
+.weui-search-bar__label {
+  border-radius: 60px !important;
+}
+
+.weui-search-bar__box {
+  background: #FFFFFF !important;
+  border-radius: 20px !important;
 }

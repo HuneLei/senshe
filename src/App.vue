@@ -26,7 +26,7 @@ export default {
 
 /* icon size设置 */
 .icon {
-  font-size: 18px /*px*/;
+  font-size: 20px /*px*/;
 }
 
 // tab切换页icon设置
@@ -128,5 +128,19 @@ export default {
 }
 ._v-container > ._v-content > .loading-layer {
   font-size: 12px !important;
+}
+
+// 搜索组件样式
+.weui-search-bar {
+  padding: 10px 15px !important;
+}
+.weui-icon-search {
+  font-size: 15px !important;
+}
+.weui-search-bar__label span {
+  font-size: 15px !important;
+}
+.weui-search-bar__box .weui-search-bar__input {
+  font-size: 14px !important;
 }
 </style>

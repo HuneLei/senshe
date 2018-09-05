@@ -7,19 +7,21 @@ import axios from 'axios';
 import config from '../config';
 
 const instance = axios.create({
+  // baseURL: 'https://code.yuewanwan.net/mobile/product/list?page=0&size=10&access_token=1ac80b36-f129-43c4-957d-0f3052f5cf6b',
   baseURL: config.apiHost,
   withCredentials: true,
   params: {
-    access_token: config.getToken(), // 初始化params参数
+    // access_token: config.getToken(), // 初始化params参数
   },
 });
 
 instance.interceptors.request.use((request) => {
   const axiosRequest = {
     ...request,
+    headers: {},
     params: {
       ...request.params,
-      access_token: config.getToken(),
+      // access_token: config.getToken(),
     },
   };
   return axiosRequest;
@@ -45,3 +47,5 @@ instance.interceptors.response.use(
     return Promise.reject(error)
   }
 );
+
+export default instance;

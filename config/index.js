@@ -17,7 +17,15 @@ module.exports = {
     assetsRoot: assetsRoot,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-
+    proxyTable: {
+      '/api': {
+        target: 'http://172.18.91.113:9898',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '/',
+        },
+      },
+    },
     /**
      * Source Maps
      */
@@ -47,7 +55,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://api.develop.iyaoling.com/',
+        target: 'http://172.18.91.113:9898',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/',
@@ -56,7 +64,8 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    // host: '172.18.160.204', // can be overwritten by process.env.HOST
+    // host: 'localhost',
     port: 9090, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true, // 运行后项目自启
     errorOverlay: true,

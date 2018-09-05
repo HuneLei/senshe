@@ -88,7 +88,7 @@ export default {
     CellClick(id) {
       console.log('id', id);
       this.$router.push(`/DateCenter/IndexItem?id=${id}`);
-    }
+    },
   },
 };
 </script>

@@ -1,27 +1,32 @@
 <!-- 修改密码 -->
 <template>
-  <div class="edit_password">
-    <!-- 输入密码 -->
-    <group gutter='0' style="width: 100%">
-      <x-input type="password" placeholder="请输入新密码" v-model="newPassWord"></x-input>
-      <x-input type="password" placeholder="再次输入新密码" v-model="ageinPassWord"></x-input>
-    </group>
-    <!-- 确认提交 -->
-    <div class="submit_button">
-      <x-button :show-loading="submitLoading" text="确认提交" @click.native="submitClick"></x-button>
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
+    <div class="edit_password">
+      <!-- 输入密码 -->
+      <group gutter='0' style="width: 100%">
+        <x-input type="password" placeholder="请输入新密码" v-model="newPassWord"></x-input>
+        <x-input type="password" placeholder="再次输入新密码" v-model="ageinPassWord"></x-input>
+      </group>
+      <!-- 确认提交 -->
+      <div class="submit_button">
+        <x-button :show-loading="submitLoading" text="确认提交" @click.native="submitClick"></x-button>
+      </div>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+  },
   computed: {},
   components: {},
   data() {
     return {
+      winTop: 0, // 导航栏高度
       newPassWord: '123', // 新密码
       ageinPassWord: '134', // 再次输入的新密码
       submitLoading: false, // 提交时候的loading

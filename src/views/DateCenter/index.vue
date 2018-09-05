@@ -1,6 +1,6 @@
 <!-- 数据中心 -->
 <template>
-  <div class="data_center" :style="`margin-top: ${winTop}px`">
+  <div class="data_center" ref="dataCenter">
     <keep-alive>
       <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
         <router-view></router-view>
@@ -10,15 +10,14 @@
 </template>
 
 <script>
-import myGoods from './MyGoods/index.vue'; // 我的商品
-import myClient from './MyClient/index.vue'; // 我的客户
-import myIndex from './MyIndex/index.vue'; // 我的指标
 
 export default {
   mounted() {
     // 导航栏高度
-    this.winTop = document.querySelector('.vux-tab-container').clientHeight + window.immersed;
-    console.log("this.$countHeight(['.weui-tabbar', '.vux-tab'])", this.$countHeight(['.weui-tabbar', '.vux-tab']))
+    const that = this;
+    this.$nextTick(() => {
+      that.$refs.dataCenter.style.marginTop = document.querySelector('.vux-tab-container').clientHeight + window.immersed;
+    })
   },
   computed: {
     isTabSwit() {
@@ -33,28 +32,13 @@ export default {
       return this.$store.getters.getEnteAnima;
     }
   },
-  components: {
-    myIndex,
-    myGoods,
-    myClient,
-  },
+  components: {},
   data() {
     return {
-      initIndex: 0, // 导航栏默认选项
       winTop: 0, // 导航栏高度
-      // tab页面切换
-      tabList: [
-        { name: '我的商品', slot: 'myGoods', comslot: 'MyClient' },
-        { name: '我的客户', slot: 'myClient', comslot: 'MyIndex' },
-        { name: '我的指标', slot: 'myIndex', comslot: 'MyIndex' }
-      ],
     };
   },
-  methods: {
-    indexChange(e) {
-      console.log('e', e);
-    }
-  },
+  methods: {},
 };
 </script>
 

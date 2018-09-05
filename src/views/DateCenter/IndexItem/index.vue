@@ -1,6 +1,6 @@
 <!-- 指标详情 -->
 <template>
-  <div class="index_class">
+  <scroller class="index_class" :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <search :top="`${winTop}px`" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
     <group gutter='0'>
       <x-table :cell-bordered="false" class="index_table">
@@ -22,7 +22,7 @@
         </tbody>
       </x-table>
     </group>
-  </div>
+  </scroller>
 </template>
 
 <script>
@@ -30,7 +30,7 @@
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight;
+    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
   },
   computed: {},
   components: {},
@@ -73,11 +73,106 @@ export default {
           type: '连锁流向',
           target: 5000,
           schedule: 25.12
+        },
+        {
+          id: 3,
+          name: '爱捷康（感冒药）(20粒)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 4,
+          name: '清喉利咽颗粒(10g*10袋)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 5,
+          name: '复方枣仁胶囊(0.4g*6粒)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 3,
+          name: '爱捷康（感冒药）(20粒)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 4,
+          name: '清喉利咽颗粒(10g*10袋)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 5,
+          name: '复方枣仁胶囊(0.4g*6粒)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 3,
+          name: '爱捷康（感冒药）(20粒)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 4,
+          name: '清喉利咽颗粒(10g*10袋)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 5,
+          name: '复方枣仁胶囊(0.4g*6粒)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 3,
+          name: '爱捷康（感冒药）(20粒)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 4,
+          name: '清喉利咽颗粒(10g*10袋)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
+        },
+        {
+          id: 5,
+          name: '复方枣仁胶囊(0.4g*6粒)',
+          type: '连锁流向',
+          target: 5000,
+          schedule: 25.12
         }
       ], // 列表
     };
   },
-  methods: {},
+  methods: {
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      console.log('done', done);
+      done(true)
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      console.log('done', done);
+      done(true)
+    }
+  },
 };
 </script>
 

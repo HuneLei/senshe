@@ -1,6 +1,6 @@
 <!-- 进销存列表 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
+  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <group gutter='0'>
       <cell title="通用名" class="common_name">
         <span class="client_type">客户类型</span>
@@ -48,6 +48,16 @@ export default {
     CellClick(id) {
       console.log('id', id);
       this.$router.push(`/JobControl/CreatInvoicItem?id=${id}`);
+    },
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      console.log('done', done);
+      done(true)
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      console.log('done', done);
+      done(true)
     }
   },
 };

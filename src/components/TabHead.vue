@@ -21,7 +21,7 @@
     </div>
     <!-- tab页面切换组件 -->
     <div v-if="headIndex == 2">
-      <tab-swit id='data_center_container' :winHeight="winHeight" :initIndex="initIndex" :tabList="tabList" @index-change="indexChange">
+      <tab-swit id='data_center_container' :initIndex="defaultIndex" :tabList="tabList" @index-change="indexChange" ref="swiper">
         <div v-for="(item, index) in tabList" :slot="item.slot" :key="index" class="my_index_scroll">
           <component :is="item.slot"></component>
         </div>
@@ -40,6 +40,10 @@ export default {
     immersed() {
       return window.immersed
     },
+    // 选中的tab
+    defaultIndex() {
+      return this.$store.getters.getDefaultIndex
+    }
   },
   components: {
     myGoods,
@@ -71,17 +75,12 @@ export default {
     headIndex: {
       type: Number,
       default: 0,
-    }
+    },
   },
   created() { },
-  mounted() {
-    // 屏幕高度
-    this.winHeight = this.$countHeight(['.weui-tabbar', '.tab_head']) - window.immersed;
-  },
+  mounted() { },
   data() {
     return {
-      winHeight: 0, // 屏幕高度
-      initIndex: 0, // 导航栏默认选项
       // tab页面切换
       tabList: [
         { name: '我的商品', slot: 'myGoods', comslot: 'MyClient' },
@@ -94,6 +93,7 @@ export default {
     // tab页面切换的时候触发
     indexChange(e) {
       console.log('e', e);
+      this.$store.commit('updateDefaultIndex', e)
     },
     // 点击右侧按钮时候触发
     rightClick(e) {
