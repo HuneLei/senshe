@@ -29,6 +29,10 @@ export default {
   font-size: 20px /*px*/;
 }
 
+.icon-login {
+  font-size: 17px;
+}
+
 // tab切换页icon设置
 .tab_icon {
   font-size: 25px /*px*/;

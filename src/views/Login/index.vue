@@ -8,8 +8,8 @@
     </div>
     <!-- 登录手机和密码 -->
     <div class="login_input">
-      <x-input type="tel" :title='`<span class="icon iconfont icon-shouji"> 手机</span>`' v-model="phone_value" show-clear></x-input>
-      <x-input type="password" :title='`<span class="icon iconfont icon-mima icon"> 密码</span>`' v-model="passwd_value" show-clear></x-input>
+      <x-input type="tel" :title='`<span class="icon-login iconfont icon-shouji"> 手机</span>`' v-model="phone_value" show-clear></x-input>
+      <x-input type="password" :title='`<span class="icon-login iconfont icon-mima"> 密码</span>`' v-model="passwd_value" show-clear></x-input>
     </div>
     <!-- 登录操作 -->
     <div class="login_button">
@@ -189,4 +189,3 @@ export default {
   font-size: 14px;
 }
 </style>
-
