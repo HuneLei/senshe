@@ -26,11 +26,19 @@
 </template>
 
 <script>
+import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
   mounted() {
     this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    const type = this.$route.query.type;
+    const id = this.$route.query.id;
+    if (type === '1') {
+      this.yearItem(id)
+    } else {
+      this.monthItem(id)
+    }
   },
   computed: {},
   components: {},
@@ -162,11 +170,28 @@ export default {
     };
   },
   methods: {
+    // 年度指标详情
+    yearItem(id) {
+      dateCenter.yearitem(id).then((res) => {
+        const data = res.data;
+        console.log('data', data);
+      })
+    },
+
+    // 月度指标详情
+    monthItem(id) {
+      dateCenter.monthitem(id).then((res) => {
+        const data = res.data;
+        console.log('data', data);
+      })
+    },
+
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
       console.log('done', done);
       done(true)
     },
+
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
       console.log('done', done);

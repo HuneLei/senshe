@@ -9,7 +9,6 @@
 </template>
 
 <script>
-
 import dateCenter from '../../../api/dateCenter';
 
 export default {
@@ -26,17 +25,17 @@ export default {
         amount: 50,
         title: '一级商',
         color: '#07bc99',
-        path: '1',
+        path: '100',
       }, {
         amount: 123,
         title: '二级连锁',
         color: '#3477E5',
-        path: '2',
+        path: '200',
       }, {
         amount: 4565,
         title: '终端门店',
         color: '#E68A07',
-        path: '3',
+        path: '300',
       }]
     };
   },
@@ -45,10 +44,10 @@ export default {
     listcount() {
       dateCenter.listcount().then((res) => {
         console.log('res', res)
-        this.clientList[0].amount = res.data.oneCustomer;
-        this.clientList[1].amount = res.data.tweCustomer;
-        this.clientList[2].amount = res.data.threeCustomer;
-        console.log('clientList', this.clientList)
+        const data = res.data;
+        this.clientList[0].amount = data.oneCustomer;
+        this.clientList[1].amount = data.tweCustomer;
+        this.clientList[2].amount = data.threeCustomer;
       });
     },
     // 去相应的客户页面

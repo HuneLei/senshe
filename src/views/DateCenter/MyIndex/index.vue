@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
@@ -82,12 +83,32 @@ export default {
   methods: {
     // 点击切换指标时候
     IndexClick(index) {
+      console.log('index', index)
       this.selectIndex = index
+      if (index === 1) {
+        this.yearList()
+      } else {
+        this.monthList()
+      }
+    },
+    // 年指标列表
+    yearList(index) {
+      dateCenter.yearlist().then((res) => {
+        const data = res.data;
+        console.log('data', data);
+      })
+    },
+    // 月指标列表
+    monthList(index) {
+      dateCenter.monthlist().then((res) => {
+        const data = res.data;
+        console.log('data', data);
+      })
     },
     // 点击指标查看详情
     CellClick(id) {
       console.log('id', id);
-      this.$router.push(`/DateCenter/IndexItem?id=${id}`);
+      this.$router.push(`/DateCenter/IndexItem?id=${id}&type=${this.selectIndex}`);
     },
   },
 };

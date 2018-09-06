@@ -21,11 +21,16 @@
 </template>
 
 <script>
+import user from '../../../api/user';
 
 export default {
   created() { },
   mounted() {
     this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    this.userId = this.$route.query.id;
+    this.userinfo(this.$route.query.id, (data) => {
+      console.log('data', data)
+    })
   },
   computed: {},
   components: {},
@@ -86,6 +91,13 @@ export default {
       console.log(`我要去的是${pathname}`);
       this.$router.push(`/User/${pathname}`);
     },
+    // 获取用户信息
+    userinfo(id, callBack) {
+      user.userinfo(id).then((res) => {
+        const data = res.data;
+        callBack(data)
+      });
+    }
   },
 };
 </script>

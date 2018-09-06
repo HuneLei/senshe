@@ -24,13 +24,14 @@
 
 <script>
 import config from '../../config';
+import login from '../../api/login';
 
 let that = this;
 export default {
   beforeRouteEnter(to, from, next) {
     const token = config.getToken();
     console.log('token', token)
-    if (token) next({ path: '/User', replace: true });
+    // if (token) next({ path: '/User', replace: true });
     next();
   },
   created() {
@@ -76,9 +77,16 @@ export default {
       //     return;
       //   }
       // this.$router.replace('/User?id=1');
-      document.getElementById('head_state').style.backgroundColor = '#07BC99'
-      that.$router.push('/User?id=1');
-      config.setToken('Hune');
+      this.userLogin(this.phone_value, this.passwd_value, (data) => {
+        console.log('data', data)
+        if (!data.id) {
+          this.$vux.toast.text(data, 'middle');
+          return;
+        }
+        document.getElementById('head_state').style.backgroundColor = '#07BC99'
+        that.$router.push(`/User?id=${data.id}`);
+        config.setToken('Hune');
+      })
       // })
     },
     // 校验密码是否正确
@@ -91,6 +99,13 @@ export default {
         }
         callBack(true)
       }, 1000);
+    },
+    // 登录操作
+    userLogin(username, password, callBack) {
+      login.login(username, password).then((res) => {
+        const data = res.data;
+        callBack(data)
+      });
     },
     // 忘记密码
     forgetPass() {
