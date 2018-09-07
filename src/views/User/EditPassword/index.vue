@@ -1,11 +1,11 @@
 <!-- 修改密码 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
+  <scroller ref="EditPassScroller">
     <div class="edit_password">
       <!-- 输入密码 -->
       <group gutter='0' style="width: 100%">
-        <x-input type="password" placeholder="请输入新密码" v-model="newPassWord"></x-input>
-        <x-input type="password" placeholder="再次输入新密码" v-model="ageinPassWord"></x-input>
+        <x-input type="password" placeholder="请输入新密码" v-model="form.newPassWord"></x-input>
+        <x-input type="password" placeholder="再次输入新密码" v-model="form.ageinPassWord"></x-input>
       </group>
       <!-- 确认提交 -->
       <div class="submit_button">
@@ -16,28 +16,48 @@
 </template>
 
 <script>
+import user from '../../../api/user';
 
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    // 屏幕高度设置
+    const that = this;
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.EditPassScroller.$el.style.marginTop = `${marginTop}px`
+      that.$refs.EditPassScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+    })
   },
   computed: {},
   components: {},
   data() {
     return {
       winTop: 0, // 导航栏高度
-      newPassWord: '123', // 新密码
-      ageinPassWord: '134', // 再次输入的新密码
+      form: {
+        id: '',
+        newPassWord: '',
+        ageinPassWord: '',
+      },
+      // newPassWord: '123', // 新密码
+      // ageinPassWord: '134', // 再次输入的新密码
       submitLoading: false, // 提交时候的loading
     };
   },
   methods: {
     // 确认提交
     submitClick() {
-      if (this.newPassWord !== this.ageinPassWord) {
-        this.$vux.toast.text('两次密码不一致', 'top');
+      if (this.form.newPassWord === '' || this.form.ageinPassWord === '') {
+        this.$vux.toast.text('请输入新秘密', 'middle');
+        return;
       }
+      if (this.form.newPassWord !== this.form.ageinPassWord) {
+        this.$vux.toast.text('两次密码不一致', 'middle');
+        return;
+      }
+      user.updatePwd(this.form).then((res) => {
+        console.log('res', res.data)
+      })
     }
   },
 };

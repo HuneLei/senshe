@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-  <div :style="`margin-top: ${winTop}px;`">
+  <div ref="UserInfo">
     <keep-alive>
       <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
         <!-- router链接 -->
@@ -11,12 +11,17 @@
 </template>
 
 <script>
+import user from '../../api/user';
 
 export default {
   created() { },
   mounted() {
+    const that = this;
     // 导航栏高度
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.UserInfo.style.marginTop = `${marginTop}px`;
+    })
   },
   computed: {
     // 离开时动画
@@ -30,11 +35,9 @@ export default {
   },
   components: {},
   data() {
-    return {
-      winTop: 0, // 导航栏高度
-    }
+    return {}
   },
-  methods: { },
+  methods: {},
 };
 </script>
 

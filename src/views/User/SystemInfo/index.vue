@@ -1,11 +1,11 @@
 <!-- 系统信息 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
+  <scroller ref="SysInfoScroller">
     <div class="leave_smg_div">
       <div class="msg_content">
         <div>
-          <span class="info_icon iconfont icon-xinfeng1"></span> {{systeminfo.title}}</div>
-        <div class="msg_time">{{systeminfo.time}}</div>
+          <span class="info_icon iconfont icon-xinfeng1"></span> 系统信息 </div>
+        <div class="msg_time">{{systeminfo.announcementTime | convertTime}}</div>
       </div>
       <div class="msg_text">{{systeminfo.content}}</div>
     </div>
@@ -13,26 +13,43 @@
 </template>
 
 <script>
+import user from '../../../api/user';
 
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    const that = this;
+    const id = this.$route.query.id;
+    // 获取详情
+    this.getSysInfoItem(id, (data) => {
+      if (data.code === 0) {
+        console.log('result', data.result)
+        that.systeminfo = data.result
+      }
+    })
+    // 屏幕高度设置
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.SysInfoScroller.$el.style.marginTop = `${marginTop}px`
+      that.$refs.SysInfoScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+    })
   },
   computed: {},
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
       // 系统信息
-      systeminfo: {
-        title: '系统信息',
-        time: '2018-05-25 19:00:30',
-        content: '系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息系统信息'
-      },
+      systeminfo: {},
     };
   },
-  methods: {},
+  methods: {
+    // 信息详情
+    getSysInfoItem(id, callBack) {
+      user.mobileItem(id).then((res) => {
+        callBack(res.data)
+      })
+    }
+  },
 };
 </script>
 

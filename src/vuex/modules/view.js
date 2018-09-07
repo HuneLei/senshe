@@ -4,6 +4,8 @@ const state = {
   enteAnima: 'fadeInRight faster', // 进来时候的动画
   leaveAnima: 'fadeOutLeft faster', // 出去时候的动画
   defaultIndex: 0, // 默认选中的tab
+  userInfo: {}, // 用户信息
+  userFlush: true // 是否刷新用户信息
 };
 
 const getters = {
@@ -11,12 +13,17 @@ const getters = {
   getWinHeight: (state) => state.winHeight,
   getEnteAnima: (state) => state.enteAnima,
   getLeaveAnima: (state) => state.leaveAnima,
-  getDefaultIndex: (state) => state.defaultIndex
+  getDefaultIndex: (state) => state.defaultIndex,
+  getUserInfo: (state) => state.userInfo,
+  getUserFlush: (state) => state.userFlush,
 };
 
 const actions = {};
 
 const mutations = {
+  updateUserFlush(state, flush) {
+    state.userFlush = flush;
+  },
   updateLoadingStatus(state, payload) {
     state.isLoading = payload.isLoading;
   },
@@ -31,6 +38,9 @@ const mutations = {
   },
   updateDefaultIndex(state, index) {
     state.defaultIndex = index;
+  },
+  updateUserInfo(state, data) {
+    state.userInfo = data;
   }
 };
 

@@ -231,7 +231,14 @@ function plusHeight() {
   }
 }
 
+import convert from './utils/convert'; //  常用方法
 import validator from './utils/validator'; //  数据校验
 import mobileNative from './utils/mobileNative'; //  手机共用方法
+
+// 定义全局过滤器
+Object.keys(convert).forEach(k => {
+  Vue.filter(k, convert[k])
+})
+
 window.validator = validator;
 window.mobileNative = mobileNative;

@@ -7,7 +7,6 @@ import axios from 'axios';
 import config from '../config';
 
 const instance = axios.create({
-  // baseURL: 'https://code.yuewanwan.net/mobile/product/list?page=0&size=10&access_token=1ac80b36-f129-43c4-957d-0f3052f5cf6b',
   baseURL: config.apiHost,
   withCredentials: true,
   params: {
@@ -30,11 +29,13 @@ instance.interceptors.request.use((request) => {
 instance.interceptors.response.use(
   (response) => {
     if (response.data.code !== 0 && response.data.code !== 20000 && response.data.code !== 401) {
-      Vue.$vux.toast.text(response.data.message, 'top');
+      Vue.$vux.toast.text(response.data.message, 'middle');
     }
-    // if (response.data.code === 401) {
-    //   config.removeToken();
-    // }
+    if (response.data.code === 401) {
+      config.removeToken();
+      console.log('Vue.$router', window.location.href)
+      window.location.href = '/'
+    }
     // if (response.data.code === 403) {
     //   Vue.$vux.toast.text(response.data.message, 'top');
     // }
@@ -43,7 +44,7 @@ instance.interceptors.response.use(
     // }
     return response;
   }, (error) => {
-    Vue.$vux.toast.text('系统出错', 'top');
+    Vue.$vux.toast.text('请检测网络', 'middle');
     return Promise.reject(error)
   }
 );

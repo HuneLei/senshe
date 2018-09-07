@@ -31,38 +31,16 @@ export default {
       return baseList[this.$route.path]
     },
   },
-  mounted() {
-    // 状态栏高度设置
-    // this.$plusHeight()
-    this.$store.commit('updateEnteAnima', 'slideInRight')
-    this.$store.commit('updateLeaveAnima', 'slideOutLeft')
-  },
+  mounted() { },
   data() {
-    return {
-      // tab页面切换
-      tabList: [{ name: '我的商品', slot: 'myGoods' }, { name: '我的客户', slot: 'myClient' }, { name: '我的指标', slot: 'myIndex' }],
-      headerName: '我的', // 导航标题
-      // 右边图标样式组
-      slotRight: [{
-        icon: 'iconfont icon-shouji',
-        name: 'shouji1'
-      }, {
-        icon: 'iconfont icon-shouji',
-        name: 'shouji2'
-      }]
-    };
+    return { };
   },
   methods: {
     // 点击右边图片时触发
     rightClick(e) {
-      console.log('this.baseList', this.baseList)
       console.log('我过来了', this.baseList.slotRight[e].path);
       this.$router.push({ path: this.baseList.slotRight[e].path });
     },
-    indexChange(e) {
-      console.log('e', this.baseList.tabList[e].path);
-      this.$router.push({ path: this.baseList.tabList[e].path });
-    }
   },
 };
 </script>

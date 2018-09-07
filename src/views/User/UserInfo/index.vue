@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
+  <scroller ref="InfoScroller">
     <div class="message_group">
       <!-- 用户基本信息 -->
       <group gutter='0'>
@@ -26,13 +26,40 @@ import user from '../../../api/user';
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    const that = this;
     this.userId = this.$route.query.id;
-    this.userinfo(this.$route.query.id, (data) => {
-      console.log('data', data)
+    // 检测是否有保存过用户信息
+    if (!Object.keys(this.UserInfo).length || this.UserFlush) {
+      this.userinfo(this.$route.query.id, (data) => {
+        console.log('data', data);
+        if (data.code !== 0) {
+          this.$vux.toast.text(data.message, 'middle');
+          return;
+        }
+        this.pushinfo(data.result)
+        this.$store.commit('updateUserInfo', data.result);
+        this.$store.commit('updateUserFlush', false)
+      })
+    } else {
+      this.pushinfo(this.UserInfo)
+    }
+    // 屏幕高度设置
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.InfoScroller.$el.style.marginTop = `${marginTop}px`
+      that.$refs.InfoScroller.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar']) - window.immersed}px`
     })
   },
-  computed: {},
+  computed: {
+    // 用户信息
+    UserInfo() {
+      return this.$store.getters.getUserInfo
+    },
+    // 是否刷新
+    UserFlush() {
+      return this.$store.getters.getUserFlush
+    }
+  },
   components: {},
   data() {
     return {
@@ -42,7 +69,7 @@ export default {
         myMessage: {
           name: '我的留言',
           path: 'myMessage',
-          text: '1'
+          text: ''
         },
         myInformation: {
           name: '我的信息',
@@ -57,29 +84,29 @@ export default {
       },
       // 用户基本信息
       userForm: {
-        loginName: {
+        username: {
           name: '登录名',
-          value: '扒鸡来了'
+          value: ''
         },
-        realName: {
+        name: {
           name: '真实姓名',
-          value: '扒鸡又来了'
+          value: ''
         },
         phone: {
           name: '手机号',
-          value: '18124525656'
+          value: ''
         },
-        company: {
+        companyName: {
           name: '所属分公司',
-          value: '扒鸡来了大公司'
+          value: ''
         },
-        postType: {
+        businessType: {
           name: '岗位类型',
-          value: '推广'
+          value: ''
         },
-        postName: {
+        jobName: {
           name: '岗位名称',
-          value: '推广代表'
+          value: ''
         },
       }
     };
@@ -97,6 +124,14 @@ export default {
         const data = res.data;
         callBack(data)
       });
+    },
+    // 给用户信息赋值
+    pushinfo(data) {
+      Object.keys(data).forEach((item) => {
+        if (Object.prototype.hasOwnProperty.call(this.userForm, item)) {
+          this.userForm[item].value = data[item]
+        }
+      })
     }
   },
 };

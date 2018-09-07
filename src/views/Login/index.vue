@@ -1,6 +1,6 @@
 <!-- 登录页面 -->
 <template>
-  <div class="login_center" :style="`height:${WinHeight}px`">
+  <div class="login_center" ref="LoginCenter">
     <!-- 登录logo和文字 -->
     <div class="login_logo">
       <img src="https://wx.qlogo.cn/mmopen/vi_32/1M0IXDDhAU1o6tQbJ4OF5aZ6D4ibhpTe4QvGUh250P0yZzdLalBicfeoicLbSjFo7unVpbrWvQ8Gkr8R53Sibwhs1g/132" alt="">
@@ -35,15 +35,17 @@ export default {
     next();
   },
   created() {
-    document.getElementById('head_state').style.backgroundColor = '#f8f8f8'
     // 保存this的值和赋值当前页面
     that = this;
   },
-  computed: {
-    // 屏幕高度
-    WinHeight: () => that.$countHeight()
+  computed: {},
+  mounted() {
+    // 屏幕高度设置
+    this.$nextTick(() => {
+      that.$refs.LoginCenter.style.height = `${that.$countHeight()}px`;
+      document.getElementById('head_state').style.backgroundColor = '#f8f8f8'
+    })
   },
-  mounted() { },
   components: {},
   data() {
     return {
@@ -57,19 +59,19 @@ export default {
     loginClick() {
       console.log('登录操作');
       // 校验手机号
-      // if (!this.phone_value) {
-      //   this.$vux.toast.text('请输入手机号码', 'middle');
-      //   return;
-      // }
+      if (!this.phone_value) {
+        this.$vux.toast.text('请输入手机号码', 'middle');
+        return;
+      }
       // if (!window.validator.regPhone.test(this.phone_value)) {
       //   this.$vux.toast.text('请输入正确的手机号', 'middle');
       //   return;
       // }
       // 校验密码
-      // if (!this.passwd_value) {
-      //   this.$vux.toast.text('请输入密码', 'middle');
-      //   return;
-      // }
+      if (!this.passwd_value) {
+        this.$vux.toast.text('请输入密码', 'middle');
+        return;
+      }
       // this.checkPass(this.passwd_value, (state) => {
       //   this.loginLoading = false;
       //   if (!state) {
@@ -77,12 +79,16 @@ export default {
       //     return;
       //   }
       // this.$router.replace('/User?id=1');
+      this.loginLoading = true;
+      // that.$router.push('/User?');
       this.userLogin(this.phone_value, this.passwd_value, (data) => {
         console.log('data', data)
-        if (!data.id) {
-          this.$vux.toast.text(data, 'middle');
+        if (data.code !== 0) {
+          this.$vux.toast.text(data.message, 'middle');
           return;
         }
+        this.$store.commit('updateUserInfo', data.result);
+        this.$store.commit('updateUserFlush', false)
         document.getElementById('head_state').style.backgroundColor = '#07BC99'
         that.$router.push(`/User?id=${data.id}`);
         config.setToken('Hune');
@@ -91,7 +97,6 @@ export default {
     },
     // 校验密码是否正确
     checkPass(value, callBack) {
-      this.loginLoading = true;
       setTimeout(() => {
         if (value !== '123') {
           callBack(false)
@@ -103,8 +108,13 @@ export default {
     // 登录操作
     userLogin(username, password, callBack) {
       login.login(username, password).then((res) => {
-        const data = res.data;
-        callBack(data)
+        this.loginLoading = false;
+        if (res) {
+          const data = res.data;
+          callBack(data)
+        }
+      }, (error) => {
+        this.loginLoading = false;
       });
     },
     // 忘记密码

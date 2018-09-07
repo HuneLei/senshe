@@ -1,42 +1,63 @@
 <!-- 留言详情 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
-    <!-- 森舍回复 * 留言内容 -->
-    <div class="leave_smg_div" v-for="(item, index) in messageList" :key="index">
+  <scroller ref="LeaveMessScroller">
+    <!-- 留言内容 -->
+    <div class="leave_smg_div">
       <div class="msg_content">
-        <div>{{item.title}}</div>
-        <div class="msg_time">{{item.time}}</div>
+        <div>留言内容：</div>
+        <div class="msg_time">{{messageList.createTime | convertTime}}</div>
       </div>
-      <div class="msg_text">{{item.content}}</div>
+      <div class="msg_text" v-html="messageList.content"></div>
+    </div>
+    <!-- 森舍回复 -->
+    <div class="leave_smg_div" v-show="messageList.replyType == 200">
+      <div class="msg_content">
+        <div>森舍回复：</div>
+        <div class="msg_time">{{messageList.replyTime | convertTime}}</div>
+      </div>
+      <div class="msg_text" v-html="messageList.replyContent"></div>
     </div>
   </scroller>
 </template>
 
 <script>
+import user from '../../../api/user';
 
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    const that = this;
+    const id = this.$route.query.id;
+    // 获取详情
+    this.getMobileItem(id, (data) => {
+      if (data.code === 0) {
+        console.log('result', data.result)
+        that.messageList = data.result
+      }
+    })
+    // 屏幕高度设置
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.LeaveMessScroller.$el.style.marginTop = `${marginTop}px`
+      that.$refs.LeaveMessScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+    })
   },
   computed: {},
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
       // 留言信息和回复
-      messageList: [{
-        title: '留言内容:',
-        time: '2018-05-25 19:00:30',
-        content: '这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言'
-      }, {
-        title: '森舍回复:',
-        time: '2018-05-25 19:00:30',
-        content: '这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言这是一条留言'
-      }],
+      messageList: {},
     };
   },
-  methods: {},
+  methods: {
+    // 留言详情
+    getMobileItem(id, callBack) {
+      user.msgitem(id).then((res) => {
+        callBack(res.data)
+      })
+    }
+  },
 };
 </script>
 

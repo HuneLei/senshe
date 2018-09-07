@@ -45,7 +45,7 @@ export default {
 
 // 信息图标icon设置
 .info_icon {
-  font-size: 19px /*px*/;
+  font-size: 20px /*px*/;
 }
 
 #app {
@@ -147,4 +147,5 @@ export default {
 .weui-search-bar__box .weui-search-bar__input {
   font-size: 14px !important;
 }
+
 </style>

@@ -1,87 +1,56 @@
 <!-- 我的信息 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
-    <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;" @click="clickInfo(index)">
-      <div :class="`infor_icon ${!item.type || 'infor_icon_yes'}`">
-        <span :class="`info_icon iconfont ${item.type ? 'icon-xinfeng1' : 'icon-xinfeng'}`"></span>
+  <scroller ref="MyInfoScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+    <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;" @click="clickInfo(item.id)">
+      <!-- <div :class="`infor_icon ${item.releaseType == 100 || 'infor_icon_yes'}`">
+        <span :class="`info_icon iconfont ${item.releaseType == 200 ? 'icon-xinfeng1' : 'icon-xinfeng'}`"></span>
+      </div> -->
+      <div class="infor_icon">
+        <span class="info_icon iconfont icon-xinfeng"></span>
       </div>
       <div class="infor_content">
         <div class="system_infor">
           <div>系统信息</div>
-          <div class="system_time">{{item.time}}</div>
+          <div class="system_time">{{item.announcementTime | convertTime}}</div>
         </div>
-        <div class="system_text" :style="`color:${!item.type || '#999999'}`">{{item.text}}</div>
+        <!-- <div class="system_text" :style="`color:${item.releaseType == 100 || '#999999'}`">{{item.content}}</div> -->
+        <div class="system_text">{{item.content}}</div>
       </div>
     </div>
   </scroller>
 </template>
 
 <script>
+import user from '../../../api/user';
 
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    this.getMobileAnnt((data) => {
+      console.log('data', data.result)
+      if (data.code === 0) {
+        this.infoList = data.result
+        if (data.result.length === 0) {
+          this.noDataText = '没有更多数据';
+        }
+      }
+    })
+    // 屏幕高度设置
+    const that = this;
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.MyInfoScroller.$el.style.marginTop = `${marginTop}px`
+      that.$refs.MyInfoScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+    })
   },
   computed: {},
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
+      // 上拉加载信息提示
+      noDataText: '',
       // 信息列表
-      infoList: [{
-        type: 0,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }, {
-        type: 1,
-        time: '2018-05-03 19:00:20',
-        text: '这是一条后台发向前端的系统信息,请注意查收请注意查收'
-      }]
+      infoList: []
     };
   },
   methods: {
@@ -89,6 +58,13 @@ export default {
     clickInfo(index) {
       console.log(`我点击了这条消息${index}`);
       this.$router.push(`/User/systemInfo?id=${index}`);
+    },
+    // 获取留言信息
+    getMobileAnnt(callBack) {
+      user.mobileAnnt().then((res) => {
+        const data = res.data;
+        callBack(data)
+      });
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
