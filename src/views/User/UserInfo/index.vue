@@ -116,7 +116,7 @@ export default {
     goRouter(name) {
       const pathname = name;
       console.log(`我要去的是${pathname}`);
-      this.$router.push(`/User/${pathname}`);
+      this.$router.push(`/User/${pathname}?id=${this.$route.query.id}`);
     },
     // 获取用户信息
     userinfo(id, callBack) {

@@ -104,12 +104,21 @@ video {
 
 /* 上边框 */
 .border_top {
-  border-top: 1px solid #C7C7C7;
+  border-top: 1px solid #E2E2E2;
 }
 
 /* 下边框 */
 .border_bottom {
-  border-bottom: 1px solid #C7C7C7;
+  border-bottom: 1px solid #E2E2E2;
+}
+
+.weui-search-bar:after {
+  border-bottom: 1px solid #cccccc !important;
+}
+
+/* 全边框 */
+.border_all {
+  border: 1px solid #E2E2E2;
 }
 
 /* 状态栏 */
@@ -136,10 +145,25 @@ video {
 }
 
 .weui-search-bar__label {
-  border-radius: 60px !important;
+  border-radius: 35px !important;
 }
 
 .weui-search-bar__box {
+  border: 1px solid #E2E2E2 !important;
   background: #FFFFFF !important;
-  border-radius: 20px !important;
+}
+
+/* 瀑布流 */
+.vue-waterfall-easy-container .vue-waterfall-easy a.img-inner-box {
+  border-radius: 10px !important;
+  -moz-box-shadow:4px 4px 5px #e8e7e7;
+  -webkit-box-shadow:4px 4px 5px #e8e7e7;
+  box-shadow:4px 4px 5px #e8e7e7;
+}
+
+.vue-waterfall-easy-container .vue-waterfall-easy a.img-wraper > img {
+  border-radius: 10px 10px 0px 0px !important;
+  -moz-box-shadow:4px 4px 5px #e8e7e7;
+  -webkit-box-shadow:4px 4px 5px #e8e7e7;
+  box-shadow:4px 4px 5px #e8e7e7;
 }

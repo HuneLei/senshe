@@ -16,7 +16,8 @@ const DateCenter = {
   dateCenter: '/DateCenter',
   IndexClass: '/DateCenter/IndexClass',
   IndexItem: '/DateCenter/IndexItem',
-  clientItem: '/DateCenter/ClientItem'
+  clientItem: '/DateCenter/ClientItem',
+  MyGoodsItem: '/DateCenter/MyGoodsItem'
 }
 
 // 工作管理
@@ -186,6 +187,14 @@ const baseList = {
   },
   [DateCenter.clientItem]: {
     name: '客户详情',
+    isTab: true,
+    isShowBack: true,
+    slotRight: [],
+    barIndex: 0,
+    headIndex: 0,
+  },
+  [DateCenter.MyGoodsItem]: {
+    name: '商品详情',
     isTab: true,
     isShowBack: true,
     slotRight: [],

@@ -22,7 +22,7 @@
     <!-- tab页面切换组件 -->
     <div v-if="headIndex == 2">
       <tab-swit id='data_center_container' :initIndex="defaultIndex" :tabList="tabList" @index-change="indexChange" ref="swiper">
-        <div v-for="(item, index) in tabList" :slot="item.slot" :key="index" class="my_index_scroll">
+        <div v-for="(item, index) in tabList" :slot="item.slot" :key="index" :class="item.slot != 'myIndex' || 'my_index_scroll'" style="height: 100%;">
           <component :is="item.slot"></component>
         </div>
       </tab-swit>

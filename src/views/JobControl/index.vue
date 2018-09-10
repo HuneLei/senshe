@@ -1,12 +1,12 @@
 <!-- 工作管理 -->
 <template>
   <div :style="`margin-top: ${winTop}px;`">
-    <keep-alive>
-      <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
-        <!-- router链接 -->
+    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+      <!-- router链接 -->
+      <keep-alive>
         <router-view></router-view>
-      </transition>
-    </keep-alive>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 

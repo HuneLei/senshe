@@ -1,8 +1,8 @@
 const state = {
   isLoading: false, // router切换loading
   winHeight: 0, // tab切换页的高度
-  enteAnima: 'fadeInRight faster', // 进来时候的动画
-  leaveAnima: 'fadeOutLeft faster', // 出去时候的动画
+  enteAnima: 'slideInRight faster', // 进来时候的动画
+  leaveAnima: 'slideOutLeft faster', // 出去时候的动画
   defaultIndex: 0, // 默认选中的tab
   userInfo: {}, // 用户信息
   userFlush: true // 是否刷新用户信息

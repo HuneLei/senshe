@@ -1,11 +1,11 @@
 <!-- 数据中心 -->
 <template>
   <div class="data_center" ref="dataCenter">
-    <keep-alive>
-      <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+      <!-- <keep-alive> -->
         <router-view></router-view>
-      </transition>
-    </keep-alive>
+      <!-- </keep-alive> -->
+    </transition>
   </div>
 </template>
 
@@ -52,6 +52,5 @@ export default {
 /* 添加滚动条 */
 .my_index_scroll {
   overflow: scroll !important;
-  height: 100%;
 }
 </style>

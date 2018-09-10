@@ -28,6 +28,15 @@ const updatePwd = (form) => api.post(path.updatePwd, {
   password: form.ageinPassWord,
 });
 
+// 修改密码
+// const updatePwd = (form) => api.get(path.updatePwd, {
+//   params: {
+//     id: form.id,
+//     newPwd: form.newPassWord,
+//     password: form.ageinPassWord,
+//   },
+// });
+
 // 消息详情
 const mobileItem = (id) => api.get(path.mobileItem, {
   params: {
@@ -46,10 +55,8 @@ const msgitem = (id) => api.get(path.msgitem, {
 });
 
 // 新建留言
-const msgcreate = (content) => api.get(path.msgcreate, {
-  params: {
-    content
-  }
+const msgcreate = (content) => api.post(path.msgcreate, {
+  content
 });
 
 export default {

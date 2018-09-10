@@ -136,7 +136,10 @@ export default {
 
 // 搜索组件样式
 .weui-search-bar {
-  padding: 10px 15px !important;
+  padding: 8px 12px !important;
+}
+.weui-search-bar:before {
+  border-top: 0 !important;
 }
 .weui-icon-search {
   font-size: 15px !important;
@@ -144,8 +147,48 @@ export default {
 .weui-search-bar__label span {
   font-size: 15px !important;
 }
+.weui-search-bar__box {
+  border-radius: 17.5px !important;
+  padding-top: 1px;
+  padding-bottom: 2px;
+}
+.weui-search-bar__box .weui-icon-search {
+  top: inherit !important;
+}
+.weui-search-bar.weui-search-bar_focusing .weui-search-bar__cancel-btn {
+  display: flex !important;
+  align-items: center;
+  font-size: 13px !important;
+}
 .weui-search-bar__box .weui-search-bar__input {
+  font-size: 14px !important;
+  color: #2c3e50;
+}
+.weui-search-bar__box .weui-search-bar__input::-moz-placeholder {
   font-size: 14px !important;
 }
 
+.weui-search-bar__box .weui-search-bar__input::-webkit-input-placeholder {
+  color: #b2b2b2;
+}
+.weui-search-bar__box .weui-search-bar__input:-moz-placeholder {
+  color: #b2b2b2;
+}
+.weui-search-bar__box .weui-search-bar__input::-moz-placeholder {
+  color: #b2b2b2;
+}
+.weui-search-bar__box .weui-search-bar__input:-ms-input-placeholder {
+  color: #b2b2b2;
+}
+
+.weui-search-bar__label {
+  display: flex;
+  top: 1px !important;
+  bottom: 2px !important;
+  align-items: center;
+  justify-content: center;
+}
+.vue-waterfall-easy-container .vue-waterfall-easy .over {
+  font-size: 13px !important;
+}
 </style>

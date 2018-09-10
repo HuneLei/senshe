@@ -5,6 +5,7 @@ import VueScroller from 'vue-scroller'
 import {
   // Icon,
   Badge,
+  LoadMore,
   XButton,
   XHeader,
   Previewer,
@@ -20,7 +21,7 @@ import {
   // CellBox,
   // CellFormPreview,
   Cell,
-  // Card,
+  Card,
   // CheckIcon,
   // Checker,
   // CheckerItem,
@@ -103,6 +104,7 @@ Vue.use(ToastPlugin);
 Vue.use(VueScroller)
 Vue.use(LoadingPlugin) // loading加载
 
+Vue.component('LoadMore', LoadMore); // 底部加载
 Vue.component('Tabbar', Tabbar); // 底部导航
 Vue.component('Previewer', Previewer); // 图片预览
 Vue.component('TransferDom', TransferDom); // 图片预览
@@ -116,7 +118,7 @@ Vue.component('Group', Group);
 Vue.component('x-button', XButton);
 // Vue.component('ViewBox', ViewBox);
 // Vue.component('CellBox', CellBox);
-// Vue.component('Card', Card);
+Vue.component('Card', Card);
 // Vue.component('Flexbox', Flexbox);
 // Vue.component('FlexboxItem', FlexboxItem);
 Vue.component('XInput', XInput);

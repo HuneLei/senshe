@@ -23,6 +23,7 @@ export default {
   mounted() {
     // 屏幕高度设置
     const that = this;
+    that.form.id = that.$route.query.id;
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
       that.$refs.EditPassScroller.$el.style.marginTop = `${marginTop}px`
@@ -33,6 +34,7 @@ export default {
   components: {},
   data() {
     return {
+      userId: '', // 用户id
       winTop: 0, // 导航栏高度
       form: {
         id: '',

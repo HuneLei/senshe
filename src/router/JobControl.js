@@ -86,7 +86,7 @@ export default {
           path: 'FollowUpItem',
           component: FollowUpItem,
           name: '进度查询四级',
-        },
+        }
       ]
     },
   ],
