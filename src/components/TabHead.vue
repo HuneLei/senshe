@@ -20,10 +20,13 @@
       </x-header>
     </div>
     <!-- tab页面切换组件 -->
-    <div v-if="headIndex == 2">
+    <div v-show="headIndex == 2">
       <tab-swit id='data_center_container' :initIndex="defaultIndex" :tabList="tabList" @index-change="indexChange" ref="swiper">
         <div v-for="(item, index) in tabList" :slot="item.slot" :key="index" :class="item.slot != 'myIndex' || 'my_index_scroll'" style="height: 100%;">
-          <component :is="item.slot"></component>
+          <!-- <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+            <component v-if="headIndex == 2" :is="item.slot"></component>
+          </transition> -->
+          <component v-if="headIndex == 2" :is="item.slot"></component>
         </div>
       </tab-swit>
     </div>
@@ -36,6 +39,14 @@ import myClient from '../views/DateCenter/MyClient/index.vue'; // 我的客户
 import myIndex from '../views/DateCenter/MyIndex/index.vue'; // 我的指标
 export default {
   computed: {
+    // 离开时动画
+    leaveAnima() {
+      return this.$store.getters.getLeaveAnima;
+    },
+    // 进入时动画
+    enteAnima() {
+      return this.$store.getters.getEnteAnima;
+    },
     // 有状态栏时距离顶部的高度
     immersed() {
       return window.immersed

@@ -26,8 +26,8 @@ import user from '../../../api/user';
 export default {
   created() { },
   mounted() {
+    console.log(8888888)
     const that = this;
-    this.userId = this.$route.query.id;
     // 检测是否有保存过用户信息
     if (!Object.keys(this.UserInfo).length || this.UserFlush) {
       this.userinfo(this.$route.query.id, (data) => {
@@ -39,9 +39,11 @@ export default {
         this.pushinfo(data.result)
         this.$store.commit('updateUserInfo', data.result);
         this.$store.commit('updateUserFlush', false)
+        this.userId = data.result.id;
       })
     } else {
       this.pushinfo(this.UserInfo)
+      this.userId = this.UserInfo.id;
     }
     // 屏幕高度设置
     this.$nextTick(() => {
@@ -116,7 +118,7 @@ export default {
     goRouter(name) {
       const pathname = name;
       console.log(`我要去的是${pathname}`);
-      this.$router.push(`/User/${pathname}?id=${this.$route.query.id}`);
+      this.$router.push(`/User/${pathname}?id=${this.userId}`);
     },
     // 获取用户信息
     userinfo(id, callBack) {

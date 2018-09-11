@@ -1,13 +1,15 @@
 <!-- 商级 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
-    <div class="index_class">
-      <search :top="`${winTop}px`" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
-      <group gutter='0'>
-        <cell v-for="(item, index) in cellList" :key="index" :title="item.title" is-link @click.native="goCellItem(item.id)"></cell>
-      </group>
-    </div>
-  </scroller>
+  <div>
+    <search ref="clientClassItem" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
+    <scroller ref="IndexClass" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <div class="index_class">
+        <group gutter='0'>
+          <cell v-for="(item, index) in cellList" :key="index" :title="item.clientName" is-link @click.native="goCellItem(item.id)"></cell>
+        </group>
+      </div>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -16,59 +18,35 @@ import dateCenter from '../../../api/dateCenter';
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-    console.log('this.$route.query.index', this.$route.query.index)
+    const that = this;
+    // 屏幕高度设置
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const Top = document.querySelector('#clientSearchView').clientHeight + marginTop;
+      that.$refs.clientClassItem.$el.style.top = `${marginTop}px`;
+      that.$refs.IndexClass.$el.style.top = `${Top}px`;
+      that.$refs.IndexClass.$el.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView']) - window.immersed}px`;
+    })
     this.clientIndex = this.$route.query.index;
-    this.clientList(this.$route.query.index);
   },
   computed: {},
   components: {},
   data() {
     return {
+      page: 0, // 当前页数
       clientIndex: '', // 当前客户类型 100一级商 200二级连锁 300终端门店
       winTop: 0, // 自动固定时距离顶部的距离
       searchValue: '', // 搜索的值
-      cellList: [
-        {
-          id: 1,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 2,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 2,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 3,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 2,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 2,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 2,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 2,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 2,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }, {
-          id: 2,
-          title: '上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东上海浦东'
-        }
-      ], // 列表
+      noDataText: '',
+      cellList: [], // 列表
     };
   },
   methods: {
     // 我的客户列表
-    clientList(index) {
-      dateCenter.list(index).then((res) => {
+    clientList(index, callBack) {
+      dateCenter.list(this.page, this.searchValue, index).then((res) => {
         const data = res.data;
-        console.log('data', data)
+        callBack(data)
       });
     },
     // 去列表详情页面
@@ -78,13 +56,57 @@ export default {
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log('done', done);
-      done(true)
+      this.page += 1;
+      const self = this; // this指向问题
+      this.clientList(self.$route.query.index, (data) => {
+        if (data.code === 0) {
+          if (data.result.listData.length < 10) {
+            if (self.page === 1 && data.result.listData.length === 0) {
+              self.noDataText = '暂无数据';
+            } else if (self.page !== 1) {
+              self.noDataText = '没有更多数据了';
+            }
+            self.cellList = self.cellList.concat(data.result.listData);
+            done(true)
+            return
+          }
+          self.cellList = self.cellList.concat(data.result.listData);
+        }
+        done()
+      })
     },
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      console.log('done', done);
-      done(true)
+      const self = this; // this指向问题
+      self.page = 1;
+      this.clientList(self.$route.query.index, (data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.cellList = data.result.listData;
+        }
+        done()
+      })
+    },
+    // 搜索的时候触发
+    onSubmit() {
+      self.page = 1;
+      this.clientList(this.$route.query.index, (data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.cellList = data.result.listData;
+        }
+      })
+    },
+    // 点击取消的时候触发
+    onCancel() {
+      self.page = 1;
+      this.searchValue = '';
+      this.clientList(this.$route.query.index, (data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.cellList = data.result.listData;
+        }
+      })
     }
   },
 };
@@ -93,6 +115,7 @@ export default {
 <style scoped>
 .search_view {
   font-size: 15px;
+  position: absolute !important;
 }
 </style>
 <style>

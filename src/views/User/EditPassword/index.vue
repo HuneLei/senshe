@@ -58,7 +58,10 @@ export default {
         return;
       }
       user.updatePwd(this.form).then((res) => {
-        console.log('res', res.data)
+        if (res.data.code === 0) {
+          this.$vux.toast.text(res.data.message, 'middle');
+          this.$router.back()
+        }
       })
     }
   },

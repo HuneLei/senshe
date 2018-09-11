@@ -1,28 +1,30 @@
 <!-- 指标详情 -->
 <template>
-  <scroller class="index_class" :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
-    <search :top="`${winTop}px`" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
-    <group gutter='0'>
-      <x-table :cell-bordered="false" class="index_table">
-        <thead>
-          <tr>
-            <th>通用名</th>
-            <th>流向类型</th>
-            <th>指标</th>
-            <th>进度(%)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in indexList" :key="index">
-            <td>{{item.name}}</td>
-            <td>{{item.type}}</td>
-            <td>{{item.target}}</td>
-            <td>{{item.schedule}}</td>
-          </tr>
-        </tbody>
-      </x-table>
-    </group>
-  </scroller>
+  <div>
+    <search ref="IndexClassItem" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" id="indexSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
+    <scroller ref="IndexItemScroller" class="index_class" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <group gutter='0'>
+        <x-table :cell-bordered="false" class="index_table">
+          <thead>
+            <tr>
+              <th>通用名</th>
+              <th>流向类型</th>
+              <th>指标</th>
+              <th>进度(%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in indexList" :key="index">
+              <td>{{item.sensheProduct.commonName}}</td>
+              <td>{{flowType[item.flowType]}}</td>
+              <td>{{item.stand}}</td>
+              <td>{{item.userName}}</td>
+            </tr>
+          </tbody>
+        </x-table>
+      </group>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -31,171 +33,118 @@ import dateCenter from '../../../api/dateCenter';
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-    const type = this.$route.query.type;
-    const id = this.$route.query.id;
-    if (type === '1') {
-      this.yearItem(id)
-    } else {
-      this.monthItem(id)
+    const that = this;
+    // 屏幕高度设置
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const Top = document.querySelector('#indexSearchView').clientHeight + marginTop;
+      that.$refs.IndexClassItem.$el.style.top = `${marginTop}px`;
+      that.$refs.IndexItemScroller.$el.style.top = `${Top}px`;
+      that.$refs.IndexItemScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#indexSearchView']) - window.immersed}px`;
+    })
+  },
+  computed: {
+    flowType() {
+      return window.validator.flowType
     }
   },
-  computed: {},
   components: {},
   data() {
     return {
-      winTop: 0, // 自动固定时距离顶部的距离
+      page: 0, // 当前页数
       searchValue: '', // 搜索的值
-      indexList: [
-        {
-          id: 1,
-          name: '强力枇杷膏',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 2,
-          name: '福牌阿胶(250g)',
-          type: '商批流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 3,
-          name: '爱捷康（感冒药）(20粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 4,
-          name: '清喉利咽颗粒(10g*10袋)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 5,
-          name: '复方枣仁胶囊(0.4g*6粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 3,
-          name: '爱捷康（感冒药）(20粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 4,
-          name: '清喉利咽颗粒(10g*10袋)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 5,
-          name: '复方枣仁胶囊(0.4g*6粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 3,
-          name: '爱捷康（感冒药）(20粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 4,
-          name: '清喉利咽颗粒(10g*10袋)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 5,
-          name: '复方枣仁胶囊(0.4g*6粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 3,
-          name: '爱捷康（感冒药）(20粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 4,
-          name: '清喉利咽颗粒(10g*10袋)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 5,
-          name: '复方枣仁胶囊(0.4g*6粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 3,
-          name: '爱捷康（感冒药）(20粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 4,
-          name: '清喉利咽颗粒(10g*10袋)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        },
-        {
-          id: 5,
-          name: '复方枣仁胶囊(0.4g*6粒)',
-          type: '连锁流向',
-          target: 5000,
-          schedule: 25.12
-        }
-      ], // 列表
+      indexList: [], // 列表
+      noDataText: '',
     };
   },
   methods: {
-    // 年度指标详情
-    yearItem(id) {
-      dateCenter.yearitem(id).then((res) => {
+    // 年指标列表
+    yearList(year, callBack) {
+      const that = this;
+      dateCenter.yearlist(that.page, year).then((res) => {
         const data = res.data;
-        console.log('data', data);
+        callBack(data)
       })
     },
-
-    // 月度指标详情
-    monthItem(id) {
-      dateCenter.monthitem(id).then((res) => {
+    // 月指标列表
+    monthList(year, month, callBack) {
+      const that = this;
+      dateCenter.monthlist(that.page, year, month).then((res) => {
         const data = res.data;
-        console.log('data', data);
+        callBack(data)
       })
+    },
+    // 方法引入
+    indxList(callBack) {
+      const type = this.$route.query.type;
+      const year = this.$route.query.year;
+      const month = this.$route.query.month;
+      if (type === '1') {
+        this.yearList(year, (data) => {
+          callBack(data)
+        })
+      } else {
+        this.monthList(year, month, (data) => {
+          callBack(data)
+        })
+      }
     },
 
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log('done', done);
-      done(true)
+      this.page += 1;
+      const self = this; // this指向问题
+      this.indxList((data) => {
+        if (data.code === 0) {
+          console.log('self.indexList', data.result.listData)
+          if (data.result.listData.length < 10) {
+            if (self.page === 1 && data.result.listData.length === 0) {
+              self.noDataText = '暂无数据';
+            } else if (self.page !== 1) {
+              self.noDataText = '没有更多数据了';
+            }
+            self.indexList = self.indexList.concat(data.result.listData);
+            done(true)
+            return
+          }
+          self.indexList = self.indexList.concat(data.result.listData);
+        }
+        done()
+      })
     },
-
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      console.log('done', done);
-      done(true)
+      const self = this; // this指向问题
+      self.page = 1;
+      this.indxList((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.indexList = data.result.listData;
+        }
+        done()
+      })
+    },
+
+    // 搜索的时候触发
+    onSubmit() {
+      self.page = 1;
+      this.indxList((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.indexList = data.result.listData;
+        }
+      })
+    },
+    // 点击取消的时候触发
+    onCancel() {
+      self.page = 1;
+      this.searchValue = '';
+      this.indxList((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.indexList = data.result.listData;
+        }
+      })
     }
   },
 };
@@ -204,6 +153,7 @@ export default {
 <style scoped>
 .search_view {
   font-size: 15px;
+  position: absolute !important;
 }
 
 .index_table th {

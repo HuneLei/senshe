@@ -3,7 +3,7 @@ import api from './index';
 const path = {
   list: '/mobile/customer/list', // 我的客户列表 100一级商200二级连锁300终端门店
   listcount: '/mobile/customer/list/count', // 我的客户统计
-  customeritem: '/mobile/customer/list/item', // 我的客户详情
+  customeritem: '/mobile/customer/item', // 我的客户详情
   yearlist: '/mobile/myindex/year/list', // 年度指标数据
   monthlist: '/mobile/myindex/month/list', // 月度指标数据
   yearitem: '/mobile/myindex/year/item', // 年度指标详情
@@ -13,7 +13,10 @@ const path = {
 };
 
 // 商品列表
-const productlist = () => api.get(path.productlist, {});
+const productlist = (page, productName) => api.get(path.productlist, {
+  page,
+  productName,
+});
 
 // 商品详情
 const productitem = (id) => api.get(path.productitem, {
@@ -23,16 +26,18 @@ const productitem = (id) => api.get(path.productitem, {
 });
 
 // 我的客户列表
-const list = (customerType) => api.get(path.list, {
+const list = (currentPage, clientName, clientType) => api.get(path.list, {
   params: {
-    customerType,
+    currentPage,
+    clientName,
+    clientType,
   },
 });
 
 // 我的客户统计
 const listcount = () => api.get(path.listcount, {});
 
-// 我的客户统计
+// 我的客户详情
 const customeritem = (id) => api.get(path.customeritem, {
   params: {
     id,
@@ -40,10 +45,21 @@ const customeritem = (id) => api.get(path.customeritem, {
 });
 
 // 年度指标数据
-const yearlist = () => api.get(path.yearlist, {});
+const yearlist = (currentPage, year) => api.get(path.yearlist, {
+  params: {
+    currentPage,
+    year,
+  },
+});
 
 // 月度指标数据
-const monthlist = () => api.get(path.monthlist, {});
+const monthlist = (currentPage, year, month) => api.get(path.monthlist, {
+  params: {
+    currentPage,
+    year,
+    month,
+  },
+});
 
 // 年度指标详情
 const yearitem = (id) => api.get(path.yearitem, {

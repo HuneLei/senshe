@@ -21,8 +21,16 @@ const browser = () => {
   };
 };
 
+const flowType = {
+  100: '商批流向',
+  200: '连锁流向',
+  300: '门店流向',
+  400: '终端销售',
+};
+
 export default {
   regCart,
   regPhone,
   browser,
+  flowType,
 };

@@ -1,11 +1,10 @@
 <!-- 数据中心 -->
 <template>
   <div class="data_center" ref="dataCenter">
-    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
-      <!-- <keep-alive> -->
-        <router-view></router-view>
-      <!-- </keep-alive> -->
-    </transition>
+    <!-- <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+      <router-view></router-view>
+    </transition> -->
+    <router-view></router-view>
   </div>
 </template>
 

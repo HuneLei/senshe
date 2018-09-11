@@ -1,6 +1,6 @@
 <!-- 工作管理 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
+  <scroller ref="controlHome">
     <div class="my_client">
       <div class="client_view" v-for="(item, index) in clientList" :key="index">
         <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path)">
@@ -17,7 +17,13 @@
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    // 导航栏高度
+    const that = this;
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.controlHome.$el.style.marginTop = `${marginTop}px`
+      that.$refs.controlHome.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar']) - window.immersed}px`
+    })
   },
   computed: {},
   components: {},

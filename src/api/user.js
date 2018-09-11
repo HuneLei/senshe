@@ -5,7 +5,7 @@ const path = {
   userInfo: '/mobile/manage/info', // 获取用户信息
   mobileAnnt: '/mobile/annt/list', // 我的消息
   mobileItem: '/mobile/annt/item', // 消息详情
-  updatePwd: '/update/pwd', // 修改密码
+  updatePwd: '/mobile/manage/update/pwd', // 修改密码
   msglist: '/mobile/msg/list', // 我的留言
   msgitem: '/mobile/msg/item', // 留言详情
   msgcreate: '/mobile/msg/create', // 新建留言
@@ -19,7 +19,11 @@ const userinfo = (id) => api.get(path.userInfo, {
 });
 
 // 我的消息
-const mobileAnnt = () => api.get(path.mobileAnnt, {});
+const mobileAnnt = (currentPage) => api.get(path.mobileAnnt, {
+  params: {
+    currentPage
+  }
+});
 
 // 修改密码
 const updatePwd = (form) => api.post(path.updatePwd, {
@@ -45,7 +49,11 @@ const mobileItem = (id) => api.get(path.mobileItem, {
 });
 
 // 我的留言
-const msglist = () => api.get(path.msglist, {});
+const msglist = (currentPage) => api.get(path.msglist, {
+  params: {
+    currentPage
+  }
+});
 
 // 留言详情
 const msgitem = (id) => api.get(path.msgitem, {

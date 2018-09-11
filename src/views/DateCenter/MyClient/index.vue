@@ -22,17 +22,17 @@ export default {
     return {
       // 客户列表
       clientList: [{
-        amount: 50,
+        amount: 0,
         title: '一级商',
         color: '#07bc99',
         path: '100',
       }, {
-        amount: 123,
+        amount: 0,
         title: '二级连锁',
         color: '#3477E5',
         path: '200',
       }, {
-        amount: 4565,
+        amount: 0,
         title: '终端门店',
         color: '#E68A07',
         path: '300',

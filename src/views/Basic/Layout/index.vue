@@ -11,9 +11,9 @@
      v-show="baseList.isTab"></tab-head>
     <!-- router链接 -->
     <div>
-      <keep-alive>
+      <!-- <keep-alive> -->
         <router-view></router-view>
-      </keep-alive>
+      <!-- </keep-alive> -->
     </div>
     <!-- 底部导航组件 -->
     <tab-bar :initIndex="baseList.barIndex" v-show="baseList.isBar"></tab-bar>

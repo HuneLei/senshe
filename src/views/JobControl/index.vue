@@ -1,6 +1,6 @@
 <!-- 工作管理 -->
 <template>
-  <div :style="`margin-top: ${winTop}px;`">
+  <div ref="jobControl">
     <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
       <!-- router链接 -->
       <keep-alive>
@@ -16,7 +16,10 @@ export default {
   created() { },
   mounted() {
     // 导航栏高度
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    const that = this;
+    this.$nextTick(() => {
+      that.$refs.jobControl.style.marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    })
   },
   computed: {
     // 离开时动画

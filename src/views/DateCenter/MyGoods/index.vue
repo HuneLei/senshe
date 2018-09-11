@@ -7,7 +7,7 @@
       <keep-alive>
         <vue-waterfall-easy ref="waterfall" :imgsArr="imgsArr" :mobileGap=20 :enablePullDownEvent='cancelShow' :loadingDotStyle='loadingDotStyle' @scrollReachBottom='fetchImgsData' @click="clickFn">
           <div class="img-info" slot-scope="props">
-            <p class="some-info">{{props.value.name}}</p>
+            <p class="some-info">{{props.value.commonName}}</p>
           </div>
         </vue-waterfall-easy>
       </keep-alive>
@@ -18,6 +18,7 @@
 
 <script>
 import vueWaterfallEasy from 'vue-waterfall-easy'
+import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
@@ -27,8 +28,15 @@ export default {
     this.$nextTick(() => {
       that.$refs.vueWaterfallEasy.style.height = `${that.$countHeight(['.vux-tab-container', '.weui-tabbar', '.search_view']) - window.immersed}px`;
     });
-    this.imgsArr = this.initImgsArr(0, 10);
-    this.fetchImgsArr = this.initImgsArr(10, 20) // 模拟每次请求的新的图片的数据数据
+    this.initImgsArr((data) => {
+      if (data.code === 0) {
+        console.log('self.indexList', data.result)
+        for (let i = 0; i < data.result.length; i += 1) {
+          data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
+        }
+        that.imgsArr = data.result
+      }
+    });
   },
   computed: {},
   components: {
@@ -36,8 +44,8 @@ export default {
   },
   data() {
     return {
+      page: 0, // 当前页数
       cancelShow: true, // 取消按钮是否显示
-      winTop: 0, // 自动固定时距离顶部的距离
       searchValue: '', // 搜索的内容
       loadingDotStyle: {
         backgroundColor: '#07BC99' // loading动画内小圆点的样式
@@ -48,22 +56,15 @@ export default {
   },
   methods: {
     // 获取图片数据
-    initImgsArr(n, m) {
+    initImgsArr(callBack) {
       const arr = [];
-      for (let i = n; i < m; i += 1) {
-        if (i % 2 === 0) {
-          arr.push({ id: i, src: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg', name: '通络止痛药酒' })
-        } else if (i % 3 === 0) {
-          arr.push({ id: i, src: 'https://2017051845.oss-cn-hangzhou.aliyuncs.com/8f4bbfd0-0517-41b5-8d98-419b6ae8fefe..jpg', name: '通络止痛药酒' })
-        } else if (i % 2 === 0) {
-          arr.push({ id: i, src: 'https://2017051845.oss-cn-hangzhou.aliyuncs.com/989f38e6-05de-4e6b-bdf1-2865800503d7..jpg', name: '通络止痛药酒' })
-        }
-      }
-      return arr
+      dateCenter.productlist(this.page, this.searchValue).then((res) => {
+        callBack(res.data)
+      })
     },
     // 下拉加载更多图片
     fetchImgsData() {
-      this.imgsArr = this.imgsArr.concat(this.fetchImgsArr)
+      // this.imgsArr = this.imgsArr.concat(this.fetchImgsArr)
       // this.$refs.waterfall.waterfallOver()
     },
     // 查看详情
@@ -87,7 +88,7 @@ export default {
 }
 .img-info {
   text-align: center;
-  font-size: 16px;
+  font-size: 15px;
 }
 .some-info {
   padding: 6px;

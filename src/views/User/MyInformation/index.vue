@@ -26,17 +26,9 @@ import user from '../../../api/user';
 export default {
   created() { },
   mounted() {
-    this.getMobileAnnt((data) => {
-      console.log('data', data.result)
-      if (data.code === 0) {
-        this.infoList = data.result
-        if (data.result.length === 0) {
-          this.noDataText = '没有更多数据';
-        }
-      }
-    })
     // 屏幕高度设置
     const that = this;
+    that.page = 0;
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
       that.$refs.MyInfoScroller.$el.style.marginTop = `${marginTop}px`
@@ -47,6 +39,7 @@ export default {
   components: {},
   data() {
     return {
+      page: 0, // 当前页数
       // 上拉加载信息提示
       noDataText: '',
       // 信息列表
@@ -61,20 +54,43 @@ export default {
     },
     // 获取留言信息
     getMobileAnnt(callBack) {
-      user.mobileAnnt().then((res) => {
+      user.mobileAnnt(this.page).then((res) => {
         const data = res.data;
         callBack(data)
       });
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log('done', done);
-      done(true)
+      this.page += 1;
+      const self = this; // this指向问题
+      this.getMobileAnnt((data) => {
+        if (data.code === 0) {
+          if (data.result.listData.length < 10) {
+            if (self.page === 1 && data.result.listData.length === 0) {
+              self.noDataText = '暂无数据';
+            } else if (self.page !== 1) {
+              self.noDataText = '没有更多数据了';
+            }
+            self.infoList = self.infoList.concat(data.result.listData);
+            done(true)
+            return
+          }
+          self.infoList = self.infoList.concat(data.result.listData);
+        }
+        done()
+      })
     },
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      console.log('done', done);
-      done(true)
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getMobileAnnt((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.infoList = data.result.listData;
+        }
+        done()
+      })
     }
   },
 };

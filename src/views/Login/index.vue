@@ -90,7 +90,8 @@ export default {
         this.$store.commit('updateUserInfo', data.result);
         this.$store.commit('updateUserFlush', false)
         document.getElementById('head_state').style.backgroundColor = '#07BC99'
-        that.$router.push(`/User?id=${data.id}`);
+        console.log('data', data.result.id);
+        that.$router.push(`/User?id=${data.result.id}`);
         config.setToken('Hune');
       })
       // })

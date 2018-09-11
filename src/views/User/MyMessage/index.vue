@@ -1,6 +1,6 @@
 <!-- 我的留言 -->
 <template>
-  <scroller ref="MyMessScroller" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+  <scroller ref="MyMessScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
     <div style="border-bottom: 1px solid #d9d9d9;" v-for="(item, index) in messageList" :key="index" :class="`message_list ${!item.type || 'no_color'}`" @click="clickMsg(item.id)">
       <div class="message_text">{{item.content}}</div>
       <div>
@@ -20,12 +20,7 @@ export default {
   created() { },
   mounted() {
     const that = this;
-    this.getMsglist((data) => {
-      console.log('data', data)
-      if (data.code === 0) {
-        this.messageList = data.result
-      }
-    })
+    that.page = 0;
     // 屏幕高度设置
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
@@ -37,10 +32,11 @@ export default {
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
+      page: 0, // 当前页数
       // 留言列表
       // replyType 100 是未处理 200 是已经回复
       messageList: [],
+      noDataText: '',
     };
   },
   methods: {
@@ -51,20 +47,45 @@ export default {
     },
     // 获取留言信息
     getMsglist(callBack) {
-      user.msglist().then((res) => {
+      user.msglist(this.page).then((res) => {
         const data = res.data;
         callBack(data)
       });
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log('done', done);
-      done(true)
+      this.page += 1;
+      const self = this; // this指向问题
+      this.getMsglist((data) => {
+        if (data.code === 0) {
+          console.log('data.result.listData', data.result.listData)
+          if (data.result.listData.length < 10) {
+            if (self.page === 1 && data.result.listData.length === 0) {
+              self.noDataText = '暂无数据';
+            } else if (self.page !== 1) {
+              self.noDataText = '没有更多数据了';
+            }
+            self.messageList = self.messageList.concat(data.result.listData);
+            done(true)
+            return
+          }
+          self.messageList = self.messageList.concat(data.result.listData);
+        }
+        done()
+      })
     },
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      console.log('done', done);
-      done(true)
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getMsglist((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          console.log('data.result.listData', data.result.listData)
+          self.messageList = data.result.listData;
+        }
+        done()
+      })
     }
   },
 };
