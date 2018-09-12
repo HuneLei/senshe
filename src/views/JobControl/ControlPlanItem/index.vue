@@ -1,6 +1,6 @@
 <!-- 客户规划三级 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+  <scroller ref="controlPlanItem" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
     <div class="control_plan_two">
       <group gutter='0'>
         <cell title="客户名称" class="common_name">
@@ -11,8 +11,8 @@
         </cell>
         <cell v-for="(item, index) in planList" :key="index" :title="item.name" class="plan_name">
           <div class="plan_type">
-            <div slot="value" class="client_stock">{{item.stock}}</div>
-            <div slot="value" class="client_market">{{item.market}}</div>
+            <x-input slot="value" v-model='item.stock' type='number' class="client_stock" :show-clear='false'></x-input>
+            <x-input slot="value" v-model='item.market' type='number' class="client_stock" :show-clear='false'></x-input>
           </div>
         </cell>
       </group>
@@ -25,9 +25,19 @@
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    const that = this;
+    that.page = 0;
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.controlPlanItem.$el.style.marginTop = `${marginTop}px`
+      that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+    })
   },
-  computed: {},
+  computed: {
+    modifier() {
+      return this.$store.getters.getModifier
+    }
+  },
   components: {},
   data() {
     return {
@@ -104,11 +114,16 @@ export default {
 .client_stock {
   width: 100px;
   text-align: left;
+  padding-right: 0px !important
 }
 </style>
 
 <style>
 .control_plan_two .weui-cell {
-  padding-right: 10px;
+  /* padding-right: 10px; */
+}
+
+.plan_type .weui-cell:before {
+  border-top: 0;
 }
 </style>

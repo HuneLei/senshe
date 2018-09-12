@@ -167,3 +167,9 @@ video {
   -webkit-box-shadow:4px 4px 5px #e8e7e7;
   box-shadow:4px 4px 5px #e8e7e7;
 }
+
+/* 表格input样式 */
+.client_stock .weui-input {
+  border: 1px solid #dcdee2;
+  width: 80%;
+}

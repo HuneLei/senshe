@@ -4,7 +4,8 @@
     <!-- 导航顶部类型 -->
     <div v-if="headIndex == 0">
       <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
-        <span slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
+        <span v-if="!modifier" slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
+        <span v-if="modifier" slot="right" v-for="(item, index) in slotRight" :key="index" class="right_name" @click="rightClick(index)">{{item.name}}</span>
       </x-header>
     </div>
     <!-- 带tab切换导航顶部类型 -->
@@ -39,6 +40,10 @@ import myClient from '../views/DateCenter/MyClient/index.vue'; // 我的客户
 import myIndex from '../views/DateCenter/MyIndex/index.vue'; // 我的指标
 export default {
   computed: {
+    // 修改状态切换
+    modifier() {
+      return this.$store.getters.getModifier
+    },
     // 离开时动画
     leaveAnima() {
       return this.$store.getters.getLeaveAnima;
@@ -109,6 +114,10 @@ export default {
     // 点击右侧按钮时候触发
     rightClick(e) {
       console.log('我点击了右侧按钮', e)
+      console.log('slotRight', this.slotRight[e].path)
+      if (!this.slotRight[e].path) {
+        this.$store.commit('updateModifier', !this.modifier)
+      }
       this.$emit('right-click', e);
     },
   }
@@ -118,6 +127,9 @@ export default {
 <style scoped>
 .icon_view {
   padding-left: 10px;
+}
+.right_name {
+  font-size: 16px;
 }
 </style>
 <style>

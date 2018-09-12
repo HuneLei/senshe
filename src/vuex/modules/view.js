@@ -5,7 +5,8 @@ const state = {
   leaveAnima: 'slideOutLeft faster', // 出去时候的动画
   defaultIndex: 0, // 默认选中的tab
   userInfo: {}, // 用户信息
-  userFlush: true // 是否刷新用户信息
+  userFlush: true, // 是否刷新用户信息
+  modifier: false // 是否修改状态
 };
 
 const getters = {
@@ -16,11 +17,15 @@ const getters = {
   getDefaultIndex: (state) => state.defaultIndex,
   getUserInfo: (state) => state.userInfo,
   getUserFlush: (state) => state.userFlush,
+  getModifier: (state) => state.modifier,
 };
 
 const actions = {};
 
 const mutations = {
+  updateModifier(state, instate) {
+    state.modifier = instate;
+  },
   updateUserFlush(state, flush) {
     state.userFlush = flush;
   },

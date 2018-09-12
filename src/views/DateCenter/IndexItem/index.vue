@@ -61,7 +61,7 @@ export default {
     // 年指标列表
     yearList(year, callBack) {
       const that = this;
-      dateCenter.yearlist(that.page, year).then((res) => {
+      dateCenter.yearlist(that.page, that.searchValue, year).then((res) => {
         const data = res.data;
         callBack(data)
       })
@@ -69,7 +69,7 @@ export default {
     // 月指标列表
     monthList(year, month, callBack) {
       const that = this;
-      dateCenter.monthlist(that.page, year, month).then((res) => {
+      dateCenter.monthlist(that.page, that.searchValue, year, month).then((res) => {
         const data = res.data;
         callBack(data)
       })
@@ -97,7 +97,7 @@ export default {
       this.indxList((data) => {
         if (data.code === 0) {
           console.log('self.indexList', data.result.listData)
-          if (data.result.listData.length < 10) {
+          if (data.result.listData.length < 15) {
             if (self.page === 1 && data.result.listData.length === 0) {
               self.noDataText = '暂无数据';
             } else if (self.page !== 1) {
@@ -127,6 +127,7 @@ export default {
 
     // 搜索的时候触发
     onSubmit() {
+      const self = this; // this指向问题
       self.page = 1;
       this.indxList((data) => {
         if (data.code === 0) {
@@ -137,6 +138,7 @@ export default {
     },
     // 点击取消的时候触发
     onCancel() {
+      const self = this; // this指向问题
       self.page = 1;
       this.searchValue = '';
       this.indxList((data) => {

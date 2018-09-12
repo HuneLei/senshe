@@ -1,6 +1,6 @@
 <!-- 客户规划三级 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+  <scroller ref="controlPlanList" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
     <group gutter='0'>
       <cell title="通用名" class="common_name">
         <span class="client_type">客户类型</span>
@@ -17,13 +17,19 @@
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    const that = this;
+    that.page = 0;
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.controlPlanList.$el.style.marginTop = `${marginTop}px`
+      that.$refs.controlPlanList.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+    })
   },
   computed: {},
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
+      noDataText: '',
       cellList: [
         { id: '1', name: '强力枇杷膏', value: '商业' },
         { id: '2', name: '强力枇杷膏', value: '商业' },

@@ -10,12 +10,15 @@ const path = {
   monthitem: '/mobile/myindex/month/item', // 年度指标详情
   productlist: '/mobile/myproduct/list', // 商品列表
   productitem: '/mobile/myproduct/item', // 商品详情
+  productlistall: 'mobile/myproduct/list/all', // 商品下拉列表
 };
 
 // 商品列表
-const productlist = (page, productName) => api.get(path.productlist, {
-  page,
-  productName,
+const productlist = (currentPage, commonName) => api.get(path.productlist, {
+  params: {
+    currentPage,
+    commonName,
+  },
 });
 
 // 商品详情
@@ -45,17 +48,19 @@ const customeritem = (id) => api.get(path.customeritem, {
 });
 
 // 年度指标数据
-const yearlist = (currentPage, year) => api.get(path.yearlist, {
+const yearlist = (currentPage, commonName, year) => api.get(path.yearlist, {
   params: {
     currentPage,
+    commonName,
     year,
   },
 });
 
 // 月度指标数据
-const monthlist = (currentPage, year, month) => api.get(path.monthlist, {
+const monthlist = (currentPage, commonName, year, month) => api.get(path.monthlist, {
   params: {
     currentPage,
+    commonName,
     year,
     month,
   },
@@ -75,6 +80,9 @@ const monthitem = (id) => api.get(path.monthitem, {
   },
 });
 
+// 商品下拉列表
+const productlistall = () => api.get(path.productlistall, {});
+
 export default {
   list,
   listcount,
@@ -85,4 +93,5 @@ export default {
   productlist,
   productitem,
   customeritem,
+  productlistall,
 };

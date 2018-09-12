@@ -59,7 +59,7 @@ export default {
       this.getMsglist((data) => {
         if (data.code === 0) {
           console.log('data.result.listData', data.result.listData)
-          if (data.result.listData.length < 10) {
+          if (data.result.listData.length < 15) {
             if (self.page === 1 && data.result.listData.length === 0) {
               self.noDataText = '暂无数据';
             } else if (self.page !== 1) {

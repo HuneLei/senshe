@@ -18,7 +18,8 @@ export default {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
-      that.$refs.jobControl.style.marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.jobControl.style.marginTop = `${marginTop}px`
     })
   },
   computed: {

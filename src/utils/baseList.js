@@ -134,8 +134,12 @@ const baseList = {
     name: '客户规划',
     isTab: true,
     isShowBack: true,
-    slotRight: [],
     headIndex: 0,
+    slotRight: [{
+      icon: 'iconfont icon-bianji',
+      path: '',
+      name: '保存',
+    }]
   },
   [JobControl.FollowUp]: {
     name: '进度查询',

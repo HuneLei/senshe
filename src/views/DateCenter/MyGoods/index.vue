@@ -1,18 +1,17 @@
 <template>
   <div class="my_goods">
     <keep-alive>
-      <search :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view"></search>
+      <search :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" @on-submit="onSubmit" @on-cancel="onCancel"></search>
     </keep-alive>
-    <div ref="vueWaterfallEasy" class="Water_fall">
-      <keep-alive>
-        <vue-waterfall-easy ref="waterfall" :imgsArr="imgsArr" :mobileGap=20 :enablePullDownEvent='cancelShow' :loadingDotStyle='loadingDotStyle' @scrollReachBottom='fetchImgsData' @click="clickFn">
-          <div class="img-info" slot-scope="props">
-            <p class="some-info">{{props.value.commonName}}</p>
-          </div>
-        </vue-waterfall-easy>
-      </keep-alive>
-      <load-more :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more>
+    <div ref="vueWaterfallEasy" class="Water_fall" v-show="imgsArr.length">
+      <vue-waterfall-easy ref="waterfall" :mobileGap=20 :enablePullDownEvent='cancelShow' :loadingDotStyle='loadingDotStyle' @scrollReachBottom='fetchImgsData' @click="clickFn" :imgsArr="imgsArr">
+        <div class="img-info" slot-scope="props">
+          <p class="some-info">{{props.value.commonName}}</p>
+        </div>
+        <div slot="waterfall-over">没有更多数据了</div>
+      </vue-waterfall-easy>
     </div>
+    <load-more v-show="loadMore" :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more>
   </div>
 </template>
 
@@ -30,10 +29,10 @@ export default {
     });
     this.initImgsArr((data) => {
       if (data.code === 0) {
-        console.log('self.indexList', data.result)
         for (let i = 0; i < data.result.length; i += 1) {
           data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
         }
+        if (data.result.length === 0) this.loadMore = true;
         that.imgsArr = data.result
       }
     });
@@ -44,14 +43,14 @@ export default {
   },
   data() {
     return {
-      page: 0, // 当前页数
+      loadMore: false,
+      page: 1, // 当前页数
       cancelShow: true, // 取消按钮是否显示
       searchValue: '', // 搜索的内容
       loadingDotStyle: {
         backgroundColor: '#07BC99' // loading动画内小圆点的样式
       },
       imgsArr: [], // 存放所有已加载图片的数组（即当前页面会加载的所有图片）
-      fetchImgsArr: [], // 存放每次滚动时下一批要加载的图片的数组
     }
   },
   methods: {
@@ -64,15 +63,56 @@ export default {
     },
     // 下拉加载更多图片
     fetchImgsData() {
-      // this.imgsArr = this.imgsArr.concat(this.fetchImgsArr)
-      // this.$refs.waterfall.waterfallOver()
+      const that = this;
+      that.page += 1;
+      this.initImgsArr((data) => {
+        if (data.code === 0) {
+          if (data.result.length === 0) this.loadMore = true;
+          for (let i = 0; i < data.result.length; i += 1) {
+            data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
+          }
+          if (data.result.length !== 0) {
+            that.imgsArr = that.imgsArr.concat(data.result)
+          }
+          if (data.result.length === 0) {
+            that.$refs.waterfall.waterfallOver()
+          }
+        }
+      })
     },
     // 查看详情
     clickFn(event, { index, value }) {
       // 阻止a标签跳转
       event.preventDefault()
-      console.log(value.id)
       this.$router.push(`DateCenter/MyGoodsItem?id=${value.id}`)
+    },
+    // 搜索的时候触发
+    onSubmit() {
+      const that = this;
+      this.page = 1;
+      this.initImgsArr((data) => {
+        if (data.code === 0) {
+          if (data.result.length === 0) this.loadMore = true;
+          for (let i = 0; i < data.result.length; i += 1) {
+            data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
+          }
+          that.imgsArr = data.result;
+        }
+      })
+    },
+    // 点击取消的时候触发
+    onCancel() {
+      const that = this; // this指向问题
+      that.page = 1;
+      that.searchValue = '';
+      this.initImgsArr((data) => {
+        if (data.code === 0) {
+          for (let i = 0; i < data.result.length; i += 1) {
+            data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
+          }
+          that.imgsArr = data.result;
+        }
+      })
     }
   },
 };
@@ -94,3 +134,10 @@ export default {
   padding: 6px;
 }
 </style>
+<style>
+.vux-loadmore.weui-loadmore_line:before,
+.vux-loadmore.weui-loadmore_line:after {
+  border-top: 0rem !important;
+}
+</style>
+

@@ -2,17 +2,12 @@
 <template>
   <div>
     <!-- 头部导航组件 -->
-    <tab-head
-     :header_name="baseList.name"
-     :slotRight="baseList.slotRight"
-     :isShowBack="baseList.isShowBack"
-     :headIndex="baseList.headIndex"
-     @right-click="rightClick"
-     v-show="baseList.isTab"></tab-head>
+    <tab-head :header_name="baseList.name" :slotRight="baseList.slotRight"
+    :isShowBack="baseList.isShowBack" :headIndex="baseList.headIndex" @right-click="rightClick" v-show="baseList.isTab"></tab-head>
     <!-- router链接 -->
     <div>
       <!-- <keep-alive> -->
-        <router-view></router-view>
+      <router-view></router-view>
       <!-- </keep-alive> -->
     </div>
     <!-- 底部导航组件 -->
@@ -33,13 +28,15 @@ export default {
   },
   mounted() { },
   data() {
-    return { };
+    return {};
   },
   methods: {
     // 点击右边图片时触发
     rightClick(e) {
       console.log('我过来了', this.baseList.slotRight[e].path);
-      this.$router.push({ path: this.baseList.slotRight[e].path });
+      if (this.baseList.slotRight[e].path) {
+        this.$router.push({ path: this.baseList.slotRight[e].path });
+      }
     },
   },
 };

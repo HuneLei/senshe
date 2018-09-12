@@ -68,10 +68,8 @@ export default {
       this.selectIndex = index
       if (index === 1) {
         this.showIndex = true;
-        this.yearList()
       } else {
         this.showIndex = false;
-        this.monthList()
       }
     },
     // 点击指标查看详情
