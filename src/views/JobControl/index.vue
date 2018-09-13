@@ -1,6 +1,6 @@
 <!-- 工作管理 -->
 <template>
-  <div ref="jobControl">
+  <div ref="jobControl" style="background-color: white;">
     <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
       <!-- router链接 -->
       <keep-alive>

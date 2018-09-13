@@ -1,13 +1,13 @@
 <!-- 留言详情 -->
 <template>
-  <scroller ref="LeaveMessScroller">
+  <scroller style="background-color: #ffffff;">
     <!-- 留言内容 -->
     <div class="leave_smg_div">
       <div class="msg_content">
         <div>留言内容：</div>
         <div class="msg_time">{{messageList.createTime | convertTime}}</div>
       </div>
-      <div class="msg_text" v-html="messageList.content"></div>
+      <div class="msg_text" v-text="messageList.content"></div>
     </div>
     <!-- 森舍回复 -->
     <div class="leave_smg_div" v-show="messageList.replyType == 200">
@@ -15,7 +15,7 @@
         <div>森舍回复：</div>
         <div class="msg_time">{{messageList.replyTime | convertTime}}</div>
       </div>
-      <div class="msg_text" v-html="messageList.replyContent"></div>
+      <div class="msg_text" v-text="messageList.replyContent"></div>
     </div>
   </scroller>
 </template>
@@ -25,7 +25,7 @@ import user from '../../../api/user';
 
 export default {
   created() { },
-  mounted() {
+  activated() {
     const that = this;
     const id = this.$route.query.id;
     // 获取详情
@@ -35,13 +35,8 @@ export default {
         that.messageList = data.result
       }
     })
-    // 屏幕高度设置
-    this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.LeaveMessScroller.$el.style.marginTop = `${marginTop}px`
-      that.$refs.LeaveMessScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
-    })
   },
+  mounted() { },
   computed: {},
   components: {},
   data() {

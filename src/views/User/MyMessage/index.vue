@@ -1,16 +1,24 @@
 <!-- 我的留言 -->
 <template>
-  <scroller ref="MyMessScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
-    <div style="border-bottom: 1px solid #d9d9d9;" v-for="(item, index) in messageList" :key="index" :class="`message_list ${!item.type || 'no_color'}`" @click="clickMsg(item.id)">
-      <div class="message_text">{{item.content}}</div>
-      <div>
-        <div class="message_time">{{(item.replyType == 200 ? item.replyTime : item.createTime) | convertTime }}</div>
-        <div class="message_deal">
-          <p :class="`message_viewp ${item.replyType == 200 ? 'yes_deal' : 'no_deal'}`" v-html="`${item.replyType == 200 ? ' 已回复' : '未处理'}`"></p>
+  <div ref="MyMessScroller" style="position: relative;">
+    <scroller ref="MyScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <div style="border-bottom: 1px solid #d9d9d9;" v-for="(item, index) in messageList" :key="index" :class="`message_list ${!item.type || 'no_color'}`" @click="clickMsg(item.id)">
+        <div class="message_text">{{item.content}}</div>
+        <div>
+          <div class="message_time">{{(item.replyType == 200 ? item.replyTime : item.createTime) | convertTime }}</div>
+          <div class="message_deal">
+            <p :class="`message_viewp ${item.replyType == 200 ? 'yes_deal' : 'no_deal'}`" v-html="`${item.replyType == 200 ? ' 已回复' : '未处理'}`"></p>
+          </div>
         </div>
       </div>
-    </div>
-  </scroller>
+    </scroller>
+    <transition enter-active-class="animated slideInRight faster" leave-active-class="animated slideOutRight faster">
+      <!-- router链接 -->
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -24,26 +32,41 @@ export default {
     // 屏幕高度设置
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.MyMessScroller.$el.style.marginTop = `${marginTop}px`
-      that.$refs.MyMessScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.MyMessScroller.style.marginTop = `${marginTop}px`
+      that.$refs.MyMessScroller.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
     })
   },
-  computed: {},
+  computed: {
+    // 是否刷新
+    msgFlush() {
+      return this.$store.getters.getMsgFlush
+    }
+  },
   components: {},
   data() {
     return {
       page: 0, // 当前页数
       // 留言列表
-      // replyType 100 是未处理 200 是已经回复
       messageList: [],
       noDataText: '',
     };
+  },
+  watch: {
+    $route(to, from) {
+      if (from.path === '/User/myMessage/newMessage' && this.msgFlush) {
+        const self = this; // this指向问题
+        self.page = 0;
+        this.$refs.MyScroller.scrollTo(0, 0, false)
+        this.$refs.MyScroller.triggerPullToRefresh()
+        self.messageList = [];
+      }
+    }
   },
   methods: {
     // 点击留言信息
     clickMsg(index) {
       console.log(`我点击了这条留言${index}`);
-      this.$router.push(`/User/leaveMessage?id=${index}`);
+      this.$router.push(`/User/myMessage/leaveMessage?id=${index}`);
     },
     // 获取留言信息
     getMsglist(callBack) {
@@ -58,7 +81,6 @@ export default {
       const self = this; // this指向问题
       this.getMsglist((data) => {
         if (data.code === 0) {
-          console.log('data.result.listData', data.result.listData)
           if (data.result.listData.length < 15) {
             if (self.page === 1 && data.result.listData.length === 0) {
               self.noDataText = '暂无数据';
@@ -81,7 +103,6 @@ export default {
       this.getMsglist((data) => {
         if (data.code === 0) {
           self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
-          console.log('data.result.listData', data.result.listData)
           self.messageList = data.result.listData;
         }
         done()

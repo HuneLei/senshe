@@ -42,9 +42,13 @@ router.beforeEach((to, from, next) => {
 })
 
 // 路由出去时关闭isLoading载入
-router.afterEach((to) => {
+router.afterEach((to, from) => {
   console.log('router关闭了')
-  store.commit('updateModifier', false)
+  if (to.path === '/JobControl/ControlPlanItem' && from.path === '/JobControl/CreatPlan') {
+    store.commit('updateModifier', true)
+  } else {
+    store.commit('updateModifier', false)
+  }
   store.commit('updateLoadingStatus', { isLoading: true })
 })
 

@@ -6,10 +6,14 @@ const state = {
   defaultIndex: 0, // 默认选中的tab
   userInfo: {}, // 用户信息
   userFlush: true, // 是否刷新用户信息
-  modifier: false // 是否修改状态
+  msgFlush: false, // 是否刷新留言信息
+  modifier: false, // 是否修改状态
+  planDate: {}, // 新增客户计划数据
+  position: {}, // 保存滚动条的位置
 };
 
 const getters = {
+  getPosition: (state) => state.position,
   getLoading: (state) => state.isLoading,
   getWinHeight: (state) => state.winHeight,
   getEnteAnima: (state) => state.enteAnima,
@@ -18,11 +22,22 @@ const getters = {
   getUserInfo: (state) => state.userInfo,
   getUserFlush: (state) => state.userFlush,
   getModifier: (state) => state.modifier,
+  getPlanDate: (state) => state.planDate,
+  getMsgFlush: (state) => state.msgFlush,
 };
 
 const actions = {};
 
 const mutations = {
+  updatePosition(state, position) {
+    state.position = position;
+  },
+  updatemsgFlush(state, instate) {
+    state.msgFlush = instate;
+  },
+  updatePlanDate(state, data) {
+    state.planDate = data;
+  },
   updateModifier(state, instate) {
     state.modifier = instate;
   },

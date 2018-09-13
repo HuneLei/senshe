@@ -19,7 +19,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://172.18.91.113:9898',
+        target: 'http://172.18.255.249:9898',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/',
@@ -55,7 +55,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://172.18.91.113:9898',
+        target: 'http://172.18.255.249:9898',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/',
@@ -65,7 +65,7 @@ module.exports = {
 
     // Various Dev Server settings
     // host: '172.18.160.204', // can be overwritten by process.env.HOST
-    // host: 'localhost',
+    host: 'localhost',
     port: 9090, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: true, // 运行后项目自启
     errorOverlay: true,

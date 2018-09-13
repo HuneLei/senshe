@@ -1,21 +1,23 @@
 <!-- 客户规划 -->
 <template>
-  <scroller ref="controlplan">
-    <div class="my_index">
-      <div class="index_view vux-1px-b">
-        <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
-        <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度指标</div>
+  <div ref="controlplan" style="position: relative;">
+    <scroller ref="planScroller" style="background-color: #ffffff;">
+      <div class="my_index">
+        <div class="index_view vux-1px-b">
+          <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
+          <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度指标</div>
+        </div>
+        <group gutter='0'>
+          <div v-show="showIndex">
+            <cell v-for="(item, index) in indexYearList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year)"></cell>
+          </div>
+          <div v-show="!showIndex">
+            <cell v-for="(item, index) in indexMonthList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year, item.month)"></cell>
+          </div>
+        </group>
       </div>
-      <group gutter='0'>
-        <div v-show="showIndex">
-          <cell v-for="(item, index) in indexYearList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year)"></cell>
-        </div>
-        <div v-show="!showIndex">
-          <cell v-for="(item, index) in indexMonthList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year, item.month)"></cell>
-        </div>
-      </group>
-    </div>
-  </scroller>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -28,8 +30,8 @@ export default {
     that.page = 0;
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.controlplan.$el.style.marginTop = `${marginTop}px`
-      that.$refs.controlplan.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.controlplan.style.marginTop = `${marginTop}px`
+      that.$refs.controlplan.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
     })
     const myDate = new Date(); // 获取系统当前时间
     const nowYear = myDate.getFullYear() + 1; // 当前年份
@@ -59,7 +61,20 @@ export default {
       }
     }
   },
-  computed: {},
+  activated() {
+    this.$refs.planScroller.scrollTo(0, 1300, false)
+    if (this.position.top) {
+      this.$nextTick(() => {
+        this.$refs.planScroller.scrollTo(this.position.left, this.position.top, false)
+      });
+    }
+    console.log('3333', this.position.top)
+  },
+  computed: {
+    position() {
+      return this.$store.getters.getPosition
+    }
+  },
   components: {},
   data() {
     return {
@@ -73,6 +88,7 @@ export default {
   methods: {
     // 点击切换指标时候
     IndexClick(index) {
+      this.$refs.planScroller.scrollTo(0, 1300, false)
       console.log('index', index)
       this.selectIndex = index
       if (index === 1) {
@@ -83,7 +99,8 @@ export default {
     },
     // 点击指标查看详情
     CellClick(id) {
-      console.log('id', id);
+      console.log('getPosition', this.$refs.planScroller.getPosition())
+      this.$store.commit('updatePosition', this.$refs.planScroller.getPosition())
       this.$router.push(`/JobControl/ControlPlanList?id=${id}`);
     },
   },

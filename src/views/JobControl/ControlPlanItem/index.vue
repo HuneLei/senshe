@@ -1,18 +1,23 @@
 <!-- 客户规划三级 -->
 <template>
-  <scroller ref="controlPlanItem" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+  <scroller ref="controlPlanItem">
     <div class="control_plan_two">
       <group gutter='0'>
         <cell title="客户名称" class="common_name">
           <div class="client_type">
             <div slot="value" class="client_stock">进货规划</div>
-            <div slot="value" class="client_market">销售规划</div>
+            <div slot="value" class="client_stock">销售规划</div>
           </div>
         </cell>
-        <cell v-for="(item, index) in planList" :key="index" :title="item.name" class="plan_name">
+        <cell v-for="(item, index) in planList" :key="index" :title="item.clientName" class="plan_name">
           <div class="plan_type">
-            <x-input slot="value" v-model='item.stock' type='number' class="client_stock" :show-clear='false'></x-input>
-            <x-input slot="value" v-model='item.market' type='number' class="client_stock" :show-clear='false'></x-input>
+            <x-input v-show="modifier"  slot="value" v-model='item.salePlan' type='number'
+            :class="modifier ? 'client_stock' : 'client_stock_may'"
+            :show-clear='false' text-align='right' :disabled='!modifier'></x-input>
+            <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.salePlan}}</div>
+            <x-input v-show="modifier" slot="value" v-model='item.stockPlan' type='number'
+            :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'></x-input>
+            <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.stockPlan}}</div>
           </div>
         </cell>
       </group>
@@ -24,9 +29,18 @@
 
 export default {
   created() { },
+  activated() {
+    if (this.modifier) {
+      this.page = 1;
+      this.planList = this.planDate.result.listData;
+    } else {
+      this.planList = [];
+      console.log(1111111111)
+    }
+  },
   mounted() {
     const that = this;
-    that.page = 0;
+    this.page = 0;
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
       that.$refs.controlPlanItem.$el.style.marginTop = `${marginTop}px`
@@ -36,53 +50,21 @@ export default {
   computed: {
     modifier() {
       return this.$store.getters.getModifier
+    },
+    // 新增的客户规划
+    planDate() {
+      return this.$store.getters.getPlanDate
     }
   },
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
+      page: 0,
       // 规划列表
-      planList: [
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-        { name: '上海上虹大药房连锁有限公司', stock: '50000', market: '45000' },
-      ]
+      planList: []
     };
   },
-  methods: {
-    // 每当向上滑动的时候就让页数加1
-    infinite(done) {
-      console.log('done', done);
-      done(true)
-    },
-    // 这是向下滑动的时候请求最新的数据
-    refresh(done) {
-      console.log('done', done);
-      done(true)
-    }
-  },
+  methods: {},
 };
 </script>
 
@@ -100,6 +82,7 @@ export default {
   padding-left: 15px;
   color: #959595;
 }
+
 .client_type {
   width: 160px;
   display: flex;
@@ -109,12 +92,19 @@ export default {
 }
 .client_market {
   width: 60px;
-  text-align: left;
+  text-align: right;
 }
+.client_stock_may {
+  width: 100px;
+  text-align: right;
+  word-break: break-all;
+  padding-right: 5px !important;
+}
+
 .client_stock {
   width: 100px;
-  text-align: left;
-  padding-right: 0px !important
+  text-align: right;
+  padding-right: 0px !important;
 }
 </style>
 
@@ -125,5 +115,9 @@ export default {
 
 .plan_type .weui-cell:before {
   border-top: 0;
+}
+
+.client_stock .weui-input {
+  padding: 0 5px !important;
 }
 </style>

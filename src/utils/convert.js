@@ -1,6 +1,6 @@
 // 格式化日期
 const convertDate = (olddate) => {
-  let ret = null;
+  let ret = '';
   if (olddate) {
     const date = (new Date(olddate.replace(/-/g, '/')));
     const y = date.getFullYear();

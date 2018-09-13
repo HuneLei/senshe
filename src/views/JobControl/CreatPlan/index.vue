@@ -1,6 +1,6 @@
 <!-- 添加客户计划 -->
 <template>
-  <div class="creat_plan" ref="creatplan">
+  <scroller class="creat_plan" ref="creatplan">
     <group gutter='0'>
       <cell title="规划类型:">
         <div slot="title" class="title_slot">
@@ -18,10 +18,11 @@
     <div class="confirm_button">
       <x-button :show-loading="loginLoading" text="确定" @click.native="confirmClick"></x-button>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
+import jobControl from '../../../api/jobControl';
 import dateCenter from '../../../api/dateCenter';
 
 export default {
@@ -30,7 +31,9 @@ export default {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
-      that.$refs.creatplan.style.marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.creatplan.$el.style.marginTop = `${marginTop}px`
+      that.$refs.creatplan.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
     })
     const myDate = new Date(); // 获取系统当前时间
     const nowYear = myDate.getFullYear() + 1; // 当前年份
@@ -76,6 +79,8 @@ export default {
   components: {},
   data() {
     return {
+      // 新增参数
+      from: {},
       yearShow: true,
       // 年度规划和品种选择
       planlist: [],
@@ -101,6 +106,26 @@ export default {
     };
   },
   methods: {
+    // 添加客户计划
+    addCreatPlan() {
+      this.from = {
+        currentPage: 1,
+        year: this.yearPlan[0],
+        productId: this.productVar[0],
+        clientType: this.clientVar[0],
+      }
+      if (this.selectIndex === 2) {
+        this.from.year = this.monthPlan[0];
+        this.from.month = this.monthPlan[1];
+      }
+      jobControl.add(this.from).then((res) => {
+        console.log(res.data.code)
+        if (res.data.code === 0) {
+          this.$store.commit('updatePlanDate', res.data)
+          this.$router.push('/JobControl/ControlPlanItem');
+        }
+      })
+    },
     // 点击切换指标时候
     indexClick(index) {
       this.yearShow = index === 1;
@@ -108,7 +133,7 @@ export default {
     },
     // 点击确定按钮的时候
     confirmClick() {
-      console.log(this.yearPlan, this.monthPlan, this.productVar, this.productVar)
+      console.log(this.yearPlan, this.monthPlan, this.productVar, this.clientVar)
       if (this.yearPlan.length === 0 && this.selectIndex === 1) {
         this.$vux.toast.text('请选择年度规划', 'middle');
         return;
@@ -125,6 +150,7 @@ export default {
         this.$vux.toast.text('请选择客户类型', 'middle');
         return;
       }
+      this.addCreatPlan();
       console.log('点击了确定按钮');
     },
     // 选择触发

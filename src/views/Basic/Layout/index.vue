@@ -5,13 +5,11 @@
     <tab-head :header_name="baseList.name" :slotRight="baseList.slotRight"
     :isShowBack="baseList.isShowBack" :headIndex="baseList.headIndex" @right-click="rightClick" v-show="baseList.isTab"></tab-head>
     <!-- router链接 -->
-    <div>
-      <!-- <keep-alive> -->
-      <router-view></router-view>
-      <!-- </keep-alive> -->
-    </div>
+    <router-view></router-view>
     <!-- 底部导航组件 -->
-    <tab-bar :initIndex="baseList.barIndex" v-show="baseList.isBar"></tab-bar>
+    <transition enter-active-class="animated slideInLeft faster" leave-active-class="animated slideOutLeft faster">
+      <tab-bar :initIndex="baseList.barIndex" v-show="baseList.isBar"></tab-bar>
+    </transition>
   </div>
 </template>
 

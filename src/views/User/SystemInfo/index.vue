@@ -1,6 +1,6 @@
 <!-- 系统信息 -->
 <template>
-  <scroller ref="SysInfoScroller">
+  <scroller style="background-color: #ffffff;">
     <div class="leave_smg_div">
       <div class="msg_content">
         <div>
@@ -26,12 +26,6 @@ export default {
         console.log('result', data.result)
         that.systeminfo = data.result
       }
-    })
-    // 屏幕高度设置
-    this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.SysInfoScroller.$el.style.marginTop = `${marginTop}px`
-      that.$refs.SysInfoScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
     })
   },
   computed: {},

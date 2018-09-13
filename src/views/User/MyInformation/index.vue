@@ -1,23 +1,27 @@
 <!-- 我的信息 -->
 <template>
-  <scroller ref="MyInfoScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
-    <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;" @click="clickInfo(item.id)">
-      <!-- <div :class="`infor_icon ${item.releaseType == 100 || 'infor_icon_yes'}`">
-        <span :class="`info_icon iconfont ${item.releaseType == 200 ? 'icon-xinfeng1' : 'icon-xinfeng'}`"></span>
-      </div> -->
-      <div class="infor_icon">
-        <span class="info_icon iconfont icon-xinfeng"></span>
-      </div>
-      <div class="infor_content">
-        <div class="system_infor">
-          <div>系统信息</div>
-          <div class="system_time">{{item.announcementTime | convertTime}}</div>
+  <div ref="MyInfoScroller" style="position: relative">
+    <scroller ref="MyScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;" @click="clickInfo(item.id)">
+        <div class="infor_icon">
+          <span class="info_icon iconfont icon-xinfeng"></span>
         </div>
-        <!-- <div class="system_text" :style="`color:${item.releaseType == 100 || '#999999'}`">{{item.content}}</div> -->
-        <div class="system_text">{{item.content}}</div>
+        <div class="infor_content">
+          <div class="system_infor">
+            <div>系统信息</div>
+            <div class="system_time">{{item.announcementTime | convertTime}}</div>
+          </div>
+          <div class="system_text">{{item.content}}</div>
+        </div>
       </div>
-    </div>
-  </scroller>
+    </scroller>
+    <transition enter-active-class="animated slideInRight faster" leave-active-class="animated slideOutRight faster">
+      <!-- router链接 -->
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -31,8 +35,8 @@ export default {
     that.page = 0;
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.MyInfoScroller.$el.style.marginTop = `${marginTop}px`
-      that.$refs.MyInfoScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.MyInfoScroller.style.marginTop = `${marginTop}px`
+      that.$refs.MyInfoScroller.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
     })
   },
   computed: {},
@@ -50,7 +54,7 @@ export default {
     // 系统消息详情
     clickInfo(index) {
       console.log(`我点击了这条消息${index}`);
-      this.$router.push(`/User/systemInfo?id=${index}`);
+      this.$router.push(`/User/myInformation/systemInfo?id=${index}`);
     },
     // 获取留言信息
     getMobileAnnt(callBack) {

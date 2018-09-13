@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-  <scroller ref="InfoScroller">
+  <scroller ref="InfoScroller" style="background-color: white;">
     <div class="message_group">
       <!-- 用户基本信息 -->
       <group gutter='0'>

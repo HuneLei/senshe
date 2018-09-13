@@ -27,29 +27,33 @@ export default {
           name: '修改密码',
         },
         {
-          path: 'leaveMessage',
-          component: leaveMessage,
-          name: '留言详情',
-        },
-        {
           path: 'myInformation',
           component: myInformation,
           name: '我的信息',
+          children: [
+            {
+              path: 'systemInfo',
+              component: systemInfo,
+              name: '系统信息',
+            },
+          ]
         },
         {
           path: 'myMessage',
           component: myMessage,
           name: '我的留言',
-        },
-        {
-          path: 'newMessage',
-          component: newMessage,
-          name: '新建留言',
-        },
-        {
-          path: 'systemInfo',
-          component: systemInfo,
-          name: '系统信息',
+          children: [
+            {
+              path: 'leaveMessage',
+              component: leaveMessage,
+              name: '留言详情',
+            },
+            {
+              path: 'newMessage',
+              component: newMessage,
+              name: '新建留言',
+            },
+          ]
         },
       ]
     },

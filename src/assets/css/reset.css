@@ -171,5 +171,11 @@ video {
 /* 表格input样式 */
 .client_stock .weui-input {
   border: 1px solid #dcdee2;
+  border-radius: 8px;
   width: 80%;
+}
+
+.client_stock .weui-input:focus {
+  border: 1px solid #07BC99;
+  box-shadow: 0 0 0 2px rgba(45,140,240,.2);
 }

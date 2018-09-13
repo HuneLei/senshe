@@ -1,18 +1,20 @@
 <!-- 修改密码 -->
 <template>
-  <scroller ref="EditPassScroller">
-    <div class="edit_password">
-      <!-- 输入密码 -->
-      <group gutter='0' style="width: 100%">
-        <x-input type="password" placeholder="请输入新密码" v-model="form.newPassWord"></x-input>
-        <x-input type="password" placeholder="再次输入新密码" v-model="form.ageinPassWord"></x-input>
-      </group>
-      <!-- 确认提交 -->
-      <div class="submit_button">
-        <x-button :show-loading="submitLoading" text="确认提交" @click.native="submitClick"></x-button>
+  <div ref="EditPassScroller" style="position: relative;background-color: #ffffff">
+    <scroller ref="EditPassScroller">
+      <div class="edit_password">
+        <!-- 输入密码 -->
+        <group gutter='0' style="width: 100%">
+          <x-input type="password" placeholder="请输入新密码" v-model="form.newPassWord"></x-input>
+          <x-input type="password" placeholder="再次输入新密码" v-model="form.ageinPassWord"></x-input>
+        </group>
+        <!-- 确认提交 -->
+        <div class="submit_button">
+          <x-button :show-loading="submitLoading" text="确认提交" @click.native="submitClick"></x-button>
+        </div>
       </div>
-    </div>
-  </scroller>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -26,8 +28,8 @@ export default {
     that.form.id = that.$route.query.id;
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.EditPassScroller.$el.style.marginTop = `${marginTop}px`
-      that.$refs.EditPassScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.EditPassScroller.style.marginTop = `${marginTop}px`
+      that.$refs.EditPassScroller.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
     })
   },
   computed: {},

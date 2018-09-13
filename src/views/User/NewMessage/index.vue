@@ -1,6 +1,6 @@
 <!-- 新的留言 -->
 <template>
-  <scroller ref="NewNessScroller">
+  <scroller style="background-color: #ffffff;">
     <div class="new_message">
       <!-- 输入留言 -->
       <group gutter='0' style="width: 100%">
@@ -18,16 +18,12 @@
 import user from '../../../api/user';
 
 export default {
-  created() { },
-  mounted() {
-    const that = this;
-    // 屏幕高度设置
-    this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.NewNessScroller.$el.style.marginTop = `${marginTop}px`
-      that.$refs.NewNessScroller.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
-    })
+  activated() {
+    this.textValue = '';
+    this.$store.commit('updatemsgFlush', false)
   },
+  created() { },
+  mounted() { },
   computed: {},
   components: {},
   data() {
@@ -46,7 +42,9 @@ export default {
         user.msgcreate(this.textValue).then((res) => {
           console.log('res', res.data)
           // 重新获取用户信息
+          this.$store.commit('updatemsgFlush', true)
           this.$store.commit('updateUserFlush', true)
+          this.$vux.toast.text('新增成功', 'middle');
           this.$router.back()
         });
       }

@@ -4,11 +4,11 @@
 const userPath = {
   user: '/User',
   editPassword: '/User/editPassword',
-  leaveMessage: '/User/leaveMessage',
+  leaveMessage: '/User/myMessage/leaveMessage',
   myInformation: '/User/myInformation',
   myMessage: '/User/myMessage',
-  newMessage: '/User/newMessage',
-  systemInfo: '/User/systemInfo',
+  newMessage: '/User/myMessage/newMessage',
+  systemInfo: '/User/myInformation/systemInfo',
 }
 
 // 数据中心
@@ -250,7 +250,7 @@ const baseList = {
     isBar: false,
     slotRight: [{
       icon: 'iconfont icon-jiahao',
-      path: 'newMessage'
+      path: 'myMessage/newMessage'
     }],
     headIndex: 0,
   },
