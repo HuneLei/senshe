@@ -1,6 +1,6 @@
 <!-- 客户规划 -->
 <template>
-  <div ref="controlplan" style="position: relative;">
+  <div ref="controlplan" class="scroller_rela">
     <scroller ref="planScroller" style="background-color: #ffffff;">
       <div class="my_index">
         <div class="index_view vux-1px-b">
@@ -62,18 +62,16 @@ export default {
     }
   },
   activated() {
-    this.$refs.planScroller.scrollTo(0, 1300, false)
-    if (this.position.top) {
-      this.$nextTick(() => {
-        this.$refs.planScroller.scrollTo(this.position.left, this.position.top, false)
-      });
-    }
-    console.log('3333', this.position.top)
+    // console.log('this.position.top', this.position.top)
+    // const that = this
+    // this.$nextTick(() => {
+    //   that.$refs.planScroller.scrollTo(that.position.left, that.position.top, false)
+    // });
   },
   computed: {
-    position() {
-      return this.$store.getters.getPosition
-    }
+    // position() {
+    //   return this.$store.getters.getPosition
+    // }
   },
   components: {},
   data() {
@@ -88,7 +86,6 @@ export default {
   methods: {
     // 点击切换指标时候
     IndexClick(index) {
-      this.$refs.planScroller.scrollTo(0, 1300, false)
       console.log('index', index)
       this.selectIndex = index
       if (index === 1) {
@@ -98,10 +95,10 @@ export default {
       }
     },
     // 点击指标查看详情
-    CellClick(id) {
+    CellClick(year, month) {
       console.log('getPosition', this.$refs.planScroller.getPosition())
       this.$store.commit('updatePosition', this.$refs.planScroller.getPosition())
-      this.$router.push(`/JobControl/ControlPlanList?id=${id}`);
+      this.$router.push(`/JobControl/ControlPlanList?year=${year}&month=${month || 0}`);
     },
   },
 };

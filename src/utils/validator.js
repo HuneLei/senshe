@@ -28,9 +28,16 @@ const flowType = {
   400: '终端销售',
 };
 
+const clientType = {
+  100: '一级商',
+  200: '二级连锁',
+  300: '终端门店',
+};
+
 export default {
   regCart,
   regPhone,
   browser,
   flowType,
+  clientType,
 };

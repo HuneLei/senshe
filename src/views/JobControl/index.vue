@@ -1,11 +1,14 @@
 <!-- 工作管理 -->
 <template>
   <div ref="jobControl" style="background-color: white;">
-    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`" v-if="$route.meta.keepAlive">
       <!-- router链接 -->
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
+    </transition>
+    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`" v-if="!$route.meta.keepAlive">
+      <router-view></router-view>
     </transition>
   </div>
 </template>

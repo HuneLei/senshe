@@ -179,3 +179,9 @@ video {
   border: 1px solid #07BC99;
   box-shadow: 0 0 0 2px rgba(45,140,240,.2);
 }
+
+.scroller_rela {
+  position: relative;
+  top: 0;
+  left: 0;
+}

@@ -27,6 +27,18 @@ import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
+  activated() { },
+  watch: {
+    $route(to, form) {
+      if (to.path === '/JobControl/CreatPlan' && form.path === '/JobControl/ControlPlan') {
+        this.selectIndex = 1;
+        this.yearPlan = [];
+        this.monthPlan = [];
+        this.productVar = [];
+        this.clientVar = [];
+      }
+    }
+  },
   mounted() {
     // 导航栏高度
     const that = this;
@@ -108,6 +120,9 @@ export default {
   methods: {
     // 添加客户计划
     addCreatPlan() {
+      this.$vux.loading.show({
+        text: '添加中...'
+      })
       this.from = {
         currentPage: 1,
         year: this.yearPlan[0],
@@ -122,7 +137,14 @@ export default {
         console.log(res.data.code)
         if (res.data.code === 0) {
           this.$store.commit('updatePlanDate', res.data)
-          this.$router.push('/JobControl/ControlPlanItem');
+          let clientType = 0;
+          let productId = 0;
+          if (res.data.result.listData.length) {
+            clientType = res.data.result.listData[0].clientType;
+            productId = res.data.result.listData[0].productId;
+          }
+          this.$vux.loading.hide()
+          this.$router.push(`/JobControl/ControlPlanItem?clientType=${clientType}&productId=${productId}&year=${this.from.year}&month=${this.from.month || 0}`);
         }
       })
     },

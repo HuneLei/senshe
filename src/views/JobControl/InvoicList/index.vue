@@ -1,15 +1,17 @@
 <!-- 进销存列表 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
-    <group gutter='0'>
-      <cell title="通用名" class="common_name">
-        <span class="client_type">客户类型</span>
-      </cell>
-      <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.name" @click.native="CellClick(item.id)">
-        <span class="cell_type">{{item.value}}</span>
-      </cell>
-    </group>
-  </scroller>
+  <div ref="invoicList" class="scroller_rela">
+    <scroller v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+      <group gutter='0'>
+        <cell title="通用名" class="common_name">
+          <span class="client_type">客户类型</span>
+        </cell>
+        <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.name" @click.native="CellClick(item.id)">
+          <span class="cell_type">{{item.value}}</span>
+        </cell>
+      </group>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -17,7 +19,14 @@
 export default {
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    // 屏幕高度设置
+    const that = this;
+    that.page = 0;
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      that.$refs.invoicList.style.marginTop = `${marginTop}px`
+      that.$refs.invoicList.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+    })
   },
   computed: {},
   components: {},

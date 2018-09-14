@@ -17,15 +17,6 @@ module.exports = {
     assetsRoot: assetsRoot,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      '/api': {
-        target: 'http://172.18.255.249:9898',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/',
-        },
-      },
-    },
     /**
      * Source Maps
      */

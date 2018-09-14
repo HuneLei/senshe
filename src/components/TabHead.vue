@@ -3,7 +3,7 @@
   <div class="tab_head" :style="`top:${immersed}px`">
     <!-- 导航顶部类型 -->
     <div v-if="headIndex == 0">
-      <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name">
+      <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name" @on-click-back='onClickBack'>
         <span v-if="!modifier" slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
         <span v-if="modifier" slot="right" v-for="(item, index) in slotRight" :key="index" class="right_name" @click="rightClick(index)">{{item.name}}</span>
       </x-header>
@@ -80,7 +80,7 @@ export default {
     // 是否禁止点击返回按钮
     isBack: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     // 是否显示返回文字
     isShowBack: {
@@ -120,6 +120,24 @@ export default {
       }
       this.$emit('right-click', e);
     },
+    // 点击返回按钮触发
+    onClickBack() {
+      console.log('route', this.$route.path)
+      if (this.$route.path === '/JobControl/ControlPlanItem' && this.modifier) {
+        // 显示
+        const that = this
+        this.$vux.confirm.show({
+          content: '记录未保存是否退出?',
+          onCancel() { },
+          onConfirm() {
+            that.$store.commit('updateModifier', true)
+            that.$router.back()
+          }
+        })
+      } else {
+        this.$router.back()
+      }
+    }
   }
 };
 </script>

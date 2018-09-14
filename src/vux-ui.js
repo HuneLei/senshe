@@ -90,7 +90,7 @@ import {
   // VLegend,
   // XCircle,
   // Scroller,
-  // ConfirmPlugin,
+  ConfirmPlugin,
   ToastPlugin,
 } from 'vux';
 
@@ -99,7 +99,7 @@ Vue.component('TabHead', MyCom.TabHead); // 顶部导航组件
 Vue.component('TabSwit', MyCom.TabSwit); // Tab页面切换组件
 Vue.component('TabBar', MyCom.TabBar); // 底部导航组件
 
-// Vue.use(ConfirmPlugin);
+Vue.use(ConfirmPlugin);
 Vue.use(ToastPlugin);
 Vue.use(VueScroller)
 Vue.use(LoadingPlugin) // loading加载

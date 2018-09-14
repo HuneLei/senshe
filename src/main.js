@@ -46,7 +46,7 @@ router.afterEach((to, from) => {
   console.log('router关闭了')
   if (to.path === '/JobControl/ControlPlanItem' && from.path === '/JobControl/CreatPlan') {
     store.commit('updateModifier', true)
-  } else {
+  } else if (to.path !== '/JobControl/CreatPlan' && from.path !== '/JobControl/ControlPlanItem') {
     store.commit('updateModifier', false)
   }
   store.commit('updateLoadingStatus', { isLoading: true })
