@@ -1,6 +1,6 @@
 <!-- 我的留言 -->
 <template>
-  <div ref="MyMessScroller" style="position: relative;">
+  <div ref="MyMessScroller" class="scroller_rela">
     <scroller ref="MyScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
       <div style="border-bottom: 1px solid #d9d9d9;" v-for="(item, index) in messageList" :key="index" :class="`message_list ${!item.type || 'no_color'}`" @click="clickMsg(item.id)">
         <div class="message_text">{{item.content}}</div>
@@ -31,9 +31,7 @@ export default {
     that.page = 0;
     // 屏幕高度设置
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.MyMessScroller.style.marginTop = `${marginTop}px`
-      that.$refs.MyMessScroller.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.MyMessScroller.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {

@@ -27,9 +27,7 @@ export default {
     const that = this;
     that.form.id = that.$route.query.id;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.EditPassScroller.style.marginTop = `${marginTop}px`
-      that.$refs.EditPassScroller.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.EditPassScroller.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {},

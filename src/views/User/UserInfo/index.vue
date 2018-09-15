@@ -26,7 +26,6 @@ import user from '../../../api/user';
 export default {
   created() { },
   mounted() {
-    console.log(8888888)
     const that = this;
     // 检测是否有保存过用户信息
     if (!Object.keys(this.UserInfo).length || this.UserFlush) {
@@ -47,9 +46,9 @@ export default {
     }
     // 屏幕高度设置
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.InfoScroller.$el.style.marginTop = `${marginTop}px`
-      that.$refs.InfoScroller.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar']) - window.immersed}px`
+      that.$refs.InfoScroller.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar'])}px`
     })
   },
   computed: {

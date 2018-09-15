@@ -20,9 +20,9 @@ export default {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.controlHome.$el.style.marginTop = `${marginTop}px`
-      that.$refs.controlHome.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar']) - window.immersed}px`
+      that.$refs.controlHome.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar'])}px`
     })
   },
   computed: {},

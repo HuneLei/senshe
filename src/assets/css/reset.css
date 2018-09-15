@@ -121,18 +121,6 @@ video {
   border: 1px solid #E2E2E2;
 }
 
-/* 状态栏 */
-#head_state {
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 9999;
-  display: none;
-  color: #ffffff;
-  position: fixed;
-  background-color: #07BC99;
-}
-
 /* 搜索组件样式 */
 .weui-search-bar__form:after {
   background: #F8F8F8 !important;
@@ -181,7 +169,8 @@ video {
 }
 
 .scroller_rela {
-  position: relative;
   top: 0;
   left: 0;
+  position: relative;
+  background-color: #ffffff;
 }

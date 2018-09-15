@@ -43,7 +43,6 @@ function compatibleAdjust() {
   }
   _adjust = true;
   // 关闭启动界面
-  plus.navigator.setStatusBarBackground('#D74B28');
   setTimeout(function () {
     plus.navigator.closeSplashscreen();
   }, 200);

@@ -43,9 +43,9 @@ export default {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.creatplan.$el.style.marginTop = `${marginTop}px`
-      that.$refs.creatplan.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.creatplan.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
     const myDate = new Date(); // 获取系统当前时间
     const nowYear = myDate.getFullYear() + 1; // 当前年份

@@ -51,9 +51,9 @@ export default {
   mounted() {
     const that = this;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.controlPlanItem.$el.style.marginTop = `${marginTop}px`
-      that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {

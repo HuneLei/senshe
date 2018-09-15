@@ -1,6 +1,6 @@
 <!-- 顶部导航组件 -->
 <template>
-  <div class="tab_head" :style="`top:${immersed}px`">
+  <div class="tab_head">
     <!-- 导航顶部类型 -->
     <div v-if="headIndex == 0">
       <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name" @on-click-back='onClickBack'>
@@ -170,7 +170,6 @@ export default {
 }
 /* 顶部导航样式 */
 .tab_head {
-  position: fixed;
   width: 100%;
   z-index: 9999;
 }

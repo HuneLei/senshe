@@ -195,43 +195,9 @@ Vue.prototype.$countHeight = (array) => {
   return window.innerHeight - h;
 };
 
-let immersed = 0;
-
 if (window.plus) {
   Vue.prototype.$plus = plus;
-  plusHeight()
-} else {
-  immersed = 20
-  window.immersed = immersed;
-  var t = document.getElementById('head_state');
-  if (window.location.href.indexOf('login') > 0) {
-    t && (t.style.display = 'block', t.style.height = immersed + 'px', t.style.backgroundColor = '#f8f8f8');
-  } else {
-    t && (t.style.display = 'block', t.style.height = immersed + 'px', t.style.backgroundColor = '#07BC99');
-  }
-}
-
-function plusHeight() {
-  if (window.plus) {
-    document.addEventListener('plusready', function () {
-      console.log("Immersed-UserAgent: " + navigator.userAgent);
-    }, false);
-    var ms = (/Html5Plus\/.+\s\(.*(Immersed\/(\d+\.?\d*).*)\)/gi).exec(navigator.userAgent);
-    if (ms && ms.length >= 3) {
-      immersed = parseFloat(ms[2]) + 5;
-    }
-    if (!immersed) {
-      return;
-    }
-    window.immersed = immersed;
-    var t = document.getElementById('head_state');
-    if (window.location.href.indexOf('login') > 0) {
-      t && (t.style.display = 'block', t.style.height = immersed + 'px', t.style.backgroundColor = '#f8f8f8');
-    } else {
-      t && (t.style.display = 'block', t.style.height = immersed + 'px', t.style.backgroundColor = '#07BC99');
-    }
-  }
-}
+} 
 
 import convert from './utils/convert'; //  常用方法
 import validator from './utils/validator'; //  数据校验

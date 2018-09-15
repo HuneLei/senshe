@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-  <div ref="MyInfoScroller" style="position: relative">
+  <div ref="MyInfoScroller" class="scroller_rela">
     <scroller ref="MyScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
       <div v-for="(item, index) in infoList" :key="index" class="my_infor" style="border-bottom: 1px solid #d9d9d9;" @click="clickInfo(item.id)">
         <div class="infor_icon">
@@ -34,9 +34,7 @@ export default {
     const that = this;
     that.page = 0;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.MyInfoScroller.style.marginTop = `${marginTop}px`
-      that.$refs.MyInfoScroller.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.MyInfoScroller.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {},

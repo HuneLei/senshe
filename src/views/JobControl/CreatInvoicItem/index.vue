@@ -1,27 +1,30 @@
 <!-- 进销存录入 -->
 <template>
-  <div class="index_class">
-    <search placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false'></search>
+  <div class="index_class" ref="creatInvoicItem">
+
+    <!-- <search placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false'></search> -->
     <div class="incoic_table">
       <x-table :cell-bordered="false">
-        <thead>
-          <tr>
-            <th class="table_longth table_border">客户名称</th>
-            <th>进货</th>
-            <th>销售</th>
-            <th>库存</th>
-            <th class="table_img">陈列照片</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in incoicList" :key="index">
-            <td class="table_border">{{item.date}}<br>{{item.name}}</td>
-            <td>{{item.stock}}</td>
-            <td>{{item.market}}</td>
-            <td>{{item.inventory}}</td>
-            <td>{{item.imgurl}}</td>
-          </tr>
-        </tbody>
+        <!-- <scroller style="background-color: #ffffff;"> -->
+          <thead>
+            <tr>
+              <th class="table_longth table_border">客户名称</th>
+              <th>进货</th>
+              <th>销售</th>
+              <th>库存</th>
+              <th class="table_img">陈列照片</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in incoicList" :key="index">
+              <td class="table_border">{{item.date}}<br>{{item.name}}</td>
+              <td>{{item.stock}}</td>
+              <td>{{item.market}}</td>
+              <td>{{item.inventory}}</td>
+              <td>{{item.imgurl}}</td>
+            </tr>
+          </tbody>
+        <!-- </scroller> -->
       </x-table>
     </div>
   </div>
@@ -31,7 +34,12 @@
 
 export default {
   created() { },
-  mounted() { },
+  mounted() {
+    const that = this;
+    this.$nextTick(() => {
+      that.$refs.creatInvoicItem.style.height = `${that.$countHeight(['.vux-header'])}px`
+    })
+  },
   computed: {},
   components: {},
   data() {

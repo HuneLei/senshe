@@ -1,6 +1,6 @@
 <!-- 工作管理 -->
 <template>
-  <div ref="jobControl" style="background-color: white;">
+  <div style="background-color: white;">
     <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`" v-if="$route.meta.keepAlive">
       <!-- router链接 -->
       <keep-alive>
@@ -20,10 +20,6 @@ export default {
   mounted() {
     // 导航栏高度
     const that = this;
-    this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.jobControl.style.marginTop = `${marginTop}px`
-    })
   },
   computed: {
     // 离开时动画

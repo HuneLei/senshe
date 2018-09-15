@@ -1,6 +1,6 @@
 <!-- 我的信息 -->
 <template>
-  <div ref="UserInfo">
+  <div>
     <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
       <!-- router链接 -->
       <router-view></router-view>
@@ -15,11 +15,6 @@ export default {
   created() { },
   mounted() {
     const that = this;
-    // 导航栏高度
-    this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.UserInfo.style.marginTop = `${marginTop}px`;
-    })
   },
   computed: {
     // 离开时动画

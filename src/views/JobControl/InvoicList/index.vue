@@ -1,13 +1,13 @@
 <!-- 进销存列表 -->
 <template>
   <div ref="invoicList" class="scroller_rela">
-    <scroller v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
+    <scroller ref="invoicListscroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
       <group gutter='0'>
         <cell title="通用名" class="common_name">
           <span class="client_type">客户类型</span>
         </cell>
-        <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.name" @click.native="CellClick(item.id)">
-          <span class="cell_type">{{item.value}}</span>
+        <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.commonName" @click.native="CellClick(item.id)">
+          <span class="cell_type">{{clientType[item.clientType]}}</span>
         </cell>
       </group>
     </scroller>
@@ -15,44 +15,51 @@
 </template>
 
 <script>
+import jobControl from '../../../api/jobControl';
 
 export default {
   created() { },
+  activated() { },
+  watch: {
+    $route(to, form) {
+      if (to.path === '/JobControl/InvoicList' && form.path === '/JobControl') {
+        this.$refs.invoicListscroller.triggerPullToRefresh()
+      }
+    }
+  },
   mounted() {
     // 屏幕高度设置
     const that = this;
     that.page = 0;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
-      that.$refs.invoicList.style.marginTop = `${marginTop}px`
-      that.$refs.invoicList.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.invoicList.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
-  computed: {},
+  computed: {
+    clientType() {
+      return window.validator.clientType;
+    }
+  },
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
-      cellList: [
-        { id: '1', name: '江莱清润糖', value: '商业' },
-        { id: '2', name: '强力枇杷膏', value: '商业' },
-        { id: '3', name: '爱捷康（感冒药）(20粒)', value: '商业' },
-        { id: '4', name: '红霉素眼膏(0.5%*2g)', value: '商业' },
-        { id: '3', name: '爱捷康（感冒药）(20粒)', value: '商业' },
-        { id: '4', name: '红霉素眼膏(0.5%*2g)', value: '商业' },
-        { id: '3', name: '爱捷康（感冒药）(20粒)', value: '商业' },
-        { id: '4', name: '红霉素眼膏(0.5%*2g)', value: '商业' },
-        { id: '3', name: '爱捷康（感冒药）(20粒)', value: '商业' },
-        { id: '4', name: '红霉素眼膏(0.5%*2g)', value: '连锁' },
-        { id: '3', name: '爱捷康（感冒药）(20粒)', value: '门店' },
-        { id: '4', name: '红霉素眼膏(0.5%*2g)', value: '商业' },
-        { id: '4', name: '红霉素眼膏(0.5%*2g)', value: '连锁' },
-        { id: '3', name: '爱捷康（感冒药）(20粒)', value: '门店' },
-        { id: '4', name: '红霉素眼膏(0.5%*2g)', value: '商业' },
-      ]
+      page: 0, // 当前页数
+      noDataText: '',
+      cellList: []
     };
   },
   methods: {
+    // 获取进销存列表
+    getInvoiclist(callBack) {
+      const from = {
+        currentPage: this.page,
+        month: 0,
+        year: 0,
+      }
+      jobControl.threelist(from).then((res) => {
+        callBack(res.data);
+      })
+    },
     // 点击指标查看详情
     CellClick(id) {
       console.log('id', id);
@@ -60,13 +67,36 @@ export default {
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log('done', done);
-      done(true)
+      this.page += 1;
+      const self = this; // this指向问题
+      this.getInvoiclist((data) => {
+        if (data.code === 0) {
+          if (data.result.listData.length < 15) {
+            if (self.page === 1 && data.result.listData.length === 0) {
+              self.noDataText = '暂无数据';
+            } else if (self.page !== 1) {
+              self.noDataText = '没有更多数据了';
+            }
+            self.cellList = self.cellList.concat(data.result.listData);
+            done(true)
+            return
+          }
+          self.cellList = self.cellList.concat(data.result.listData);
+        }
+        done()
+      })
     },
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      console.log('done', done);
-      done(true)
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getInvoiclist((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.cellList = data.result.listData;
+        }
+        done()
+      })
     }
   },
 };

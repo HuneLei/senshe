@@ -16,9 +16,9 @@
       <x-button :show-loading="loginLoading" text="登录" @click.native="loginClick"></x-button>
     </div>
     <!-- 忘记密码 -->
-    <div class="forget_passwd">
+    <!-- <div class="forget_passwd">
       <span @click="forgetPass"> 忘记密码 ?</span>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -40,10 +40,12 @@ export default {
   },
   computed: {},
   mounted() {
+    if (that.$plus) {
+      that.$plus.navigator.setStatusBarStyle('dark');
+    }
     // 屏幕高度设置
     this.$nextTick(() => {
       that.$refs.LoginCenter.style.height = `${that.$countHeight()}px`;
-      document.getElementById('head_state').style.backgroundColor = '#f8f8f8'
     })
   },
   components: {},
@@ -81,17 +83,24 @@ export default {
       // this.$router.replace('/User?id=1');
       this.loginLoading = true;
       // that.$router.push('/User?');
+      // if (that.$plus) {
+      //   that.$plus.navigator.setStatusBarStyle('light');
+      //   that.$plus.navigator.setStatusBarBackground('#07BC99')
+      // }
       this.userLogin(this.phone_value, this.passwd_value, (data) => {
         console.log('data', data)
         if (data.code !== 0) {
           this.$vux.toast.text(data.message, 'middle');
           return;
         }
-        this.$store.commit('updateUserInfo', data.result);
-        this.$store.commit('updateUserFlush', false)
-        document.getElementById('head_state').style.backgroundColor = '#07BC99'
+        that.$store.commit('updateUserInfo', data.result);
+        that.$store.commit('updateUserFlush', false)
         console.log('data', data.result.id);
         that.$router.push(`/User?id=${data.result.id}`);
+        if (that.$plus) {
+          that.$plus.navigator.setStatusBarStyle('light');
+          that.$plus.navigator.setStatusBarBackground('#07BC99')
+        }
         config.setToken('Hune');
       })
       // })
@@ -119,9 +128,9 @@ export default {
       });
     },
     // 忘记密码
-    forgetPass() {
-      console.log('忘记密码了');
-    }
+    // forgetPass() {
+    //   console.log('忘记密码了');
+    // }
   },
 };
 </script>
@@ -198,5 +207,9 @@ export default {
 
 .login_input .weui-input {
   font-size: 14px;
+}
+
+.login_input .weui-cell:before {
+  border-top: 0;
 }
 </style>
