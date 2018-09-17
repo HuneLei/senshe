@@ -4,7 +4,7 @@
     <div class="new_message">
       <!-- 输入留言 -->
       <group gutter='0' style="width: 100%">
-        <x-textarea :max="200" placeholder="请输入留言内容" :height="300" v-model="textValue"></x-textarea>
+        <x-textarea :max="300" placeholder="请输入留言内容"  v-model="textValue"></x-textarea>
       </group>
       <!-- 确认提交 -->
       <div class="submit_button">
@@ -74,3 +74,10 @@ export default {
   font-size: 15px;
 }
 </style>
+
+<style>
+.new_message textarea {
+  height: 6.5rem !important;
+}
+</style>
+

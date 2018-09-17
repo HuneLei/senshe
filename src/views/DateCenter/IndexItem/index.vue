@@ -36,11 +36,11 @@ export default {
     const that = this;
     // 屏幕高度设置
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       const Top = document.querySelector('#indexSearchView').clientHeight + marginTop;
       that.$refs.IndexClassItem.$el.style.top = `${marginTop}px`;
       that.$refs.IndexItemScroller.$el.style.top = `${Top}px`;
-      that.$refs.IndexItemScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#indexSearchView']) - window.immersed}px`;
+      that.$refs.IndexItemScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#indexSearchView'])}px`;
     })
   },
   computed: {

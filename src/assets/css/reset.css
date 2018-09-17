@@ -174,3 +174,20 @@ video {
   position: relative;
   background-color: #ffffff;
 }
+
+input::-webkit-input-placeholder {
+  color: #aab2bd
+}
+
+/* 去掉cell组件的前后边框 */
+.message_group .weui-cells:after {
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+
+.message_group .weui-cells:before {
+  border-top: 1px solid #d9d9d9 !important;
+}
+
+.weui-btn::after {
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+}

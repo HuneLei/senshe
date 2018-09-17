@@ -33,6 +33,7 @@ instance.interceptors.response.use(
     }
     if (response.data.code === 401) {
       config.removeToken();
+      config.removeUserToken();
       console.log('Vue.$router', window.location.href)
       window.location.href = '/'
     }
@@ -44,8 +45,9 @@ instance.interceptors.response.use(
     // }
     return response;
   }, (error) => {
+    Vue.$vux.loading.hide();
     Vue.$vux.toast.text('请检测网络', 'middle');
-    return Promise.reject(error)
+    return Promise.reject(error);
   }
 );
 

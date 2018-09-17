@@ -47,7 +47,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       // that.index = that.initIndex;
-      that.$refs.swiper.xheight = `${that.$countHeight(['.weui-tabbar', '.tab_head']) - window.immersed}px`;
+      that.$refs.swiper.xheight = `${that.$countHeight(['.weui-tabbar', '.tab_head'])}px`;
     })
   },
   data() {

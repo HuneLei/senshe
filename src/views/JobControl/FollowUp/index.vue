@@ -25,9 +25,9 @@ export default {
     const that = this;
     that.page = 0;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.followUp.$el.style.marginTop = `${marginTop}px`
-      that.$refs.followUp.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.followUp.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
     const myDate = new Date(); // 获取系统当前时间
     const nowYear = myDate.getFullYear() + 1; // 当前年份

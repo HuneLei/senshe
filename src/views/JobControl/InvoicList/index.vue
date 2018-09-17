@@ -6,7 +6,7 @@
         <cell title="通用名" class="common_name">
           <span class="client_type">客户类型</span>
         </cell>
-        <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.commonName" @click.native="CellClick(item.id)">
+        <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.commonName" @click.native="CellClick(item.id, item.clientType)">
           <span class="cell_type">{{clientType[item.clientType]}}</span>
         </cell>
       </group>
@@ -61,9 +61,9 @@ export default {
       })
     },
     // 点击指标查看详情
-    CellClick(id) {
+    CellClick(id, type) {
       console.log('id', id);
-      this.$router.push(`/JobControl/CreatInvoicItem?id=${id}`);
+      this.$router.push(`/JobControl/CreatInvoicItem?id=${id}&clientType=${type}`);
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {

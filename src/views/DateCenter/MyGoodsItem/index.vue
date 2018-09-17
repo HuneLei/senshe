@@ -23,9 +23,9 @@ export default {
   mounted() {
     const that = this;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.myGoodsCard.$el.style.marginTop = `${marginTop}px`
-      that.$refs.myGoodsCard.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar']) - window.immersed}px`
+      that.$refs.myGoodsCard.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar'])}px`
     })
     this.getProductItem((data) => {
       if (data.code === 0) {

@@ -15,7 +15,7 @@ export default {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
-      that.$refs.dataCenter.style.marginTop = document.querySelector('.vux-tab-container').clientHeight + window.immersed;
+      that.$refs.dataCenter.style.marginTop = document.querySelector('.vux-tab-container').clientHeight;
     })
   },
   computed: {

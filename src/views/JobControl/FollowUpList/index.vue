@@ -20,9 +20,9 @@ export default {
     // 屏幕高度设置
     const that = this;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.followUpList.$el.style.marginTop = `${marginTop}px`
-      that.$refs.followUpList.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.followUpList.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {},

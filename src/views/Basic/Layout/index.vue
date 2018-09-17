@@ -33,7 +33,14 @@ export default {
     rightClick(e) {
       console.log('我过来了', this.baseList.slotRight[e].path);
       if (this.baseList.slotRight[e].path) {
-        this.$router.push({ path: this.baseList.slotRight[e].path });
+        let query = {}
+        if (this.baseList.slotRight[e].query) {
+          const name = this.baseList.slotRight[e].query;
+          query = {
+            [name]: this.$route.query[name]
+          }
+        }
+        this.$router.push({ path: this.baseList.slotRight[e].path, query });
       }
     },
   },

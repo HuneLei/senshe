@@ -57,6 +57,32 @@ const getUploadHost = () => {
 };
 
 const tokenName = 'ss_token';
+const tokenUser = 'user_token';
+
+//  设置 当前用户的userinfo
+const setUserToken = (data) => {
+  console.log('data', data)
+  if (window.plus) {
+    plus.storage.setItem(tokenUser, JSON.stringify(data));
+  }
+  sessionStorage.setItem(tokenUser, JSON.stringify(data));
+};
+
+//  获取 当前用户的userinfo
+const getUserToken = () => {
+  if (window.plus) {
+    return plus.storage.getItem(tokenUser);
+  }
+  return JSON.parse(sessionStorage.getItem(tokenUser));
+};
+
+//  删除 当前用户的userinfo
+const removeUserToken = () => {
+  sessionStorage.removeItem(tokenUser);
+  if (window.plus) {
+    plus.storage.removeItem(tokenUser);
+  }
+};
 
 //  设置 当前用户的access_token
 const setToken = (token) => {
@@ -98,4 +124,7 @@ export default {
   getToken, //  获取 当前用户的access_token
   removeToken, //  删除 当前用户的access_token
   socketUrl, // socket地址
+  getUserToken, // 获取 当前用户的userinfo
+  setUserToken, // 设置 当前用户的userinfo
+  removeUserToken, // 删除 当前用户的userinfo
 };

@@ -35,38 +35,15 @@ const galleryImgsSelected = () => {
 }
 
 // 通过定位模块获取位置信息
-const getGeocode = () => {
+const getGeocode = (callBack) => {
   if (!window.plus) return
-  plus.geolocation.getCurrentPosition(geoInf, function (e) {
-    console.log("获取定位位置信息失败：" + e.message);
+  plus.geolocation.getCurrentPosition(function (position) {
+    callBack(position.addresses, null);
+  }, function (e) {
+    console.log('eeeeeee', e)
+    callBack('', e.message);
   }, { geocode: true });
 }
-
-const geoInf = (position) => {
-  var str = "";
-  str += "地址：" + position.addresses + "\n";//获取地址信息
-  str += "坐标类型：" + position.coordsType + "\n";
-  var timeflag = position.timestamp;//获取到地理位置信息的时间戳；一个毫秒数；
-  str += "时间戳：" + timeflag + "\n";
-  var codns = position.coords;//获取地理坐标信息；
-  var lat = codns.latitude;//获取到当前位置的纬度；
-  str += "纬度：" + lat + "\n";
-  var longt = codns.longitude;//获取到当前位置的经度
-  str += "经度：" + longt + "\n";
-  var alt = codns.altitude;//获取到当前位置的海拔信息；
-  str += "海拔：" + alt + "\n";
-  var accu = codns.accuracy;//地理坐标信息精确度信息；
-  str += "精确度：" + accu + "\n";
-  var altAcc = codns.altitudeAccuracy;//获取海拔信息的精确度；
-  str += "海拔精确度：" + altAcc + "\n";
-  var head = codns.heading;//获取设备的移动方向；
-  str += "移动方向：" + head + "\n";
-  var sped = codns.speed;//获取设备的移动速度；
-  str += "移动速度：" + sped;
-  console.log(JSON.stringify(position));
-  console.log(str);
-}
-
 
 export default {
   getGeocode,

@@ -14,6 +14,11 @@
           </div>
         </cell>
       </group>
+      <group gutter='0.26rem'>
+        <cell @click.native="$store.commit('updateShowSheet', true)" class="go_login">
+          <div slot="title">退出登录</div>
+        </cell>
+      </group>
       <!-- 底部白底 -->
       <div class="white_div"></div>
     </div>
@@ -21,6 +26,7 @@
 </template>
 
 <script>
+import config from '../../../config';
 import user from '../../../api/user';
 
 export default {
@@ -29,18 +35,20 @@ export default {
     const that = this;
     // 检测是否有保存过用户信息
     if (!Object.keys(this.UserInfo).length || this.UserFlush) {
-      this.userinfo(this.$route.query.id, (data) => {
-        console.log('data', data);
+      this.userinfo(config.getToken(), (data) => {
+        console.log('data', data.result.id);
         if (data.code !== 0) {
-          this.$vux.toast.text(data.message, 'middle');
+          this.$router.replace('/');
           return;
         }
         this.pushinfo(data.result)
         this.$store.commit('updateUserInfo', data.result);
         this.$store.commit('updateUserFlush', false)
         this.userId = data.result.id;
+        config.setUserToken(data.result);
       })
     } else {
+      config.setUserToken(this.UserInfo);
       this.pushinfo(this.UserInfo)
       this.userId = this.UserInfo.id;
     }
@@ -73,7 +81,7 @@ export default {
           text: ''
         },
         myInformation: {
-          name: '我的信息',
+          name: '系统消息',
           path: 'myInformation',
           text: ''
         },
@@ -109,7 +117,7 @@ export default {
           name: '岗位名称',
           value: ''
         },
-      }
+      },
     };
   },
   methods: {
@@ -147,6 +155,9 @@ export default {
 .message_group {
   background-color: #f8f8f8;
 }
+.go_login {
+  text-align: center;
+}
 </style>
 
 <style>
@@ -155,14 +166,5 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* 去掉cell组件的前后边框 */
-.message_group .weui-cells:after {
-  border-bottom: 0 solid #d9d9d9 !important;
-}
-
-.message_group .weui-cells:before {
-  border-top: 0 solid #d9d9d9 !important;
 }
 </style>

@@ -52,10 +52,6 @@ export default {
     enteAnima() {
       return this.$store.getters.getEnteAnima;
     },
-    // 有状态栏时距离顶部的高度
-    immersed() {
-      return window.immersed
-    },
     // 选中的tab
     defaultIndex() {
       return this.$store.getters.getDefaultIndex

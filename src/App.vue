@@ -191,4 +191,16 @@ export default {
 .vue-waterfall-easy-container .vue-waterfall-easy .over {
   font-size: 13px !important;
 }
+
+.weui-icon_toast.weui-loading {
+  margin: 0.4rem 0 0;
+}
+.weui-toast__content {
+  margin: 0 0 0.4rem;
+}
+.weui-toast {
+  width: 3rem;
+  top: 5.8rem;
+}
+
 </style>

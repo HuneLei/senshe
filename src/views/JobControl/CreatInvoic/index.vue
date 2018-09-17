@@ -1,14 +1,16 @@
 <!-- 进销存录入 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop">
+  <scroller :style="`margin-top: ${winTop}px;`" ref="creatInvoic">
     <group gutter='0'>
-      <datetime v-model="dataValue" @on-change="changeValue" title="日期:" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
-      <x-input title='进货:' v-model="stockValue" text-align='left' type='number'></x-input>
-      <x-input title='销售:' v-model="marketValue" text-align='left' type='number'></x-input>
-      <x-input title='库存:' v-model="repertoryValue" text-align='right' type='number'></x-input>
+      <datetime v-model="dataValue" @on-change="changeValue" title="日期：" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
+      <popup-picker v-if="isClient" title="客户：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name></popup-picker>
+      <cell v-if="!isClient" title="客户：" value="暂无客户"></cell>
+      <x-input title='进货：' v-model="stockValue" text-align='right' type='number'></x-input>
+      <x-input title='销售：' v-model="marketValue" text-align='right' type='number'></x-input>
+      <x-input title='库存：' v-model="repertoryValue" text-align='right' type='number'></x-input>
       <cell v-model="listValue" text-align='right'>
         <div slot="title" class="update_img">
-          <span class="update_img_span">陈列:</span>
+          <span class="update_img_span">陈列：</span>
           <div class="img_show">
             <div class="img_show_no" style="box-shadow: 1px 0px 1px #ccc; border: 1px solid #eaeaea; border-radius: 10px;">
               <span class="iconfont icon-zhaopian1"></span>
@@ -27,23 +29,58 @@
     </group>
     <!-- 提交操作 -->
     <div class="confirm_button">
-      <x-button :show-loading="loginLoading" text="确定" @click.native="confirmClick"></x-button>
+      <x-button :show-loading="loginLoading" text="确定" @click.native="confirmClick" :disabled='!isClient'></x-button>
     </div>
   </scroller>
 </template>
 
 <script>
+import jobControl from '../../../api/jobControl';
+import config from '../../../config';
 
 export default {
   created() { },
+  activated() {
+    this.clientType = [];
+    this.client = this.$route.query.clientType;
+    this.getCustomList((data) => {
+      console.log('data', data)
+      const clientList = [];
+      if (data.length) {
+        this.isClient = true;
+        for (let i = 0; i < data.length; i += 1) {
+          const client = {
+            name: data[i].name,
+            value: `${data[i].name}-${data[i].id}`
+          }
+          clientList.push(client)
+        }
+      } else {
+        this.isClient = false;
+      }
+      this.clientType.push(clientList)
+    })
+  },
   mounted() {
     // 导航栏高度
-    this.winTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+    const that = this;
+    this.$nextTick(() => {
+      const Top = document.querySelector('.vux-header').clientHeight;
+      that.$refs.creatInvoic.$el.style.top = `${Top}px`;
+      that.$refs.creatInvoic.$el.style.height = `${that.$countHeight(['.vux-header', '#creatSearchView'])}px`;
+    })
   },
-  computed: {},
+  computed: {
+    userInfo() {
+      return config.getUserToken();
+    }
+  },
   components: {},
   data() {
     return {
+      isClient: true,
+      clientVar: [],
+      clientType: [],
       winTop: 0, // 导航栏高度
       imgList: [{
         src: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',
@@ -77,10 +114,17 @@ export default {
       marketValue: '', // 销售
       repertoryValue: '', // 库存
       listValue: '', // 陈列
-      loginLoading: false // 确定loading
+      loginLoading: false, // 确定loading
+      client: '', // 客户类型
     };
   },
   methods: {
+    // 获取客户列表下拉
+    getCustomList(callBack) {
+      jobControl.customerlist(this.client).then((res) => {
+        callBack(res.data);
+      })
+    },
     clearValue(value) {
       this.dataValue = ''
     },
@@ -89,12 +133,71 @@ export default {
     },
     onConfirm(val) {
       console.log('on-confirm arg', val)
-      console.log('current value', this.value1)
     },
     // 确定提交按钮
     confirmClick() {
+      console.log('this.dataValue', this.dataValue)
+      console.log('this.clientVar', this.clientVar.length)
+      console.log('this.stockValue', this.stockValue)
+      console.log('this.marketValue', this.marketValue)
+      console.log('this.repertoryValue', this.repertoryValue)
+      console.log('userInfo', this.userInfo.companyId)
+      if (this.dataValue === '') {
+        this.$vux.toast.text('请选择日期', 'middle');
+        return;
+      }
+      if (this.clientVar.length === 0 && !this.clientVar[0]) {
+        this.$vux.toast.text('请选择客户', 'middle');
+        return;
+      }
+      if (this.stockValue === '') {
+        this.$vux.toast.text('请输入进货数量', 'middle');
+        return;
+      }
+      if (this.marketValue === '') {
+        this.$vux.toast.text('请输入销售数量', 'middle');
+        return;
+      }
+      if (this.repertoryValue === '') {
+        this.$vux.toast.text('请输入库存数量', 'middle');
+        return;
+      }
+      let addresses = '';
+      if (this.$plus) {
+        window.mobileNative.getGeocode((address, error) => {
+          if (error) {
+            this.$vux.toast.text('获取签到地址失败', 'middle');
+            return;
+          }
+          addresses = address;
+          this.addInvoic(addresses)
+        })
+      } else {
+        addresses = '深圳市'
+        this.addInvoic(addresses)
+      }
+    },
+    // 添加进销存
+    addInvoic(addresses) {
+      const split = this.clientVar[0].split('-')
+      console.log('splitsplit', split)
+      const from = {
+        companyId: this.userInfo.companyId,
+        companyName: this.userInfo.companyName,
+        memberId: this.userInfo.id,
+        memberName: this.userInfo.name,
+        stock: this.stockValue,
+        sale: this.stockValue,
+        writeDate: this.dataValue,
+        signAddress: addresses,
+        clientId: split[0],
+        clientName: split[1],
+        clientType: this.client
+      }
+      jobControl.createInventory(from).then((res) => {
+        console.log('resres', res)
+      })
       console.log('确定');
-      window.mobileNative.getGeocode();
     },
     // 预览图片
     showImg(index) {
@@ -106,7 +209,11 @@ export default {
     // 从相册中选择图片
     galleryImgsSelected() {
       window.mobileNative.galleryImgsSelected()
-    }
+    },
+    // 选择触发
+    selectChange(val, index) {
+      console.log('on change', val, index)
+    },
   },
 };
 </script>

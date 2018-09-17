@@ -1,11 +1,10 @@
 <!-- 进销存录入 -->
 <template>
-  <div class="index_class" ref="creatInvoicItem">
-
-    <!-- <search placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false'></search> -->
-    <div class="incoic_table">
-      <x-table :cell-bordered="false">
-        <!-- <scroller style="background-color: #ffffff;"> -->
+  <div class="index_class scroller_rela" ref="creatInvoicItem">
+    <search placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false' id="creatSearchView"></search>
+    <scroller style="background-color: #ffffff;" ref="creatScroller" :noDataText='noDataText' :on-refresh="refresh" :on-infinite="infinite">
+      <div class="incoic_table">
+        <x-table :cell-bordered="false">
           <thead>
             <tr>
               <th class="table_longth table_border">客户名称</th>
@@ -24,26 +23,30 @@
               <td>{{item.imgurl}}</td>
             </tr>
           </tbody>
-        <!-- </scroller> -->
-      </x-table>
-    </div>
+        </x-table>
+      </div>
+    </scroller>
   </div>
 </template>
 
 <script>
+import jobControl from '../../../api/jobControl';
 
 export default {
   created() { },
   mounted() {
     const that = this;
     this.$nextTick(() => {
-      that.$refs.creatInvoicItem.style.height = `${that.$countHeight(['.vux-header'])}px`
+      const Top = document.querySelector('#creatSearchView').clientHeight;
+      that.$refs.creatScroller.$el.style.top = `${Top}px`;
+      that.$refs.creatScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#creatSearchView'])}px`;
     })
   },
   computed: {},
   components: {},
   data() {
     return {
+      noDataText: '',
       searchValue: '', // 搜索的值
       incoicList: [{
         date: '2018-06-01',
@@ -76,7 +79,44 @@ export default {
       }]
     };
   },
-  methods: {},
+  methods: {
+    getMsglist(callBack) {
+
+    },
+    // 每当向上滑动的时候就让页数加1
+    infinite(done) {
+      this.page += 1;
+      const self = this; // this指向问题
+      this.getMsglist((data) => {
+        if (data.code === 0) {
+          if (data.result.listData.length < 15) {
+            if (self.page === 1 && data.result.listData.length === 0) {
+              self.noDataText = '暂无数据';
+            } else if (self.page !== 1) {
+              self.noDataText = '没有更多数据了';
+            }
+            self.messageList = self.messageList.concat(data.result.listData);
+            done(true)
+            return
+          }
+          self.messageList = self.messageList.concat(data.result.listData);
+        }
+        done()
+      })
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getMsglist((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.messageList = data.result.listData;
+        }
+        done()
+      })
+    }
+  },
 };
 </script>
 
@@ -88,10 +128,6 @@ export default {
 
 .table_img {
   width: 60px !important;
-}
-
-.incoic_table table {
-  width: 420px;
 }
 
 .table_longth {
@@ -113,13 +149,14 @@ export default {
   color: #666666;
   text-align: left;
   font-size: 14px;
-  padding: 5px 5px 5px 10px;
+  padding: 5px 10px 5px 10px;
   line-height: 22px;
 }
 
 /* 搜索 */
 .search_view {
   font-size: 15px;
+  position: absolute !important;
 }
 </style>
 <style>

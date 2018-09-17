@@ -60,7 +60,7 @@ import {
   Swiper,
   SwiperItem,
   // XProgress,
-  // Actionsheet,
+  Actionsheet,
   // Alert,
   // Confirm,
   // InlineLoading,
@@ -104,6 +104,7 @@ Vue.use(ToastPlugin);
 Vue.use(VueScroller)
 Vue.use(LoadingPlugin) // loading加载
 
+Vue.component('Actionsheet', Actionsheet); // 模态弹出框
 Vue.component('LoadMore', LoadMore); // 底部加载
 Vue.component('Tabbar', Tabbar); // 底部导航
 Vue.component('Previewer', Previewer); // 图片预览

@@ -8,8 +8,8 @@
     </div>
     <!-- 登录手机和密码 -->
     <div class="login_input">
-      <x-input type="text" :title='`<span class="icon-login iconfont icon-shouji"> 手机</span>`' v-model="phone_value" show-clear></x-input>
-      <x-input type="password" :title='`<span class="icon-login iconfont icon-mima"> 密码</span>`' v-model="passwd_value" show-clear></x-input>
+      <x-input type="text" placeholder='请输入账号' :title='`<span class="icon-login iconfont icon-shouji"></span>`' v-model="phone_value" show-clear></x-input>
+      <x-input type="password" placeholder='请输入密码' :title='`<span class="icon-login iconfont icon-mima"></span>`' v-model="passwd_value" show-clear></x-input>
     </div>
     <!-- 登录操作 -->
     <div class="login_button">
@@ -42,6 +42,7 @@ export default {
   mounted() {
     if (that.$plus) {
       that.$plus.navigator.setStatusBarStyle('dark');
+      that.$plus.navigator.setStatusBarBackground('#F8F8F8')
     }
     // 屏幕高度设置
     this.$nextTick(() => {
@@ -62,7 +63,7 @@ export default {
       console.log('登录操作');
       // 校验手机号
       if (!this.phone_value) {
-        this.$vux.toast.text('请输入手机号码', 'middle');
+        this.$vux.toast.text('请输入账号', 'middle');
         return;
       }
       // if (!window.validator.regPhone.test(this.phone_value)) {
@@ -87,21 +88,25 @@ export default {
       //   that.$plus.navigator.setStatusBarStyle('light');
       //   that.$plus.navigator.setStatusBarBackground('#07BC99')
       // }
+      this.$vux.loading.show({
+        text: '登录中'
+      })
       this.userLogin(this.phone_value, this.passwd_value, (data) => {
-        console.log('data', data)
+        this.$vux.loading.hide()
         if (data.code !== 0) {
           this.$vux.toast.text(data.message, 'middle');
           return;
         }
+        that.$store.commit('updateShowSheet', false)
         that.$store.commit('updateUserInfo', data.result);
         that.$store.commit('updateUserFlush', false)
-        console.log('data', data.result.id);
         that.$router.push(`/User?id=${data.result.id}`);
         if (that.$plus) {
           that.$plus.navigator.setStatusBarStyle('light');
           that.$plus.navigator.setStatusBarBackground('#07BC99')
         }
-        config.setToken('Hune');
+        config.setToken(data.result.id);
+        config.setUserToken(data.result);
       })
       // })
     },
@@ -201,12 +206,12 @@ export default {
 <style>
 /* 登录时候输入手机和密码label的宽度 */
 .login_input .weui-label {
-  width: 60px;
-  padding-right: 10px;
+  width: 20px;
+  padding-right: 5px;
 }
 
 .login_input .weui-input {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .login_input .weui-cell:before {

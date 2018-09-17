@@ -25,7 +25,7 @@ export default {
     // 图片组的高度
     const that = this;
     this.$nextTick(() => {
-      that.$refs.vueWaterfallEasy.style.height = `${that.$countHeight(['.vux-tab-container', '.weui-tabbar', '.search_view']) - window.immersed}px`;
+      that.$refs.vueWaterfallEasy.style.height = `${that.$countHeight(['.vux-tab-container', '.weui-tabbar', '.search_view'])}px`;
     });
     this.initImgsArr((data) => {
       if (data.code === 0) {

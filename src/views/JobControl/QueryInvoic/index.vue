@@ -15,9 +15,9 @@ export default {
     const that = this;
     that.page = 0;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.queryInvic.$el.style.marginTop = `${marginTop}px`
-      that.$refs.queryInvic.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.queryInvic.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {},

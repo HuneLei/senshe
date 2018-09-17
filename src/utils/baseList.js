@@ -57,7 +57,8 @@ const baseList = {
     headIndex: 0,
     slotRight: [{
       icon: 'iconfont icon-jiahao',
-      path: 'CreatInvoic'
+      path: 'CreatInvoic',
+      query: 'clientType'
     }, {
       icon: 'iconfont icon-bianji',
       path: 'CreatPlan'

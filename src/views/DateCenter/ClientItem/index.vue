@@ -36,9 +36,9 @@ export default {
     const that = this;
     // 屏幕高度设置
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight + window.immersed;
+      const marginTop = document.querySelector('.vux-header').clientHeight;
       that.$refs.ClintItem.$el.style.marginTop = `${marginTop}px`
-      that.$refs.ClintItem.$el.style.height = `${that.$countHeight(['.vux-header']) - window.immersed}px`
+      that.$refs.ClintItem.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
     this.clientId = this.$route.query.id;
     this.clientItem(this.$route.query.id);

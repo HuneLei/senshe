@@ -10,9 +10,11 @@ const state = {
   modifier: false, // 是否修改状态
   planDate: {}, // 新增客户计划数据
   position: {}, // 保存滚动条的位置
+  showSheet: false, // 退出登录
 };
 
 const getters = {
+  getShowSheet: (state) => state.showSheet,
   getPosition: (state) => state.position,
   getLoading: (state) => state.isLoading,
   getWinHeight: (state) => state.winHeight,
@@ -29,6 +31,9 @@ const getters = {
 const actions = {};
 
 const mutations = {
+  updateShowSheet(state, show) {
+    state.showSheet = show;
+  },
   updatePosition(state, position) {
     state.position = position;
   },
