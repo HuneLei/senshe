@@ -68,7 +68,7 @@ export default {
       console.log('在切换tab', index);
       switch (index) {
         case 0:
-          this.$router.push('/DateCenter');
+          this.$router.push('/DateCenter/MyGoods');
           break;
         case 1:
           this.$router.push('/JobControl');

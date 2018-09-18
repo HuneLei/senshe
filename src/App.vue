@@ -48,6 +48,11 @@ export default {
   font-size: 20px /*px*/;
 }
 
+// 编辑图标icon设置
+.iconbianji {
+  font-size: 17.5px /*px*/;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

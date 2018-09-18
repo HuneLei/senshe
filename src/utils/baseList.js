@@ -17,7 +17,10 @@ const DateCenter = {
   IndexClass: '/DateCenter/IndexClass',
   IndexItem: '/DateCenter/IndexItem',
   clientItem: '/DateCenter/ClientItem',
-  MyGoodsItem: '/DateCenter/MyGoodsItem'
+  MyGoodsItem: '/DateCenter/MyGoodsItem',
+  MyGoods: '/DateCenter/MyGoods',
+  MyClient: '/DateCenter/MyClient',
+  MyIndex: '/DateCenter/MyIndex'
 }
 
 // 工作管理
@@ -60,8 +63,8 @@ const baseList = {
       path: 'CreatInvoic',
       query: 'clientType'
     }, {
-      icon: 'iconfont icon-bianji',
-      path: 'CreatPlan'
+      icon: 'iconbianji iconfont icon-bianji',
+      name: '完成',
     }]
   },
   [JobControl.InvoicList]: {
@@ -164,6 +167,36 @@ const baseList = {
     headIndex: 0,
   },
   // 数据中心
+  [DateCenter.MyGoods]: {
+    name: '我的商品',
+    isTab: true,
+    isBar: true,
+    isShowBack: false,
+    slotRight: [],
+    initIndex: 0,
+    barIndex: 0,
+    headIndex: 2,
+  },
+  [DateCenter.MyClient]: {
+    name: '我的客户',
+    isTab: true,
+    isBar: true,
+    isShowBack: false,
+    slotRight: [],
+    initIndex: 0,
+    barIndex: 0,
+    headIndex: 2,
+  },
+  [DateCenter.MyIndex]: {
+    name: '我的指标',
+    isTab: true,
+    isBar: true,
+    isShowBack: false,
+    slotRight: [],
+    initIndex: 0,
+    barIndex: 0,
+    headIndex: 2,
+  },
   [DateCenter.dateCenter]: {
     name: '数据中心',
     isTab: true,

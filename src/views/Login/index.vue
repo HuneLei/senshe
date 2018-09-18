@@ -3,7 +3,8 @@
   <div class="login_center" ref="LoginCenter">
     <!-- 登录logo和文字 -->
     <div class="login_logo">
-      <img src="https://wx.qlogo.cn/mmopen/vi_32/1M0IXDDhAU1o6tQbJ4OF5aZ6D4ibhpTe4QvGUh250P0yZzdLalBicfeoicLbSjFo7unVpbrWvQ8Gkr8R53Sibwhs1g/132" alt="">
+      <!-- <img src="../../assets/img/logo.jpg" alt=""> -->
+      <img src="../../assets/img/logo.jpg" alt="">
       <div class="login_font">森舍会员登录</div>
     </div>
     <!-- 登录手机和密码 -->
@@ -163,6 +164,9 @@ export default {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  /* width: 100px; */
+  /* height: 100px; */
+  /* border-radius: 50%; */
 }
 
 /* 登录时候输入手机和密码 */

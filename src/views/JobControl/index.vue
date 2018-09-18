@@ -1,14 +1,11 @@
 <!-- 工作管理 -->
 <template>
-  <div style="background-color: white;">
-    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`" v-if="$route.meta.keepAlive">
+  <div style="background-color: white;" class="scroller_rela" ref="jobControl">
+    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
       <!-- router链接 -->
       <keep-alive>
         <router-view></router-view>
       </keep-alive>
-    </transition>
-    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`" v-if="!$route.meta.keepAlive">
-      <router-view></router-view>
     </transition>
   </div>
 </template>
@@ -20,6 +17,9 @@ export default {
   mounted() {
     // 导航栏高度
     const that = this;
+    this.$nextTick(() => {
+      that.$refs.jobControl.style.height = `${that.$countHeight(['.vux-header'])}px`
+    })
   },
   computed: {
     // 离开时动画

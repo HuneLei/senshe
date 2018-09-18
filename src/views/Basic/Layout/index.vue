@@ -41,6 +41,7 @@ export default {
           }
         }
         this.$router.push({ path: this.baseList.slotRight[e].path, query });
+        this.$store.commit('updateInvoicData', {})
       }
     },
   },

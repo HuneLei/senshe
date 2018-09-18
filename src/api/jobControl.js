@@ -6,7 +6,10 @@ const path = {
   threeitem: 'mobile/customer/plan/three/list/item', // 客户计划详情
   updateplan: 'mobile/customer/plan/update', // 更新客户计划
   createInventory: 'mobile/inventory/create', // 新增进销存
+  updateInventory: 'mobile/inventory/update', // 更新进销存
   customerlist: 'mobile/customer/list/all', // 我的客户列表
+  inventorylist: 'mobile/inventory/list', // 进销存查询
+  planinventory: 'mobile/customer/plan/list/inventory', // 进度查询
 };
 
 // 客户列表下拉
@@ -39,11 +42,35 @@ const updateplan = (list) => api.post(path.updateplan, {
 // 新增进销存
 const createInventory = (from) => api.post(path.createInventory, from);
 
+// 更新进销存
+const updateInventory = (from, id) => api.post(path.updateInventory, from, {
+  params: { id },
+});
+
+// 进销存查询
+const inventoryList = (currentPage, clientName, clientType, productId) => api.get(path.inventorylist, {
+  params: {
+    currentPage,
+    clientName,
+    clientType,
+    productId
+  }
+});
+
+// 进度查询
+const planinventory = (from) => api.get(path.planinventory, {
+  params: from
+});
+
+
 export default {
   add,
   threelist,
   threeitem,
   updateplan,
   customerlist,
+  inventoryList,
   createInventory,
+  updateInventory,
+  planinventory,
 };

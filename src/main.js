@@ -44,9 +44,13 @@ router.beforeEach((to, from, next) => {
 // 路由出去时关闭isLoading载入
 router.afterEach((to, from) => {
   console.log('router关闭了')
+  console.log('to.path', to.path)
+  console.log('from.path', from.path)
   if (to.path === '/JobControl/ControlPlanItem' && from.path === '/JobControl/CreatPlan') {
     store.commit('updateModifier', true)
-  } else if (to.path !== '/JobControl/CreatPlan' && from.path !== '/JobControl/ControlPlanItem') {
+  } else if ((to.path !== '/JobControl/CreatPlan' && from.path !== '/JobControl/ControlPlanItem') &&
+    (to.path !== '/JobControl/CreatInvoicItem' && from.path !== '/JobControl/CreatInvoic') &&
+    (to.path !== '/JobControl/CreatInvoic' && from.path !== '/JobControl/CreatInvoicItem')) {
     store.commit('updateModifier', false)
   }
   store.commit('updateLoadingStatus', { isLoading: true })

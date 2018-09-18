@@ -1,12 +1,15 @@
 <!-- 进销存列表 -->
 <template>
   <div ref="invoicList" class="scroller_rela">
+    <group gutter='0' class="absolute_group">
+      <cell title="通用名" class="common_name" id="commonname">
+        <span class="client_type">客户类型</span>
+      </cell>
+    </group>
     <scroller ref="invoicListscroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
       <group gutter='0'>
-        <cell title="通用名" class="common_name">
-          <span class="client_type">客户类型</span>
-        </cell>
-        <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.commonName" @click.native="CellClick(item.id, item.clientType)">
+        <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.commonName" @click.native="CellClick(item.id, item.clientType, item.clientId,
+        item.clientName, item.commonName, item.productId)">
           <span class="cell_type">{{clientType[item.clientType]}}</span>
         </cell>
       </group>
@@ -32,7 +35,9 @@ export default {
     const that = this;
     that.page = 0;
     this.$nextTick(() => {
-      that.$refs.invoicList.style.height = `${that.$countHeight(['.vux-header'])}px`
+      const theadTop = document.querySelector('#commonname').clientHeight;
+      that.$refs.invoicListscroller.$el.style.top = `${theadTop}px`
+      that.$refs.invoicListscroller.$el.style.height = `${that.$countHeight(['.vux-header', '#commonname'])}px`
     })
   },
   computed: {
@@ -61,9 +66,16 @@ export default {
       })
     },
     // 点击指标查看详情
-    CellClick(id, type) {
-      console.log('id', id);
-      this.$router.push(`/JobControl/CreatInvoicItem?id=${id}&clientType=${type}`);
+    CellClick(id, type, clientId, clientName, commonName, productId) {
+      const list = {
+        clientType: type,
+        clientId,
+        clientName,
+        commonName,
+        productId,
+      }
+      this.$store.commit('updateClientList', list);
+      this.$router.push(`/JobControl/CreatInvoicItem?id=${id}`);
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {

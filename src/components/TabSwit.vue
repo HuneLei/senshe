@@ -4,11 +4,11 @@
     <tab :line-width=5 active-color='#fff' default-color='#fff' :custom-bar-width="barWidth" v-model="index">
       <tab-item active-class="tab_active" v-for="(item, index) in tabList" @on-item-click="tabClick" :key="index">{{item.name}}</tab-item>
     </tab>
-    <swiper v-model="index" :threshold='120' :show-dots="false" ref="swiper">
+    <!-- <swiper v-model="index" :threshold='120' :show-dots="false" ref="swiper">
       <swiper-item v-for="(item, index) in tabList" :key="index">
         <slot :name="item.slot"></slot>
       </swiper-item>
-    </swiper>
+    </swiper> -->
   </div>
 </template>
 
@@ -47,7 +47,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       // that.index = that.initIndex;
-      that.$refs.swiper.xheight = `${that.$countHeight(['.weui-tabbar', '.tab_head'])}px`;
+      // that.$refs.swiper.xheight = `${that.$countHeight(['.weui-tabbar', '.tab_head'])}px`;
     })
   },
   data() {

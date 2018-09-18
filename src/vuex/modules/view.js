@@ -11,9 +11,12 @@ const state = {
   planDate: {}, // 新增客户计划数据
   position: {}, // 保存滚动条的位置
   showSheet: false, // 退出登录
+  clientList: {}, // 进销存查询
+  invoicData: {}, // 进销存修改记录
 };
 
 const getters = {
+  getInvoicData: (state) => state.invoicData,
   getShowSheet: (state) => state.showSheet,
   getPosition: (state) => state.position,
   getLoading: (state) => state.isLoading,
@@ -26,11 +29,18 @@ const getters = {
   getModifier: (state) => state.modifier,
   getPlanDate: (state) => state.planDate,
   getMsgFlush: (state) => state.msgFlush,
+  getClientList: (state) => state.clientList,
 };
 
 const actions = {};
 
 const mutations = {
+  updateInvoicData(state, data) {
+    state.invoicData = data;
+  },
+  updateClientList(state, list) {
+    state.clientList = list;
+  },
   updateShowSheet(state, show) {
     state.showSheet = show;
   },

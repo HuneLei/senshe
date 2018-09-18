@@ -1,6 +1,6 @@
 <!-- 进销存录入 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" ref="creatInvoic">
+  <scroller ref="creatInvoic">
     <group gutter='0'>
       <datetime v-model="dataValue" @on-change="changeValue" title="日期：" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
       <popup-picker v-if="isClient" title="客户：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name></popup-picker>
@@ -42,9 +42,24 @@ export default {
   created() { },
   activated() {
     this.clientType = [];
-    this.client = this.$route.query.clientType;
+    this.client = this.clientList.clientType;
+    // 日期
+    if (!Object.keys(this.invoicData).length) {
+      this.dataValue = '';
+      this.stockValue = ''; // 进货
+      this.marketValue = ''; // 销售
+      this.repertoryValue = ''; // 库存
+      this.listValue = ''; // 陈列
+      this.clientVar = [];
+    } else {
+      this.dataValue = this.invoicData.writeDate;
+      this.stockValue = this.invoicData.stock; // 进货
+      this.marketValue = this.invoicData.sale; // 销售
+      this.repertoryValue = this.invoicData.inventory; // 库存
+      this.listValue = ''; // 陈列
+    }
+    console.log('invoicData', this.invoicData)
     this.getCustomList((data) => {
-      console.log('data', data)
       const clientList = [];
       if (data.length) {
         this.isClient = true;
@@ -59,20 +74,30 @@ export default {
         this.isClient = false;
       }
       this.clientType.push(clientList)
+      if (Object.keys(this.invoicData).length) {
+        this.clientVar = [`${this.invoicData.clientName}-${this.invoicData.clientId}`];
+      }
     })
   },
   mounted() {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
-      const Top = document.querySelector('.vux-header').clientHeight;
-      that.$refs.creatInvoic.$el.style.top = `${Top}px`;
       that.$refs.creatInvoic.$el.style.height = `${that.$countHeight(['.vux-header', '#creatSearchView'])}px`;
     })
   },
   computed: {
     userInfo() {
       return config.getUserToken();
+    },
+    clientList() {
+      return this.$store.getters.getClientList;
+    },
+    modifier() {
+      return this.$store.getters.getModifier;
+    },
+    invoicData() {
+      return this.$store.getters.getInvoicData;
     }
   },
   components: {},
@@ -81,7 +106,6 @@ export default {
       isClient: true,
       clientVar: [],
       clientType: [],
-      winTop: 0, // 导航栏高度
       imgList: [{
         src: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',
         msrc: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',
@@ -136,12 +160,6 @@ export default {
     },
     // 确定提交按钮
     confirmClick() {
-      console.log('this.dataValue', this.dataValue)
-      console.log('this.clientVar', this.clientVar.length)
-      console.log('this.stockValue', this.stockValue)
-      console.log('this.marketValue', this.marketValue)
-      console.log('this.repertoryValue', this.repertoryValue)
-      console.log('userInfo', this.userInfo.companyId)
       if (this.dataValue === '') {
         this.$vux.toast.text('请选择日期', 'middle');
         return;
@@ -170,34 +188,81 @@ export default {
             return;
           }
           addresses = address;
-          this.addInvoic(addresses)
+          if (!Object.keys(this.invoicData).length) {
+            this.addInvoic(addresses)
+          } else {
+            this.updataInvoic(addresses)
+          }
         })
       } else {
         addresses = '深圳市'
-        this.addInvoic(addresses)
+        if (!Object.keys(this.invoicData).length) {
+          this.addInvoic(addresses)
+        } else {
+          this.updataInvoic(addresses)
+        }
       }
     },
-    // 添加进销存
-    addInvoic(addresses) {
+    // 更新进销存
+    updataInvoic(addresses) {
       const split = this.clientVar[0].split('-')
-      console.log('splitsplit', split)
       const from = {
         companyId: this.userInfo.companyId,
         companyName: this.userInfo.companyName,
         memberId: this.userInfo.id,
         memberName: this.userInfo.name,
         stock: this.stockValue,
-        sale: this.stockValue,
+        sale: this.marketValue,
+        inventory: this.repertoryValue,
         writeDate: this.dataValue,
         signAddress: addresses,
-        clientId: split[0],
-        clientName: split[1],
-        clientType: this.client
+        clientId: split[1],
+        clientName: split[0],
+        clientType: this.clientList.clientType,
+        productId: this.clientList.productId,
+        commonName: this.clientList.commonName,
+        id: this.invoicData.id,
       }
-      jobControl.createInventory(from).then((res) => {
-        console.log('resres', res)
+      this.$vux.loading.show({
+        text: '修改中...'
       })
-      console.log('确定');
+      jobControl.updateInventory(from, this.invoicData.id).then((res) => {
+        this.$vux.loading.hide()
+        if (res.data.code === 0) {
+          this.$vux.toast.text('修改成功', 'middle');
+          this.$router.back();
+        }
+      })
+    },
+    // 添加进销存
+    addInvoic(addresses) {
+      const split = this.clientVar[0].split('-')
+      const from = {
+        companyId: this.userInfo.companyId,
+        companyName: this.userInfo.companyName,
+        memberId: this.userInfo.id,
+        memberName: this.userInfo.name,
+        stock: this.stockValue,
+        sale: this.marketValue,
+        inventory: this.repertoryValue,
+        writeDate: this.dataValue,
+        signAddress: addresses,
+        clientId: split[1],
+        clientName: split[0],
+        clientType: this.clientList.clientType,
+        productId: this.clientList.productId,
+        commonName: this.clientList.commonName
+      }
+      this.$vux.loading.show({
+        text: '录入中...'
+      })
+      jobControl.createInventory(from).then((res) => {
+        this.$vux.loading.hide()
+        if (res.data.code === 0) {
+          this.$vux.toast.text('录入成功', 'middle');
+          this.$router.back();
+        }
+      })
     },
     // 预览图片
     showImg(index) {

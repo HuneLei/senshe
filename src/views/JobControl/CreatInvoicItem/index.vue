@@ -1,26 +1,32 @@
 <!-- 进销存录入 -->
 <template>
   <div class="index_class scroller_rela" ref="creatInvoicItem">
-    <search placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false' id="creatSearchView"></search>
-    <scroller style="background-color: #ffffff;" ref="creatScroller" :noDataText='noDataText' :on-refresh="refresh" :on-infinite="infinite">
+    <search placeholder="输入客户名称进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false' @on-submit="onSubmit" @on-cancel="onCancel" id="creatSearchView"></search>
+    <x-table class="table_thead" :cell-bordered="false" ref="tableThead" id="tableThead">
+      <thead>
+        <tr>
+          <th class="table_thead_longth table_border">客户名称</th>
+          <th>进货</th>
+          <th>销售</th>
+          <th>库存</th>
+          <th class="table_img">陈列照片</th>
+          <th class="table_icon" v-if="modifier"></th>
+        </tr>
+      </thead>
+    </x-table>
+    <scroller style="background-color: #ffffff;" ref="creatScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText'>
       <div class="incoic_table">
         <x-table :cell-bordered="false">
-          <thead>
-            <tr>
-              <th class="table_longth table_border">客户名称</th>
-              <th>进货</th>
-              <th>销售</th>
-              <th>库存</th>
-              <th class="table_img">陈列照片</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(item, index) in incoicList" :key="index">
-              <td class="table_border">{{item.date}}<br>{{item.name}}</td>
+          <tbody :class="`table_tbody ${ !modifier || 'table_tbody_active'}`">
+            <tr v-for="(item, index) in incoicList" :key="index" @click="updateClick(item)">
+              <td class="table_border table_tbody_longth">{{item.writeDate}}<br> {{item.clientName}}</td>
               <td>{{item.stock}}</td>
-              <td>{{item.market}}</td>
+              <td>{{item.sale}}</td>
               <td>{{item.inventory}}</td>
-              <td>{{item.imgurl}}</td>
+              <td class="table_img">{{item.filePath}}</td>
+              <td class="table_icon" v-if="modifier">
+                <x-icon type="ios-arrow-right"></x-icon>
+              </td>
             </tr>
           </tbody>
         </x-table>
@@ -34,54 +40,59 @@ import jobControl from '../../../api/jobControl';
 
 export default {
   created() { },
+  activated() { },
+  deactivated() { },
+  watch: {
+    $route(to, form) {
+      this.page = 1;
+      if ((to.path !== '/JobControl/CreatInvoicItem' && form.path !== '/JobControl/CreatInvoic') && (to.path !== '/JobControl/CreatInvoic' && form.path !== '/JobControl/CreatInvoicItem')) {
+        this.searchValue = '';
+      }
+      if ((to.path === '/JobControl/CreatInvoicItem' && form.path === '/JobControl/InvoicList') || to.path === '/JobControl/CreatInvoicItem' && form.path === '/JobControl/CreatInvoic') {
+        this.$refs.creatScroller.triggerPullToRefresh()
+      }
+    }
+  },
   mounted() {
     const that = this;
     this.$nextTick(() => {
-      const Top = document.querySelector('#creatSearchView').clientHeight;
+      const theadTop = document.querySelector('#creatSearchView').clientHeight;
+      const Top = document.querySelector('#creatSearchView').clientHeight + document.querySelector('#tableThead').clientHeight;
+      that.$refs.tableThead.$el.style.top = `${theadTop}px`;
       that.$refs.creatScroller.$el.style.top = `${Top}px`;
-      that.$refs.creatScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#creatSearchView'])}px`;
+      that.$refs.creatScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#creatSearchView', '#tableThead'])}px`;
     })
   },
-  computed: {},
+  computed: {
+    modifier() {
+      return this.$store.getters.getModifier;
+    },
+    clientList() {
+      return this.$store.getters.getClientList;
+    }
+  },
   components: {},
   data() {
     return {
+      page: 0,
       noDataText: '',
       searchValue: '', // 搜索的值
-      incoicList: [{
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        market: 45000,
-        inventory: 5000,
-        imgurl: '1'
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        market: 45000,
-        inventory: 5000,
-        imgurl: '1'
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        market: 45000,
-        inventory: 5000,
-        imgurl: '1'
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        market: 45000,
-        inventory: 5000,
-        imgurl: '1'
-      }]
+      incoicList: []
     };
   },
   methods: {
+    // 去编辑页面
+    updateClick(item) {
+      if (this.modifier) {
+        console.log('item', item);
+        this.$store.commit('updateInvoicData', item)
+        this.$router.push('/JobControl/CreatInvoic');
+      }
+    },
     getMsglist(callBack) {
-
+      jobControl.inventoryList(this.page, this.searchValue, this.clientList.clientType, this.clientList.productId).then((res) => {
+        callBack(res.data);
+      })
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
@@ -95,11 +106,11 @@ export default {
             } else if (self.page !== 1) {
               self.noDataText = '没有更多数据了';
             }
-            self.messageList = self.messageList.concat(data.result.listData);
+            self.incoicList = self.incoicList.concat(data.result.listData);
             done(true)
             return
           }
-          self.messageList = self.messageList.concat(data.result.listData);
+          self.incoicList = self.incoicList.concat(data.result.listData);
         }
         done()
       })
@@ -111,46 +122,99 @@ export default {
       this.getMsglist((data) => {
         if (data.code === 0) {
           self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
-          self.messageList = data.result.listData;
+          self.incoicList = data.result.listData;
         }
         done()
       })
+    },
+    // 搜索的时候触发
+    onSubmit() {
+      const that = this;
+      this.page = 1;
+      this.getMsglist((data) => {
+        if (data.code === 0) {
+          that.incoicList = data.result.listData;
+        }
+      })
+    },
+    // 点击取消的时候触发
+    onCancel() {
+      this.searchValue = '';
+      this.$refs.creatScroller.triggerPullToRefresh()
     }
   },
 };
 </script>
 
 <style scoped>
+.table_thead {
+  font-size: 15px;
+  position: absolute;
+}
 /* 表格样式 */
 .table_border:after {
   border-right: 0.02667rem solid #c7c7c7 !important;
 }
-
+.table_icon {
+  flex: 0.6 !important;
+}
+.table_icon svg {
+  height: 18px;
+  width: 18px;
+}
 .table_img {
-  width: 60px !important;
+  flex: 1.3 !important;
 }
 
-.table_longth {
-  width: 120px !important;
+.table_tbody tr {
+  display: flex;
 }
+
+.table_tbody tr td {
+  flex: 1;
+}
+
+.table_tbody_active tr:active {
+  background-color: #f8f8f8;
+}
+
+.table_thead_longth {
+  flex: 2.5 !important;
+  padding: 0 10px;
+  text-align: left;
+}
+
+.table_tbody_longth {
+  flex: 2.5 !important;
+  text-align: left;
+  padding: 6px 10px;
+}
+
 .incoic_table {
   overflow-y: auto;
   background-color: #ffffff;
 }
-.incoic_table table th {
-  width: 30px;
-  color: #222222;
-  text-align: left;
-  font-size: 15px;
-  padding-left: 10px;
+
+.table_thead tr {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.table_thead tr th {
+  flex: 1;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .incoic_table table td {
   color: #666666;
-  text-align: left;
   font-size: 14px;
-  padding: 5px 10px 5px 10px;
   line-height: 22px;
+  word-wrap: break-word;
+  word-break: break-all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* 搜索 */
@@ -167,5 +231,8 @@ export default {
 
 .index_class .weui-search-bar:after {
   border-bottom: 0 solid #d7d6dc;
+}
+.vux-x-icon {
+  fill: #999999;
 }
 </style>

@@ -1,19 +1,21 @@
 <!-- 进度查询 -->
 <template>
-  <scroller ref="followUp" class="my_index">
-    <div class="index_view vux-1px-b">
+  <div ref="followrela" class="scroller_rela">
+    <div class="index_view vux-1px-b" id="myFollow">
       <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度进度</div>
       <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度进度</div>
     </div>
-    <group gutter='0'>
-      <div v-show="showIndex">
-        <cell v-for="(item, index) in indexYearList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year)"></cell>
-      </div>
-      <div v-show="!showIndex">
-        <cell v-for="(item, index) in indexMonthList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year, item.month)"></cell>
-      </div>
-    </group>
-  </scroller>
+    <scroller ref="followUp" class="my_index">
+      <group gutter='0'>
+        <div v-show="showIndex">
+          <cell v-for="(item, index) in indexYearList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year)"></cell>
+        </div>
+        <div v-show="!showIndex">
+          <cell v-for="(item, index) in indexMonthList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year, item.month)"></cell>
+        </div>
+      </group>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -25,9 +27,9 @@ export default {
     const that = this;
     that.page = 0;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight;
-      that.$refs.followUp.$el.style.marginTop = `${marginTop}px`
-      that.$refs.followUp.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
+      const marginTop = document.querySelector('#myFollow').clientHeight;
+      that.$refs.followUp.$el.style.top = `${marginTop}px`;
+      that.$refs.followUp.$el.style.height = `${that.$countHeight(['.vux-header', '#myFollow'])}px`
     })
     const myDate = new Date(); // 获取系统当前时间
     const nowYear = myDate.getFullYear() + 1; // 当前年份
@@ -80,9 +82,8 @@ export default {
       }
     },
     // 点击进度查看详情
-    CellClick(id) {
-      console.log('id', id);
-      this.$router.push(`/JobControl/FollowUpList?id=${id}`);
+    CellClick(year, month) {
+      this.$router.push(`/JobControl/FollowUpList?year=${year}&month=${month || 0}`);
     },
   },
 };
@@ -117,6 +118,10 @@ export default {
   padding: 5px 10px;
   border-radius: 50px;
   background-color: #f8f8f8;
+}
+#myFollow {
+  position: absolute;
+  width: 100%;
 }
 </style>
 

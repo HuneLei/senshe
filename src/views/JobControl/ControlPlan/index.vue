@@ -1,12 +1,14 @@
 <!-- 客户规划 -->
 <template>
   <div ref="controlplan" class="scroller_rela">
+    <div class="my_index" id="myIndex">
+      <div class="index_view vux-1px-b">
+        <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
+        <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度指标</div>
+      </div>
+    </div>
     <scroller ref="planScroller" style="background-color: #ffffff;">
       <div class="my_index">
-        <div class="index_view vux-1px-b">
-          <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
-          <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度指标</div>
-        </div>
         <group gutter='0'>
           <div v-show="showIndex">
             <cell v-for="(item, index) in indexYearList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year)"></cell>
@@ -29,7 +31,9 @@ export default {
     const that = this;
     that.page = 0;
     this.$nextTick(() => {
-      that.$refs.controlplan.style.height = `${that.$countHeight(['.vux-header'])}px`
+      const myIndexTop = document.querySelector('#myIndex').clientHeight;
+      that.$refs.planScroller.$el.style.top = `${myIndexTop}px`;
+      that.$refs.planScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#myIndex'])}px`
     })
     const myDate = new Date(); // 获取系统当前时间
     const nowYear = myDate.getFullYear() + 1; // 当前年份
@@ -131,6 +135,10 @@ export default {
   padding: 5px 10px;
   border-radius: 50px;
   background-color: #f8f8f8;
+}
+#myIndex {
+  position: absolute;
+  width: 100%;
 }
 </style>
 

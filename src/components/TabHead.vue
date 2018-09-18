@@ -23,12 +23,13 @@
     <!-- tab页面切换组件 -->
     <div v-show="headIndex == 2">
       <tab-swit id='data_center_container' :initIndex="defaultIndex" :tabList="tabList" @index-change="indexChange" ref="swiper">
-        <div v-for="(item, index) in tabList" :slot="item.slot" :key="index" :class="item.slot != 'myIndex' || 'my_index_scroll'" style="height: 100%;">
-          <!-- <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+        <!-- <div v-for="(item, index) in tabList" :slot="item.slot" :key="index" :class="item.slot != 'myIndex' || 'my_index_scroll'" style="height: 100%;"> -->
+        <!-- <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
             <component v-if="headIndex == 2" :is="item.slot"></component>
           </transition> -->
-          <component v-if="headIndex == 2" :is="item.slot"></component>
-        </div>
+        <!-- <component v-if="headIndex == 2" :is="item.slot"></component> -->
+        <!-- <component :is="item.slot"></component> -->
+        <!-- </div> -->
       </tab-swit>
     </div>
   </div>
@@ -105,7 +106,22 @@ export default {
     // tab页面切换的时候触发
     indexChange(e) {
       console.log('e', e);
-      this.$store.commit('updateDefaultIndex', e)
+      let url = '';
+      switch (e) {
+        case 0:
+          url = '/DateCenter/MyGoods';
+          break;
+        case 1:
+          url = '/DateCenter/MyClient';
+          break;
+        case 2:
+          url = '/DateCenter/MyIndex';
+          break;
+        default:
+          break;
+      }
+      this.$router.push(url)
+      // this.$store.commit('updateDefaultIndex', e)
     },
     // 点击右侧按钮时候触发
     rightClick(e) {

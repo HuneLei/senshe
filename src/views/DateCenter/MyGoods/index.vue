@@ -1,8 +1,6 @@
 <template>
   <div class="my_goods">
-    <keep-alive>
-      <search :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" @on-submit="onSubmit" @on-cancel="onCancel"></search>
-    </keep-alive>
+    <search :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" @on-submit="onSubmit" @on-cancel="onCancel"></search>
     <div ref="vueWaterfallEasy" class="Water_fall" v-show="imgsArr.length">
       <vue-waterfall-easy ref="waterfall" :mobileGap=20 :enablePullDownEvent='cancelShow' :loadingDotStyle='loadingDotStyle' @scrollReachBottom='fetchImgsData' @click="clickFn" :imgsArr="imgsArr">
         <div class="img-info" slot-scope="props">
@@ -84,7 +82,7 @@ export default {
     clickFn(event, { index, value }) {
       // 阻止a标签跳转
       event.preventDefault()
-      this.$router.push(`DateCenter/MyGoodsItem?id=${value.id}`)
+      this.$router.push(`/DateCenter/MyGoodsItem?id=${value.id}`)
     },
     // 搜索的时候触发
     onSubmit() {

@@ -28,9 +28,9 @@ instance.interceptors.request.use((request) => {
 
 instance.interceptors.response.use(
   (response) => {
-    if (response.data.code !== 0 && response.data.code !== 20000 && response.data.code !== 401) {
-      Vue.$vux.toast.text(response.data.message, 'middle');
-    }
+    // if (response.data.code !== 0 && response.data.code !== 20000 && response.data.code !== 401) {
+    // Vue.$vux.toast.text(response.data.message, 'middle');
+    // }
     if (response.data.code === 401) {
       config.removeToken();
       config.removeUserToken();

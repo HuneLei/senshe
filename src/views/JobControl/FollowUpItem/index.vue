@@ -1,206 +1,166 @@
 <!-- 进度查询详情 -->
 <template>
-  <scroller :style="`margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'>
-    <div class="index_class">
-      <group gutter='0'>
+  <div class="scroller_rela" ref="followUpItem">
+    <x-table class="table_thead" :cell-bordered="false" ref="followThead" id="followThead">
+      <thead>
+        <tr>
+          <th class="table_thead_longth table_border">客户名称</th>
+          <th class="table_long">进货规划</th>
+          <th>进度%</th>
+          <th class="table_long">销售规划</th>
+          <th>进度%</th>
+        </tr>
+      </thead>
+    </x-table>
+    <scroller ref="followScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <div class="index_class incoic_table">
         <x-table :cell-bordered="false" class="index_table">
-          <thead>
-            <tr>
-              <th class="first_th">客户名称</th>
-              <th>进货规划</th>
-              <th>进度(%)</th>
-              <th>销售规划</th>
-              <th>进度(%)</th>
-            </tr>
-          </thead>
-          <tbody>
+          <tbody class="table_tbody">
             <tr v-for="(item, index) in indexList" :key="index">
-              <td class="first_td">{{item.name}}</td>
-              <td>{{item.project}}</td>
-              <td>{{item.scheduleOne}}</td>
-              <td>{{item.target}}</td>
-              <td>{{item.scheduleTwo}}</td>
+              <td class="table_tbody_longth">{{item.clientName}}</td>
+              <td class="table_long">{{item.stock}}</td>
+              <td>{{item.stockInventory}}</td>
+              <td class="table_long">{{item.sale}}</td>
+              <td>{{item.saleInventory}}</td>
             </tr>
           </tbody>
         </x-table>
-      </group>
-    </div>
-  </scroller>
+      </div>
+    </scroller>
+  </div>
 </template>
 
 <script>
+import jobControl from '../../../api/jobControl';
 
 export default {
+  activated() {
+    this.$refs.followScroller.triggerPullToRefresh()
+  },
   created() { },
   mounted() {
-    this.winTop = document.querySelector('.vux-header').clientHeight;
+    const that = this;
+    this.$nextTick(() => {
+      const Top = document.querySelector('#followThead').clientHeight;
+      that.$refs.followScroller.$el.style.top = `${Top}px`;
+      that.$refs.followScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#followThead'])}px`;
+    })
   },
   computed: {},
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
-      indexList: [
-        {
-          id: 1,
-          name: '上药科泽（上海）医药有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 2,
-          name: '上海上虹大药房连锁有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 3,
-          name: '国药控股国大药房有限公司（集采）',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 4,
-          name: '上海余天成药业连锁有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 5,
-          name: '上海第一医药股份有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 4,
-          name: '上海余天成药业连锁有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 5,
-          name: '上海第一医药股份有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 4,
-          name: '上海余天成药业连锁有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 5,
-          name: '上海第一医药股份有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 4,
-          name: '上海余天成药业连锁有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 5,
-          name: '上海第一医药股份有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 4,
-          name: '上海余天成药业连锁有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 5,
-          name: '上海第一医药股份有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 4,
-          name: '上海余天成药业连锁有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        },
-        {
-          id: 5,
-          name: '上海第一医药股份有限公司',
-          project: 5000,
-          scheduleOne: 25.12,
-          target: 5000,
-          scheduleTwo: 25.12
-        }
-      ], // 列表
+      indexList: [], // 列表
+      page: 0, // 当前页数
+      noDataText: '',
     };
   },
   methods: {
+    // 获取进度列表
+    getInvenItem(callBack) {
+      const from = {
+        currentPage: this.page,
+        year: this.$route.query.year,
+        clientType: this.$route.query.clientType,
+        productId: this.$route.query.productId,
+      }
+      if (this.$route.query.month !== '0') {
+        from.month = this.$route.query.month;
+      }
+      jobControl.planinventory(from).then((res) => {
+        callBack(res.data);
+      })
+    },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log('done', done);
-      done(true)
+      this.page += 1;
+      const self = this; // this指向问题
+      this.getInvenItem((data) => {
+        if (data.code === 0) {
+          if (data.result.listData.length < 15) {
+            if (self.page === 1 && data.result.listData.length === 0) {
+              self.noDataText = '暂无数据';
+            } else if (self.page !== 1) {
+              self.noDataText = '没有更多数据了';
+            }
+            self.indexList = self.indexList.concat(data.result.listData);
+            done(true)
+            return
+          }
+          self.indexList = self.indexList.concat(data.result.listData);
+        }
+        done()
+      })
     },
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      console.log('done', done);
-      done(true)
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getInvenItem((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.indexList = data.result.listData;
+        }
+        done()
+      })
     }
   },
 };
 </script>
 
 <style scoped>
-.first_th {
-  width: 50px !important;
-  padding-left: 12px !important;
-}
-.first_td {
-  padding-left: 12px !important;
-}
-.index_table th {
-  color: #222222;
-  text-align: left;
-  font-size: 13px;
-  padding-left: 5px;
-  width: 40px;
+.table_thead {
+  font-size: 15px;
+  position: absolute;
 }
 
-.index_table td {
+.table_thead tr {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.table_long {
+  flex: 1.5 !important;
+}
+
+.table_thead tr th {
+  flex: 1;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.table_tbody tr {
+  display: flex;
+}
+
+.table_tbody tr td {
+  flex: 1;
+}
+
+.incoic_table table td {
   color: #666666;
-  text-align: left;
-  font-size: 13px;
-  padding: 5px 0 5px 5px;
+  font-size: 14px;
   line-height: 22px;
+  word-wrap: break-word;
+  word-break: break-all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.incoic_table {
+  overflow-y: auto;
+  background-color: #ffffff;
+}
+.table_thead_longth {
+  flex: 2.5 !important;
+  padding: 0 6px;
+  text-align: left;
+}
+
+.table_tbody_longth {
+  flex: 2.5 !important;
+  text-align: left;
+  padding: 5px 6px;
 }
 </style>
 <style>

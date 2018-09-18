@@ -1,10 +1,12 @@
 <!-- 进销存查询 -->
 <template>
-  <scroller ref="queryInvic" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
-    <group gutter='0'>
-      <cell v-for="(item, index) in indexList" :key="index" :title="item.name" is-link @click.native="CellClick(item.id)"></cell>
-    </group>
-  </scroller>
+  <div class="scroller_rela">
+    <scroller ref="queryInvic" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <group gutter='0'>
+        <cell v-for="(item, index) in indexList" :key="index" :title="item.name" is-link @click.native="CellClick(item.id)"></cell>
+      </group>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -15,9 +17,7 @@ export default {
     const that = this;
     that.page = 0;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight;
-      that.$refs.queryInvic.$el.style.marginTop = `${marginTop}px`
-      that.$refs.queryInvic.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
+      that.$refs.queryInvic.$el.style.height = `${that.$countHeight(['.vux-header'])}px`;
     })
   },
   computed: {},

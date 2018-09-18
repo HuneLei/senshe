@@ -1,29 +1,33 @@
 <!-- 客户规划三级 -->
 <template>
-  <scroller ref="controlPlanItem" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新' :on-refresh="refresh">
-    <div class="control_plan_two">
-      <group gutter='0'>
-        <cell title="客户名称" class="common_name">
-          <div class="client_type">
-            <div slot="value" class="client_stock">进货规划</div>
-            <div slot="value" class="client_stock">销售规划</div>
-          </div>
-        </cell>
-        <cell v-for="(item, index) in planList" :key="index" :title="item.clientName" class="plan_name">
-          <div class="plan_type">
-            <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.salePlan' type='number'
-            :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
-            </x-input>
-            <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.salePlan}}</div>
-            <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.stockPlan' type='number'
-            :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
-            </x-input>
-            <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.stockPlan}}</div>
-          </div>
-        </cell>
-      </group>
-    </div>
-  </scroller>
+  <div ref="conplanItem"  class="scroller_rela">
+    <group gutter='0' class="absolute_group">
+      <cell title="客户名称" class="common_name" id="conplanitem">
+        <div class="client_type">
+          <div slot="value" class="client_stock">进货规划</div>
+          <div slot="value" class="client_stock">销售规划</div>
+        </div>
+      </cell>
+    </group>
+    <scroller ref="controlPlanItem" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新' :on-refresh="refresh">
+      <div class="control_plan_two">
+        <group gutter='0'>
+          <cell v-for="(item, index) in planList" :key="index" :title="item.clientName" class="plan_name">
+            <div class="plan_type">
+              <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.salePlan'
+              type='number' :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
+              </x-input>
+              <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.salePlan}}</div>
+              <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.stockPlan'
+              type='number' :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
+              </x-input>
+              <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.stockPlan}}</div>
+            </div>
+          </cell>
+        </group>
+      </div>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -51,9 +55,9 @@ export default {
   mounted() {
     const that = this;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight;
+      const marginTop = document.querySelector('#conplanitem').clientHeight;
       that.$refs.controlPlanItem.$el.style.marginTop = `${marginTop}px`
-      that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
+      that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header', '#conplanitem'])}px`
     })
   },
   computed: {

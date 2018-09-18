@@ -1,10 +1,11 @@
 <!-- 数据中心 -->
 <template>
-  <div class="data_center" ref="dataCenter">
-    <!-- <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
-      <router-view></router-view>
-    </transition> -->
-    <router-view></router-view>
+  <div class="data_center scroller_rela" ref="dataCenter">
+    <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
@@ -15,7 +16,7 @@ export default {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
-      that.$refs.dataCenter.style.marginTop = document.querySelector('.vux-tab-container').clientHeight;
+      that.$refs.dataCenter.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {

@@ -1,15 +1,19 @@
 <!-- 客户规划三级 -->
 <template>
-  <scroller ref="controlPlanList" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
-    <group gutter='0'>
-      <cell title="通用名" class="common_name">
+  <div class="scroller_rela" ref="controllist">
+    <group gutter='0' class="control_list absolute_group">
+      <cell title="通用名" id="controllist">
         <span class="client_type">客户类型</span>
       </cell>
-      <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.commonName" @click.native="CellClick(item.clientType, item.productId)">
-        <span class="cell_type">{{clientName[item.clientType]}}</span>
-      </cell>
     </group>
-  </scroller>
+    <scroller ref="controlPlanList" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <group gutter='0'>
+        <cell class="cell_name" is-link v-for="(item, index) in cellList" :key="index" :title="item.commonName" @click.native="CellClick(item.clientType, item.productId)">
+          <span class="cell_type">{{clientName[item.clientType]}}</span>
+        </cell>
+      </group>
+    </scroller>
+  </div>
 </template>
 
 <script>
@@ -29,9 +33,9 @@ export default {
   mounted() {
     const that = this;
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight;
+      const marginTop = document.querySelector('#controllist').clientHeight;
       that.$refs.controlPlanList.$el.style.marginTop = `${marginTop}px`
-      that.$refs.controlPlanList.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
+      that.$refs.controlPlanList.$el.style.height = `${that.$countHeight(['.vux-header', '#controllist'])}px`
     })
   },
   computed: {
@@ -104,6 +108,10 @@ export default {
 </script>
 
 <style scoped>
+.control_list {
+  position: absolute;
+  width: 100%;
+}
 .common_name {
   color: #222222;
 }

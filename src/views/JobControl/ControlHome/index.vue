@@ -16,20 +16,11 @@
 
 export default {
   created() { },
-  mounted() {
-    // 导航栏高度
-    const that = this;
-    this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight;
-      that.$refs.controlHome.$el.style.marginTop = `${marginTop}px`
-      that.$refs.controlHome.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar'])}px`
-    })
-  },
+  mounted() { },
   computed: {},
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
       // 工作管理列表
       clientList: [{
         icon: 'iconfont icon-guihuaxiangmu',
