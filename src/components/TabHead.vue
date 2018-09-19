@@ -3,19 +3,19 @@
   <div class="tab_head">
     <!-- 导航顶部类型 -->
     <div v-if="headIndex == 0">
-      <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name" @on-click-back='onClickBack'>
+      <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name || indexName" @on-click-back='onClickBack'>
         <span v-if="!modifier" slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
         <span v-if="modifier" slot="right" v-for="(item, index) in slotRight" :key="index" class="right_name" @click="rightClick(index)">{{item.name}}</span>
       </x-header>
     </div>
     <!-- 带tab切换导航顶部类型 -->
     <div v-if="headIndex == 1" class="incoic_item">
-      <x-header id="header" :line-width=50 title="slot:overwrite-title" :left-options="{backText: ''}">
+      <x-header id="header" title="slot:overwrite-title" :left-options="{backText: ''}">
         <div slot="overwrite-title">
-          <tab class="" default-color='#fff' active-color='#fff' custom-bar-width="1rem">
-            <tab-item active-class="tab_active" selected>商业</tab-item>
-            <tab-item active-class="tab_active">连锁</tab-item>
-            <tab-item active-class="tab_active">门店</tab-item>
+          <tab class="" default-color='#fff' active-color='#fff' custom-bar-width="1rem" :line-width='6'>
+            <tab-item active-class="tab_active" selected @on-item-click="itemTabClick(100)">商业</tab-item>
+            <tab-item active-class="tab_active" @on-item-click="itemTabClick(200)">连锁</tab-item>
+            <tab-item active-class="tab_active" @on-item-click="itemTabClick(300)">门店</tab-item>
           </tab>
         </div>
       </x-header>
@@ -41,6 +41,10 @@ import myClient from '../views/DateCenter/MyClient/index.vue'; // 我的客户
 import myIndex from '../views/DateCenter/MyIndex/index.vue'; // 我的指标
 export default {
   computed: {
+    // 商级名称
+    indexName() {
+      return this.$store.getters.getIndexName
+    },
     // 修改状态切换
     modifier() {
       return this.$store.getters.getModifier
@@ -127,6 +131,10 @@ export default {
         this.$store.commit('updateModifier', !this.modifier)
       }
       this.$emit('right-click', e);
+    },
+    // tab切换的时候触发
+    itemTabClick(index) {
+      this.$store.commit('updateTabIndex', index)
     },
     // 点击返回按钮触发
     onClickBack() {

@@ -1,11 +1,10 @@
 <!-- 进销存详情 -->
 <template>
-  <!-- <scroller  :style="`overflow-y: auto;margin-top: ${winTop}px;`" v-model="winTop" :on-refresh="refresh" :on-infinite="infinite" noDataText='' refreshText='下拉刷新'> -->
-  <div class="incoic_table">
-    <x-table :cell-bordered="false">
+  <div class="scroller_rela">
+    <x-table class="table_thead" :cell-bordered="false" ref="invoicThead" id="invoicThead">
       <thead>
         <tr>
-          <th class="table_longth table_border">客户名称</th>
+          <th class="table_thead_longth table_border">客户名称</th>
           <th>进货</th>
           <th>进度%</th>
           <th>销售</th>
@@ -13,154 +12,156 @@
           <th>库存</th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="(item, index) in incoicList" :key="index">
-          <td class="table_border">{{item.date}}<br>{{item.name}}</td>
-          <td>{{item.stock}}</td>
-          <td>{{item.scheduleOne}}</td>
-          <td>{{item.market}}</td>
-          <td>{{item.scheduleTwo}}</td>
-          <td>{{item.inventory}}</td>
-        </tr>
-      </tbody>
     </x-table>
+    <scroller ref="queryInvoicItem" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <div class="incoic_table">
+        <x-table :cell-bordered="false">
+          <tbody class="table_tbody">
+            <tr v-for="(item, index) in incoicList" :key="index">
+              <td class="table_border table_tbody_longth">{{item.createTime | convertTime}}<br>{{item.clientName}}</td>
+              <td>{{item.stock}}</td>
+              <td>{{item.stockInventory}}</td>
+              <td>{{item.sale}}</td>
+              <td>{{item.saleInventory}}</td>
+              <td>{{item.inventory}}</td>
+            </tr>
+          </tbody>
+        </x-table>
+      </div>
+    </scroller>
   </div>
-  <!-- </scroller> -->
 </template>
 
 <script>
+import jobControl from '../../../api/jobControl';
 
 export default {
   created() { },
+  activated() {
+    this.incoicList = [];
+    this.page = 0;
+    this.$refs.queryInvoicItem.triggerPullToRefresh()
+  },
   mounted() {
     // 导航栏高度
-    this.winTop = document.querySelector('.vux-header').clientHeight;
+    const that = this;
+    this.$nextTick(() => {
+      const Top = document.querySelector('#invoicThead').clientHeight;
+      that.$refs.queryInvoicItem.$el.style.top = `${Top}px`;
+      that.$refs.queryInvoicItem.$el.style.height = `${that.$countHeight(['.vux-tab-container', '#invoicThead'])}px`;
+    })
   },
-  computed: {},
+  watch: {
+    tabIndex(newVal, oldVal) {
+      this.page = 0;
+      this.incoicList = [];
+      this.$refs.queryInvoicItem.triggerPullToRefresh()
+    }
+  },
+  computed: {
+    tabIndex() {
+      return this.$store.getters.getTabIndex
+    }
+  },
   components: {},
   data() {
     return {
-      winTop: 0, // 导航栏高度
-      incoicList: [{
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }, {
-        date: '2018-06-01',
-        name: '上药科泽（上海）医药有限公司',
-        stock: 50000,
-        scheduleOne: 15.12,
-        market: 45000,
-        scheduleTwo: 8.97,
-        inventory: 5000,
-      }]
+      page: 0, // 当前页数
+      noDataText: '',
+      incoicList: []
     };
   },
   methods: {
+    // 获取详情
+    getLnventorylast(callBack) {
+      jobControl.inventorylast(this.page, this.tabIndex, this.$route.query.productId).then((res) => {
+        callBack(res.data)
+      })
+    },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log('done', done);
-      done(true)
+      this.page += 1;
+      const self = this; // this指向问题
+      this.getLnventorylast((data) => {
+        if (data.code === 0) {
+          if (data.result.listData.length < 15) {
+            if (self.page === 1 && data.result.listData.length === 0) {
+              self.noDataText = '暂无数据';
+            } else if (self.page !== 1) {
+              self.noDataText = '没有更多数据了';
+            }
+            self.incoicList = self.incoicList.concat(data.result.listData);
+            done(true)
+            return
+          }
+          self.incoicList = self.incoicList.concat(data.result.listData);
+        }
+        done()
+      })
     },
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      console.log('done', done);
-      done(true)
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getLnventorylast((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.incoicList = data.result.listData;
+        }
+        done()
+      })
     }
   },
 };
 </script>
 
 <style scoped>
-/* 表格样式 */
-.table_border:after {
-  border-right: 0.02667rem solid #c7c7c7 !important;
+.table_thead {
+  font-size: 15px;
+  position: absolute;
 }
 
-.incoic_table table {
-  width: 480px;
+.table_thead tr {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.table_longth {
-  width: 80px !important;
+.table_thead tr th {
+  flex: 1;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.table_tbody tr {
+  display: flex;
+}
+
+.table_tbody tr td {
+  flex: 1;
+}
+.incoic_table table td {
+  color: #666666;
+  font-size: 14px;
+  line-height: 22px;
+  word-wrap: break-word;
+  word-break: break-all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .incoic_table {
   overflow-y: auto;
   background-color: #ffffff;
 }
-.incoic_table table th {
-  width: 25px;
-  color: #222222;
+.table_thead_longth {
+  flex: 2.4 !important;
+  padding: 0 5px;
   text-align: left;
-  font-size: 15px;
-  padding-left: 10px;
 }
 
-.incoic_table table td {
-  color: #666666;
+.table_tbody_longth {
+  flex: 2.4 !important;
   text-align: left;
-  font-size: 14px;
-  padding: 5px 5px 5px 10px;
-  line-height: 22px;
+  padding: 5px 5px;
 }
 </style>

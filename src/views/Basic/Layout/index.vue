@@ -7,7 +7,7 @@
     <!-- router链接 -->
     <router-view></router-view>
     <!-- 底部导航组件 -->
-    <transition enter-active-class="animated slideInLeft faster" leave-active-class="animated slideOutLeft faster">
+    <transition enter-active-class="animated slideInLeft flying" leave-active-class="animated slideOutLeft flying">
       <tab-bar :initIndex="baseList.barIndex" v-show="baseList.isBar"></tab-bar>
     </transition>
   </div>

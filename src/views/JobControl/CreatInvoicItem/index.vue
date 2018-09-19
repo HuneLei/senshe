@@ -23,7 +23,9 @@
               <td>{{item.stock}}</td>
               <td>{{item.sale}}</td>
               <td>{{item.inventory}}</td>
-              <td class="table_img">{{item.filePath}}</td>
+              <td class="table_img">
+                <span class="icon iconfont icon-iconset0145"></span>
+              </td>
               <td class="table_icon" v-if="modifier">
                 <x-icon type="ios-arrow-right"></x-icon>
               </td>

@@ -204,3 +204,10 @@ input::-webkit-input-placeholder {
   position: absolute !important;
   width: 100%;
 }
+.vux-table td:before, .vux-table th:before {
+  border-bottom: 1px solid #C7C7C7 !important;
+}
+
+.table_border:after {
+  border-right: 1px solid #c7c7c7 !important;
+}

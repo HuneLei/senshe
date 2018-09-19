@@ -26,6 +26,7 @@ export default {
   watch: {
     $route(to, form) {
       if (to.path === '/JobControl/InvoicList' && form.path === '/JobControl') {
+        this.cellList = [];
         this.$refs.invoicListscroller.triggerPullToRefresh()
       }
     }

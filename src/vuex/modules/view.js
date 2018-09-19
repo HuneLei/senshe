@@ -1,8 +1,8 @@
 const state = {
   isLoading: false, // router切换loading
   winHeight: 0, // tab切换页的高度
-  enteAnima: 'slideInRight faster', // 进来时候的动画
-  leaveAnima: 'slideOutLeft faster', // 出去时候的动画
+  enteAnima: 'slideInRight flying', // 进来时候的动画
+  leaveAnima: 'slideOutLeft flying', // 出去时候的动画
   defaultPath: '/DateCenter/MyGoods', // 默认选中的tab
   userInfo: {}, // 用户信息
   userFlush: true, // 是否刷新用户信息
@@ -13,9 +13,12 @@ const state = {
   showSheet: false, // 退出登录
   clientList: {}, // 进销存查询
   invoicData: {}, // 进销存修改记录
+  indexName: '', // 商级名称
+  tabIndex: 0, // 进销存tabIndex
 };
 
 const getters = {
+  getTabIndex: (state) => state.tabIndex,
   getInvoicData: (state) => state.invoicData,
   getShowSheet: (state) => state.showSheet,
   getPosition: (state) => state.position,
@@ -30,11 +33,18 @@ const getters = {
   getPlanDate: (state) => state.planDate,
   getMsgFlush: (state) => state.msgFlush,
   getClientList: (state) => state.clientList,
+  getIndexName: (state) => state.indexName,
 };
 
 const actions = {};
 
 const mutations = {
+  updateTabIndex(state, index) {
+    state.tabIndex = index;
+  },
+  updateIndexName(state, index) {
+    state.indexName = index;
+  },
   updateInvoicData(state, data) {
     state.invoicData = data;
   },

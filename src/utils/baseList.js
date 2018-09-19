@@ -208,7 +208,7 @@ const baseList = {
     headIndex: 2,
   },
   [DateCenter.IndexClass]: {
-    name: '商级',
+    name: '',
     isTab: true,
     isShowBack: true,
     slotRight: [],

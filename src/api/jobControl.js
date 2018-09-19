@@ -10,8 +10,25 @@ const path = {
   customerlist: 'mobile/customer/list/all', // 我的客户列表
   inventorylist: 'mobile/inventory/list', // 进销存查询
   planinventory: 'mobile/customer/plan/list/inventory', // 进度查询
+  productlist: 'mobile/inventory/list/product', // 进销存查询(末次)
+  inventorylast: 'mobile/inventory/last/inventory', // 进销存查询详情(末次)
 };
 
+// 进销存查询(末次)
+const inventorylast = (currentPage, clientType, productId) => api.get(path.inventorylast, {
+  params: {
+    currentPage,
+    clientType,
+    productId,
+  }
+})
+
+// 进销存查询(末次)
+const productlist = (currentPage) => api.get(path.productlist, {
+  params: {
+    currentPage,
+  }
+})
 // 客户列表下拉
 const customerlist = (clientType) => api.get(path.customerlist, {
   params: {
@@ -68,9 +85,11 @@ export default {
   threelist,
   threeitem,
   updateplan,
+  productlist,
   customerlist,
   inventoryList,
   createInventory,
   updateInventory,
   planinventory,
+  inventorylast,
 };

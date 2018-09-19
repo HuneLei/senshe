@@ -12,7 +12,7 @@
         </div>
       </div>
     </scroller>
-    <transition enter-active-class="animated slideInRight faster" leave-active-class="animated slideOutRight faster">
+    <transition enter-active-class="animated slideInRight flying" leave-active-class="animated slideOutRight flying">
       <!-- router链接 -->
       <keep-alive>
         <router-view></router-view>

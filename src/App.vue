@@ -12,6 +12,10 @@ export default {
 
 
 <style lang="less">
+.animated.flying {
+  -webkit-animation-duration: 350ms;
+  animation-duration: 350ms;
+}
 /**
 * vux-1px-l 左边框
 * vux-1px-r 右边框

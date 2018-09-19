@@ -12,13 +12,13 @@
         <div slot="title" class="update_img">
           <span class="update_img_span">陈列：</span>
           <div class="img_show">
-            <div class="img_show_no" style="box-shadow: 1px 0px 1px #ccc; border: 1px solid #eaeaea; border-radius: 10px;">
+            <div class="img_show_no" style="border: 1px solid #eaeaea; border-radius: 10px;" @click="galleryImgsSelected()">
               <span class="iconfont icon-zhaopian1"></span>
-              <span class="img_show_font" @click="galleryImgsSelected()">上传照片</span>
+              <span class="img_show_font">上传照片</span>
             </div>
             <div class="img_show_view" v-for="(item, index) in imgList" :key="index">
-              <img class="previewer-demo-img" :src="item.src" alt="" style="box-shadow: 1px 0px 1px #ccc; border-radius: 10px;" @click="showImg(index)">
-              <span class="img_span_show iconfont icon-jianshao"></span>
+              <img v-if="item.src" class="previewer-demo-img" :src="item.src" alt="" style="box-shadow: 1px 0px 1px #ccc; border-radius: 10px;" @click="showImg(index)">
+              <span v-if="item.src" class="img_span_show iconfont icon-jianshao" @click="deleteImage(index)"></span>
             </div>
             <div v-transfer-dom>
               <previewer :list="imgList" ref="previewer" @on-index-change="logIndexChange" :options="options"></previewer>
@@ -42,6 +42,10 @@ export default {
   created() { },
   activated() {
     this.clientType = [];
+    this.imgList = [{
+      src: '',
+      msrc: '',
+    }];
     this.client = this.clientList.clientType;
     // 日期
     if (!Object.keys(this.invoicData).length) {
@@ -107,15 +111,8 @@ export default {
       clientVar: [],
       clientType: [],
       imgList: [{
-        src: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',
-        msrc: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',
-        w: 800,
-        h: 400
-      }, {
-        src: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',
-        msrc: 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/65bc9d5c-5996-4054-8404-2f2d8b0ffbef..jpg',
-        w: 800,
-        h: 400
+        src: '',
+        msrc: '',
       }],
       options: {
         getThumbBoundsFn(index) {
@@ -143,6 +140,24 @@ export default {
     };
   },
   methods: {
+    // 删除此照片
+    deleteImage(index) {
+      const that = this
+      this.$vux.confirm.show({
+        content: '确定删除此图片？',
+        onCancel() { },
+        onConfirm() {
+          if (that.imgList.length !== 1) {
+            that.imgList.splice(index, 1);
+          } else {
+            that.imgList = [{
+              src: '',
+              msrc: '',
+            }]
+          }
+        }
+      })
+    },
     // 获取客户列表下拉
     getCustomList(callBack) {
       jobControl.customerlist(this.client).then((res) => {
@@ -160,6 +175,7 @@ export default {
     },
     // 确定提交按钮
     confirmClick() {
+      const that = this
       if (this.dataValue === '') {
         this.$vux.toast.text('请选择日期', 'middle');
         return;
@@ -184,7 +200,11 @@ export default {
       if (this.$plus) {
         window.mobileNative.getGeocode((address, error) => {
           if (error) {
-            this.$vux.toast.text('获取签到地址失败', 'middle');
+            this.$vux.confirm.show({
+              showCancelButton: false,
+              title: '获取签到位置失败',
+              content: '请到手机系统的[设置]->[隐私]->[定位服务]中打开定位服务,并允许森舍使用定位服务'
+            })
             return;
           }
           addresses = address;
@@ -273,7 +293,54 @@ export default {
     },
     // 从相册中选择图片
     galleryImgsSelected() {
-      window.mobileNative.galleryImgsSelected()
+      const that = this;
+      const imgList = [];
+      const e = {
+        files: ['https://2017051845.oss-cn-hangzhou.aliyuncs.com/d6f00435-e9ab-455a-85a5-6a81de6c2471..jpg']
+      }
+      for (let i = 0; i < e.files.length; i += 1) {
+        console.log('e.files[i]', e.files[i])
+        const imgObject = {
+          src: e.files[i],
+          msrc: e.files[i],
+        }
+        imgList.push(imgObject)
+      }
+      // imgList.push(that.imgList)
+      // imgList = [...that.imgList, ...imgList]
+      // for (let i = 0; i < that.imgList.length; i += 1) {
+      //   const imgObject = {
+      //     src: that.imgList[i].src,
+      //     msrc: that.imgList[i].src,
+      //   }
+      //   imgList.push(imgObject)
+      // }
+      if (that.imgList.length === 1 && that.imgList[0].src === '') {
+        that.imgList = [];
+      }
+      that.imgList = [...that.imgList, ...imgList];
+      // window.mobileNative.galleryImgsSelected((e) => {
+      //   for (let i = 0; i < e.files.length; i += 1) {
+      //     console.log('e.files[i]', e.files[i])
+      //     const imgObject = {
+      //       src: e.files[i],
+      //       msrc: e.files[i],
+      //     }
+      //     imgList.push(imgObject)
+      //   }
+      //   for (let i = 0; i < that.imgList.length; i += 1) {
+      //     const imgObject = {
+      //       src: that.imgList[i].src,
+      //       msrc: that.imgList[i].src,
+      //     }
+      //     imgList.push(imgObject)
+      //   }
+      //   that.imgList = [{
+      //     src: '',
+      //     msrc: '',
+      //   }];
+      //   that.imgList = imgList;
+      // })
     },
     // 选择触发
     selectChange(val, index) {
@@ -303,7 +370,7 @@ export default {
 .img_show div img {
   width: 62px;
   height: 62px;
-  margin: 6px 0 5px 14px;
+  margin: 6px 0 5px 10px;
 }
 .img_show {
   display: flex;
@@ -313,7 +380,7 @@ export default {
 .img_show_no {
   width: 62px;
   height: 62px;
-  margin: 6px 0 5px 14px;
+  margin: 6px 0 5px 10px;
   text-align: center;
   background-color: #f8f8f8;
 }

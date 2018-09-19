@@ -27,7 +27,9 @@ import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
-  activated() { },
+  activated() {
+    this.yearShow = true;
+  },
   watch: {
     $route(to, form) {
       if (to.path === '/JobControl/CreatPlan' && form.path === '/JobControl/ControlPlan') {

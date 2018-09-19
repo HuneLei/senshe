@@ -3,7 +3,7 @@
   <scroller style="background-color: #ffffff;" ref="myClientscroll">
     <div class="my_client">
       <div class="client_view" v-for="(item, index) in clientList" :key="index">
-        <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path)">{{item.amount}}</div>
+        <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path, item.title)">{{item.amount}}</div>
         <div class="client_title">{{item.title}}</div>
       </div>
     </div>
@@ -57,9 +57,9 @@ export default {
       });
     },
     // 去相应的客户页面
-    goClient(data) {
-      console.log(`我点击了${data}`)
+    goClient(data, title) {
       this.$router.push(`/DateCenter/IndexClass?index=${data}`);
+      this.$store.commit('updateIndexName', title)
     }
   },
 };

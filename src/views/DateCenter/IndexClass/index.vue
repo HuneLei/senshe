@@ -1,7 +1,7 @@
 <!-- 商级 -->
 <template>
   <div ref="myIndexClass" class="scroller_rela">
-    <search ref="clientClassItem" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
+    <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索" v-model="searchValue" class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
     <scroller ref="IndexClass" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
       <div class="index_class">
         <group gutter='0'>
