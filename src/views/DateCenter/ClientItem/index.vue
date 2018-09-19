@@ -32,16 +32,19 @@ import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
+  activated() {
+    this.form = {};
+    this.clientId = this.$route.query.id;
+    this.clientItem(this.$route.query.id);
+  },
   mounted() {
     const that = this;
     // 屏幕高度设置
     this.$nextTick(() => {
       const marginTop = document.querySelector('.vux-header').clientHeight;
-      that.$refs.ClintItem.$el.style.marginTop = `${marginTop}px`
+      // that.$refs.ClintItem.$el.style.marginTop = `${marginTop}px`
       that.$refs.ClintItem.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
-    this.clientId = this.$route.query.id;
-    this.clientItem(this.$route.query.id);
   },
   computed: {},
   components: {},

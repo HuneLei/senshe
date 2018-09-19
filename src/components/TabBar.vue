@@ -16,6 +16,12 @@ export default {
   created() {
     this.tab_index = this.initIndex;
   },
+  computed: {
+    // 选中的tab
+    defaultPath() {
+      return this.$store.getters.getDefaultPath;
+    }
+  },
   mounted() { },
   props: {
     // 顶部badge组
@@ -65,10 +71,9 @@ export default {
   methods: {
     // tab切换时候触发
     indexChange(index) {
-      console.log('在切换tab', index);
       switch (index) {
         case 0:
-          this.$router.push('/DateCenter/MyGoods');
+          this.$router.push(this.defaultPath);
           break;
         case 1:
           this.$router.push('/JobControl');
@@ -85,9 +90,9 @@ export default {
 </script>
 
 <style scoped>
-  .tab_view {
-    background-color: #ffffff
-  }
+.tab_view {
+  background-color: #ffffff;
+}
 </style>
 <style>
 .tab_view .weui-tabbar__item {

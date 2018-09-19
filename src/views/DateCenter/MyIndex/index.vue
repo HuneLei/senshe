@@ -1,18 +1,24 @@
 <!-- 我的指标 -->
 <template>
-  <div class="my_index">
-    <div class="index_view vux-1px-b">
-      <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
-      <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度指标</div>
+  <div ref="myIndexView" class="scroller_rela">
+    <div class="my_index" id="myIndexs">
+      <div class="index_view vux-1px-b">
+        <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
+        <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度指标</div>
+      </div>
     </div>
-    <group gutter='0'>
-      <div v-show="showIndex">
-        <cell v-for="(item, index) in indexYearList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year)"></cell>
+    <scroller ref="myIndexScroll">
+      <div class="my_index">
+        <group gutter='0'>
+          <div v-show="showIndex">
+            <cell v-for="(item, index) in indexYearList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year)"></cell>
+          </div>
+          <div v-show="!showIndex">
+            <cell v-for="(item, index) in indexMonthList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year, item.month)"></cell>
+          </div>
+        </group>
       </div>
-      <div v-show="!showIndex">
-        <cell v-for="(item, index) in indexMonthList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year, item.month)"></cell>
-      </div>
-    </group>
+    </scroller>
   </div>
 </template>
 
@@ -22,6 +28,12 @@ import dateCenter from '../../../api/dateCenter';
 export default {
   created() { },
   mounted() {
+    const that = this;
+    this.$nextTick(() => {
+      const myIndexTop = document.querySelector('#myIndexs').clientHeight;
+      that.$refs.myIndexScroll.$el.style.top = `${myIndexTop}px`;
+      that.$refs.myIndexScroll.$el.style.height = `${that.$countHeight(['.vux-tab-container', '#myIndexs', '.weui-tabbar'])}px`
+    })
     const myDate = new Date(); // 获取系统当前时间
     const nowYear = myDate.getFullYear() + 1; // 当前年份
     const nowMonth = myDate.getMonth(); // 当前月份
@@ -109,6 +121,10 @@ export default {
   padding: 5px 10px;
   border-radius: 50px;
   background-color: #f8f8f8;
+}
+#myIndexs {
+  position: absolute;
+  width: 100%;
 }
 </style>
 

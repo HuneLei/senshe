@@ -3,7 +3,7 @@ const state = {
   winHeight: 0, // tab切换页的高度
   enteAnima: 'slideInRight faster', // 进来时候的动画
   leaveAnima: 'slideOutLeft faster', // 出去时候的动画
-  defaultIndex: 0, // 默认选中的tab
+  defaultPath: '/DateCenter/MyGoods', // 默认选中的tab
   userInfo: {}, // 用户信息
   userFlush: true, // 是否刷新用户信息
   msgFlush: false, // 是否刷新留言信息
@@ -23,7 +23,7 @@ const getters = {
   getWinHeight: (state) => state.winHeight,
   getEnteAnima: (state) => state.enteAnima,
   getLeaveAnima: (state) => state.leaveAnima,
-  getDefaultIndex: (state) => state.defaultIndex,
+  getDefaultPath: (state) => state.defaultPath,
   getUserInfo: (state) => state.userInfo,
   getUserFlush: (state) => state.userFlush,
   getModifier: (state) => state.modifier,
@@ -71,8 +71,8 @@ const mutations = {
   updateLeaveAnima(state, anima) {
     state.leaveAnima = anima;
   },
-  updateDefaultIndex(state, index) {
-    state.defaultIndex = index;
+  updateDefaultPath(state, path) {
+    state.defaultPath = path;
   },
   updateUserInfo(state, data) {
     state.userInfo = data;

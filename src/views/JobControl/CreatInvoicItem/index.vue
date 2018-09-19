@@ -57,7 +57,7 @@ export default {
     const that = this;
     this.$nextTick(() => {
       const theadTop = document.querySelector('#creatSearchView').clientHeight;
-      const Top = document.querySelector('#creatSearchView').clientHeight + document.querySelector('#tableThead').clientHeight;
+      const Top = theadTop + document.querySelector('#tableThead').clientHeight;
       that.$refs.tableThead.$el.style.top = `${theadTop}px`;
       that.$refs.creatScroller.$el.style.top = `${Top}px`;
       that.$refs.creatScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#creatSearchView', '#tableThead'])}px`;

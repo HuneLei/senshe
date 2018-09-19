@@ -1,6 +1,6 @@
 <!-- 商级 -->
 <template>
-  <div>
+  <div ref="myIndexClass" class="scroller_rela">
     <search ref="clientClassItem" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
     <scroller ref="IndexClass" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
       <div class="index_class">
@@ -17,15 +17,17 @@ import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
+  activated() {
+    this.cellList = [];
+    this.$refs.IndexClass.triggerPullToRefresh()
+  },
   mounted() {
     const that = this;
     // 屏幕高度设置
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight;
-      const Top = document.querySelector('#clientSearchView').clientHeight + marginTop;
-      that.$refs.clientClassItem.$el.style.top = `${marginTop}px`;
+      const Top = document.querySelector('#clientSearchView').clientHeight;
       that.$refs.IndexClass.$el.style.top = `${Top}px`;
-      that.$refs.IndexClass.$el.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView'])}px`;
+      that.$refs.myIndexClass.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView'])}px`;
     })
     this.clientIndex = this.$route.query.index;
   },

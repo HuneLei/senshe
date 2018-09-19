@@ -1,11 +1,13 @@
 <!-- 我的客户 -->
 <template>
-  <div class="my_client">
-    <div class="client_view" v-for="(item, index) in clientList" :key="index">
-      <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path)">{{item.amount}}</div>
-      <div class="client_title">{{item.title}}</div>
+  <scroller style="background-color: #ffffff;" ref="myClientscroll">
+    <div class="my_client">
+      <div class="client_view" v-for="(item, index) in clientList" :key="index">
+        <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path)">{{item.amount}}</div>
+        <div class="client_title">{{item.title}}</div>
+      </div>
     </div>
-  </div>
+  </scroller>
 </template>
 
 <script>
@@ -14,6 +16,10 @@ import dateCenter from '../../../api/dateCenter';
 export default {
   created() { },
   mounted() {
+    const that = this;
+    this.$nextTick(() => {
+      that.$refs.myClientscroll.$el.style.height = `${that.$countHeight(['.vux-tab-container', '#tableThead'])}px`;
+    })
     this.listcount();
   },
   computed: {},

@@ -208,4 +208,13 @@ export default {
   top: 5.8rem;
 }
 
+.vux-tab-container {
+  height: 47px !important;
+}
+.vux-tab {
+  height: 47px !important;
+}
+.tab_swit {
+  height: 47px !important;
+}
 </style>

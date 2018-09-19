@@ -1,28 +1,30 @@
 <!-- 指标详情 -->
 <template>
-  <div>
+  <div class="scroller_rela" ref="myIndexItem">
     <search ref="IndexClassItem" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" id="indexSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
-    <scroller ref="IndexItemScroller" class="index_class" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
-      <group gutter='0'>
-        <x-table :cell-bordered="false" class="index_table">
-          <thead>
-            <tr>
-              <th>通用名</th>
-              <th>流向类型</th>
-              <th>指标</th>
-              <th>进度(%)</th>
-            </tr>
-          </thead>
-          <tbody>
+    <x-table :cell-bordered="false" class="table_thead" ref="IndexItemThead" id="IndexItemThead">
+      <thead>
+        <tr>
+          <th class="table_thead_longth">通用名</th>
+          <th>流向类型</th>
+          <th>指标</th>
+          <th>进度(%)</th>
+        </tr>
+      </thead>
+    </x-table>
+    <scroller ref="IndexItemScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
+      <div class="incoic_table">
+        <x-table :cell-bordered="false">
+          <tbody class="table_tbody">
             <tr v-for="(item, index) in indexList" :key="index">
-              <td>{{item.sensheProduct.commonName}}</td>
+              <td class="table_tbody_longth">{{item.sensheProduct.commonName}}</td>
               <td>{{flowType[item.flowType]}}</td>
               <td>{{item.stand}}</td>
               <td>{{item.userName}}</td>
             </tr>
           </tbody>
         </x-table>
-      </group>
+      </div>
     </scroller>
   </div>
 </template>
@@ -32,15 +34,19 @@ import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
+  activated() {
+    this.searchValue = '';
+    this.$refs.IndexItemScroller.triggerPullToRefresh()
+  },
   mounted() {
     const that = this;
     // 屏幕高度设置
     this.$nextTick(() => {
-      const marginTop = document.querySelector('.vux-header').clientHeight;
-      const Top = document.querySelector('#indexSearchView').clientHeight + marginTop;
-      that.$refs.IndexClassItem.$el.style.top = `${marginTop}px`;
+      const theadTop = document.querySelector('#indexSearchView').clientHeight;
+      const Top = document.querySelector('#IndexItemThead').clientHeight + theadTop;
+      that.$refs.IndexItemThead.$el.style.top = `${theadTop}px`;
       that.$refs.IndexItemScroller.$el.style.top = `${Top}px`;
-      that.$refs.IndexItemScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#indexSearchView'])}px`;
+      that.$refs.IndexItemScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#indexSearchView', '#IndexItemThead'])}px`;
     })
   },
   computed: {
@@ -158,17 +164,56 @@ export default {
   position: absolute !important;
 }
 
-.index_table th {
-  color: #222222;
-  text-align: left;
-  padding-left: 15px;
+.table_thead tr {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.index_table td {
-  color: #666666;
+.table_thead tr th {
+  flex: 1;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.table_thead {
+  font-size: 15px;
+  position: absolute;
+}
+
+.table_tbody tr {
+  display: flex;
+}
+
+.table_tbody tr td {
+  flex: 1;
+}
+
+.incoic_table {
+  overflow-y: auto;
+  background-color: #ffffff;
+}
+
+.table_thead_longth {
+  flex: 2 !important;
+  padding: 0 10px;
   text-align: left;
-  font-size: 13px;
-  padding-left: 15px;
+}
+
+.table_tbody_longth {
+  flex: 2 !important;
+  text-align: left;
+  padding: 6px 10px;
+}
+
+.incoic_table table td {
+  color: #666666;
+  font-size: 14px;
+  line-height: 22px;
+  word-wrap: break-word;
+  word-break: break-all;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 <style>

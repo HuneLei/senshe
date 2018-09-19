@@ -16,7 +16,7 @@ export default {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
-      that.$refs.dataCenter.style.height = `${that.$countHeight(['.vux-header'])}px`
+      that.$refs.dataCenter.style.height = `${that.$countHeight(['.vux-tab-container'])}px`
     })
   },
   computed: {

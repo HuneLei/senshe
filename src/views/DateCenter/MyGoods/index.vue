@@ -1,6 +1,6 @@
 <template>
-  <div class="my_goods">
-    <search :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" @on-submit="onSubmit" @on-cancel="onCancel"></search>
+  <div class="my_goods data_center scroller_rela" ref="goodsSearchview">
+    <search :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" @on-submit="onSubmit" @on-cancel="onCancel" id="goodsSearch"></search>
     <div ref="vueWaterfallEasy" class="Water_fall" v-show="imgsArr.length">
       <vue-waterfall-easy ref="waterfall" :mobileGap=20 :enablePullDownEvent='cancelShow' :loadingDotStyle='loadingDotStyle' @scrollReachBottom='fetchImgsData' @click="clickFn" :imgsArr="imgsArr">
         <div class="img-info" slot-scope="props">
@@ -23,7 +23,8 @@ export default {
     // 图片组的高度
     const that = this;
     this.$nextTick(() => {
-      that.$refs.vueWaterfallEasy.style.height = `${that.$countHeight(['.vux-tab-container', '.weui-tabbar', '.search_view'])}px`;
+      that.$refs.goodsSearchview.style.height = `${that.$countHeight(['.weui-tabbar', '#goodsSearch'])}px`;
+      that.$refs.vueWaterfallEasy.style.height = `${that.$countHeight(['.vux-tab-container', '.weui-tabbar', '#goodsSearch'])}px`;
     });
     this.initImgsArr((data) => {
       if (data.code === 0) {
