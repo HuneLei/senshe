@@ -221,4 +221,8 @@ export default {
 .tab_swit {
   height: 47px !important;
 }
+
+.weui-dialog {
+  max-width: 8rem !important;
+}
 </style>

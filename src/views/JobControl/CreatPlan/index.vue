@@ -11,7 +11,7 @@
       </cell>
       <popup-picker v-show="yearShow" title="年度规划：" :data="planlist" v-model="yearPlan" @on-change="val => selectChange(val, 1)" show-name></popup-picker>
       <popup-picker v-show="!yearShow" title="月度规划：" :data="monthlist" v-model="monthPlan" @on-change="val => selectChange(val, 1)" show-name></popup-picker>
-      <popup-picker title="选择品种：" :data="productlist" v-model="productVar" @on-change="val => selectChange(val, 3)" show-name></popup-picker>
+      <popup-picker title="选择品种：" :data="productlist" v-model="productVar" @on-change="val => selectChange(val, 3)" show-name @on-show="showProduct()"></popup-picker>
       <popup-picker title="选择客户类型：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name></popup-picker>
     </group>
     <!-- 提交操作 -->
@@ -85,7 +85,6 @@ export default {
       }
       this.productlist.push(data)
     })
-    console.log('this.productlist', this.productlist)
   },
   computed: {},
   components: {},
@@ -118,6 +117,17 @@ export default {
     };
   },
   methods: {
+    // 选择品种框的时候刷新
+    showProduct() {
+      // 品种列表
+      this.getListAll((data) => {
+        this.productlist = [];
+        for (let i = 0; i < data.length; i += 1) {
+          data[i].value = data[i].id
+        }
+        this.productlist.push(data)
+      })
+    },
     // 添加客户计划
     addCreatPlan() {
       this.$vux.loading.show({

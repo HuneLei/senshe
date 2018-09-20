@@ -11,7 +11,15 @@ const path = {
   productlist: '/mobile/myproduct/list', // 商品列表
   productitem: '/mobile/myproduct/item', // 商品详情
   productlistall: 'mobile/myproduct/list/all', // 商品下拉列表
+  monthall: 'mobile/myindex/month/list/all', // 客户计划月度指标
+  yearall: 'mobile/myindex/year/list/all', // 客户计划年度指标
 };
+
+// 客户计划月度指标
+const monthall = () => api.get(path.monthall, {});
+
+// 客户计划年度指标
+const yearall = () => api.get(path.yearall, {});
 
 // 商品列表
 const productlist = (currentPage, commonName) => api.get(path.productlist, {
@@ -85,6 +93,8 @@ const productlistall = () => api.get(path.productlistall, {});
 
 export default {
   list,
+  yearall,
+  monthall,
   listcount,
   yearlist,
   monthlist,

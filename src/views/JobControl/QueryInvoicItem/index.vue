@@ -18,7 +18,7 @@
         <x-table :cell-bordered="false">
           <tbody class="table_tbody">
             <tr v-for="(item, index) in incoicList" :key="index">
-              <td class="table_border table_tbody_longth">{{item.createTime | convertTime}}<br>{{item.clientName}}</td>
+              <td class="table_border table_tbody_longth">{{item.createTime | convertNewDate}}<br>{{item.clientName}}</td>
               <td>{{item.stock}}</td>
               <td>{{item.stockInventory}}</td>
               <td>{{item.sale}}</td>

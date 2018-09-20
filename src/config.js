@@ -25,8 +25,8 @@ const setConfig = (base) => {
   // // 生产环境 （master）
   if (process.env.NODE_ENV && process.env.NODE_ENV === 'master') {
     // apiHost = 'http://172.18.91.113:9898/';
-    // apiHost = 'http://195q4l5760.imwork.net:15359';
-    apiHost = 'http://180.101.144.247:8010';
+    apiHost = 'http://195q4l5760.imwork.net:15359';
+    // apiHost = 'http://180.101.144.247:8010';
     uploadHost = 'http://api.master.iyaoling.com/manage/aliyun/upload';
     socketUrl = 'api.master.iyaoling.com'; // socket地址
   }

@@ -1,6 +1,6 @@
 <!-- 客户规划三级 -->
 <template>
-  <div ref="conplanItem"  class="scroller_rela">
+  <div ref="conplanItem" class="scroller_rela">
     <group gutter='0' class="absolute_group">
       <cell title="客户名称" class="common_name" id="conplanitem">
         <div class="client_type">
@@ -213,6 +213,8 @@ export default {
 }
 
 .client_stock .weui-input {
+  width: 90%;
+  height: 32px;
   padding: 0 5px !important;
 }
 </style>

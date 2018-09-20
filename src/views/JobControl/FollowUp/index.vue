@@ -5,7 +5,7 @@
       <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度进度</div>
       <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度进度</div>
     </div>
-    <scroller ref="followUp" class="my_index">
+    <scroller ref="followUp" class="my_index" :on-refresh="refresh">
       <group gutter='0'>
         <div v-show="showIndex">
           <cell v-for="(item, index) in indexYearList" :key="index" :title="item.name" is-link @click.native="CellClick(item.year)"></cell>
@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import jobControl from '../../../api/jobControl';
 
 export default {
   created() { },
@@ -36,28 +37,7 @@ export default {
     const nowMonth = myDate.getMonth(); // 当前月份
     this.indexYearList = [];
     this.indexMonthList = [];
-    // 获取最近三年列表
-    for (let i = 0; i < 3; i += 1) {
-      const yearList = {
-        name: `${nowYear - i}年度`,
-        year: nowYear - i,
-        id: nowYear - i
-      }
-      this.indexYearList.push(yearList);
-    }
-    // 获取最近三年月份列表
-    for (let i = 0; i < 3; i += 1) {
-      const monthall = 12;
-      for (let m = monthall; m !== 0; m -= 1) {
-        const monthList = {
-          name: `${nowYear - i}年${m}月`,
-          year: nowYear - i,
-          month: m,
-          id: nowYear - i
-        }
-        this.indexMonthList.push(monthList);
-      }
-    }
+    this.$refs.followUp.triggerPullToRefresh()
   },
   computed: {},
   components: {},
@@ -84,6 +64,55 @@ export default {
     // 点击进度查看详情
     CellClick(year, month) {
       this.$router.push(`/JobControl/FollowUpList?year=${year}&month=${month || 0}`);
+    },
+    // 获取年度指标
+    getYearall(callBack) {
+      jobControl.yearall().then((res) => {
+        callBack(res.data)
+      })
+    },
+    // 获取月度指标
+    getMonthall(callBack) {
+      jobControl.monthall().then((res) => {
+        callBack(res.data)
+      })
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      // 获取年度指标
+      this.getYearall((data) => {
+        this.indexYearList = [];
+        data.sort((a, b) => b.year - a.year)
+        for (let i = 0; i < data.length; i += 1) {
+          const yearList = {
+            name: `${data[i].year}年度`,
+            year: data[i].year,
+            id: data[i].year
+          }
+          this.indexYearList.push(yearList);
+        }
+        done()
+      })
+      // 获取月度指标
+      this.getMonthall((data) => {
+        this.indexMonthList = [];
+        data.sort((a, b) => {
+          if (b.year === a.year) {
+            return b.month - a.month
+          }
+          return b.year - a.year
+        })
+        for (let i = 0; i < data.length; i += 1) {
+          const monthList = {
+            name: `${data[i].year}年${data[i].month}月`,
+            year: data[i].year,
+            month: data[i].month,
+            id: data[i].year
+          }
+          this.indexMonthList.push(monthList);
+        }
+        done()
+      })
     },
   },
 };

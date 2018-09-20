@@ -3,11 +3,15 @@
   <scroller ref="creatInvoic">
     <group gutter='0'>
       <datetime v-model="dataValue" @on-change="changeValue" title="日期：" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
-      <popup-picker v-if="isClient" title="客户：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name></popup-picker>
+      <popup-picker v-if="isClient" title="客户：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name @on-show="showClient()"></popup-picker>
       <cell v-if="!isClient" title="客户：" value="暂无客户"></cell>
-      <x-input title='进货：' v-model="stockValue" text-align='right' type='number'></x-input>
-      <x-input title='销售：' v-model="marketValue" text-align='right' type='number'></x-input>
-      <x-input title='库存：' v-model="repertoryValue" text-align='right' type='number'></x-input>
+      <x-input class="creat_invoic" title='进货：' v-model="stockValue"
+      :text-align='stockRight' type='number' @on-blur="() => { stockRight = 'right' }" @on-focus="() => { stockRight = 'left' }"></x-input>
+      <x-input class="creat_invoic" title='销售：' v-model="marketValue"
+      :text-align='marketRight' type='number' @on-blur="() => { marketRight = 'right' }" @on-focus="() => { marketRight = 'left' }"></x-input>
+      <x-input class="creat_invoic" title='库存：' v-model="repertoryValue"
+      :text-align='repertoryRight' type='number' @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
+      </x-input>
       <cell v-model="listValue" text-align='right'>
         <div slot="title" class="update_img">
           <span class="update_img_span">陈列：</span>
@@ -107,6 +111,9 @@ export default {
   components: {},
   data() {
     return {
+      stockRight: '',
+      marketRight: '',
+      repertoryRight: '',
       isClient: true,
       clientVar: [],
       clientType: [],
@@ -140,6 +147,27 @@ export default {
     };
   },
   methods: {
+    onBlur() {
+      console.log(9999)
+    },
+    // 选择品种框的时候刷新
+    showClient() {
+      this.getCustomList((data) => {
+        const clientList = [];
+        this.clientType = [];
+        if (data.length) {
+          this.isClient = true;
+          for (let i = 0; i < data.length; i += 1) {
+            const client = {
+              name: data[i].name,
+              value: `${data[i].name}-${data[i].id}`
+            }
+            clientList.push(client)
+          }
+        }
+        this.clientType.push(clientList)
+      })
+    },
     // 删除此照片
     deleteImage(index) {
       const that = this
@@ -414,3 +442,10 @@ export default {
   line-height: 15px;
 }
 </style>
+
+<style>
+.creat_invoic input {
+  color: #999 !important;
+}
+</style>
+

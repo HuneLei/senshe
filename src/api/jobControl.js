@@ -12,7 +12,15 @@ const path = {
   planinventory: 'mobile/customer/plan/list/inventory', // 进度查询
   productlist: 'mobile/inventory/list/product', // 进销存查询(末次)
   inventorylast: 'mobile/inventory/last/inventory', // 进销存查询详情(末次)
+  monthall: 'mobile/customer/plan/month/list/all', // 客户规划月度指标
+  yearall: 'mobile/customer/plan/year/list/all', // 客户规划年度指标
 };
+
+// 客户计划月度指标
+const monthall = () => api.get(path.monthall, {});
+
+// 客户计划年度指标
+const yearall = () => api.get(path.yearall, {});
 
 // 进销存查询(末次)
 const inventorylast = (currentPage, clientType, productId) => api.get(path.inventorylast, {
@@ -82,6 +90,8 @@ const planinventory = (from) => api.get(path.planinventory, {
 
 export default {
   add,
+  yearall,
+  monthall,
   threelist,
   threeitem,
   updateplan,

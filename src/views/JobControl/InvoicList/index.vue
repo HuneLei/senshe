@@ -35,6 +35,7 @@ export default {
     // 屏幕高度设置
     const that = this;
     that.page = 0;
+    that.cellList = [];
     this.$nextTick(() => {
       const theadTop = document.querySelector('#commonname').clientHeight;
       that.$refs.invoicListscroller.$el.style.top = `${theadTop}px`

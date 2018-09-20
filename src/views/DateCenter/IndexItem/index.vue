@@ -36,6 +36,7 @@ export default {
   created() { },
   activated() {
     this.searchValue = '';
+    this.indexList = [];
     this.$refs.IndexItemScroller.triggerPullToRefresh()
   },
   mounted() {

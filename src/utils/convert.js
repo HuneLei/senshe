@@ -17,22 +17,23 @@ const convertDate = (olddate) => {
   return ret;
 };
 
-// 格式化日期 - 今天
-const convertNewDate = (olddate) => {
-  let ret = null;
-  if (olddate) {
-    const y = olddate.getFullYear();
-    let m = (olddate.getMonth() + 1).toString();
-    let d = olddate.getDate().toString();
-    if (m.length < 2) {
-      m = `0${m}`;
-    }
-    if (d.length < 2) {
-      d = `0${d}`;
-    }
-    ret = `${y}-${m}-${d}`;
+// 格式化日期-年月日
+const convertNewDate = (value) => {
+  const date = new Date(value)
+  const y = date.getFullYear();
+  let m = (date.getMonth() + 1).toString();
+  let d = date.getDate().toString();
+  let hh = date.getHours().toString();
+  if (m.length < 2) {
+    m = `0${m}`;
   }
-  return ret;
+  if (d.length < 2) {
+    d = `0${d}`;
+  }
+  if (hh.length < 2) {
+    hh = `0${hh}`;
+  }
+  return `${y}-${m}-${d}`;
 };
 
 // 格式化日期-时分秒

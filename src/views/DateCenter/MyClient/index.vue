@@ -1,6 +1,6 @@
 <!-- 我的客户 -->
 <template>
-  <scroller style="background-color: #ffffff;" ref="myClientscroll">
+  <scroller style="background-color: #ffffff;" ref="myClientscroll" :on-refresh="refresh" refreshText='下拉刷新'>
     <div class="my_client">
       <div class="client_view" v-for="(item, index) in clientList" :key="index">
         <div class="client_amount" :style="`background-color:${item.color}`" @click="goClient(item.path, item.title)">{{item.amount}}</div>
@@ -20,7 +20,11 @@ export default {
     this.$nextTick(() => {
       that.$refs.myClientscroll.$el.style.height = `${that.$countHeight(['.vux-tab-container', '#tableThead'])}px`;
     })
-    this.listcount();
+    this.listcount((data) => {
+      that.clientList[0].amount = data.oneCustomer;
+      that.clientList[1].amount = data.tweCustomer;
+      that.clientList[2].amount = data.threeCustomer;
+    });
   },
   computed: {},
   components: {},
@@ -47,20 +51,28 @@ export default {
   },
   methods: {
     // 我的客户统计
-    listcount() {
+    listcount(callBack) {
       dateCenter.listcount().then((res) => {
-        console.log('res', res)
         const data = res.data;
-        this.clientList[0].amount = data.oneCustomer;
-        this.clientList[1].amount = data.tweCustomer;
-        this.clientList[2].amount = data.threeCustomer;
+        callBack(data)
       });
     },
     // 去相应的客户页面
     goClient(data, title) {
       this.$router.push(`/DateCenter/IndexClass?index=${data}`);
       this.$store.commit('updateIndexName', title)
-    }
+    },
+    // 这是向下滑动的时候请求最新的数据
+    refresh(done) {
+      const self = this; // this指向问题
+      self.page = 1;
+      this.listcount((data) => {
+        self.clientList[0].amount = data.oneCustomer;
+        self.clientList[1].amount = data.tweCustomer;
+        self.clientList[2].amount = data.threeCustomer;
+        done()
+      })
+    },
   },
 };
 </script>
