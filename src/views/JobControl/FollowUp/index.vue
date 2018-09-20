@@ -53,7 +53,6 @@ export default {
   methods: {
     // 点击切换进度时候
     IndexClick(index) {
-      console.log('index', index)
       this.selectIndex = index
       if (index === 1) {
         this.showIndex = true;

@@ -3,7 +3,7 @@
   <scroller ref="myGoodsCard" class="my_goods_card">
     <group gutter='0' label-width="6em" label-margin-right="2em">
       <div class="goods_card_img">
-        <img src="http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg" style="width:100%;display:block;">
+        <img src="../../../assets/img/u1199.png" style="width:100%;display:block;">
       </div>
       <cell title="通用名：" :value="form.commonName" value-align="left"></cell>
       <cell title="规格：" :value="form.module" value-align="left"></cell>

@@ -20,7 +20,7 @@
               <td class="table_tbody_longth">{{item.sensheProduct.commonName}}</td>
               <td>{{flowType[item.flowType]}}</td>
               <td>{{item.stand}}</td>
-              <td>{{item.userName}}</td>
+              <td>{{item.rate}}</td>
             </tr>
           </tbody>
         </x-table>
@@ -103,7 +103,6 @@ export default {
       const self = this; // this指向问题
       this.indxList((data) => {
         if (data.code === 0) {
-          console.log('self.indexList', data.result.listData)
           if (data.result.listData.length < 15) {
             if (self.page === 1 && data.result.listData.length === 0) {
               self.noDataText = '暂无数据';

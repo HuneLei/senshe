@@ -24,7 +24,13 @@
               <td>{{item.sale}}</td>
               <td>{{item.inventory}}</td>
               <td class="table_img">
-                <span class="icon iconfont icon-iconset0145"></span>
+                <!-- <div class="img_icon iconfont icon-zhaopian" @click="showImg()">
+                  <span>1</span>
+                </div> -->
+                <div class="img_icon img_icon_no iconfont icon-zhaopian">
+                  <!-- <span>1</span> -->
+                </div>
+
               </td>
               <td class="table_icon" v-if="modifier">
                 <x-icon type="ios-arrow-right"></x-icon>
@@ -34,6 +40,9 @@
         </x-table>
       </div>
     </scroller>
+    <div v-transfer-dom>
+      <previewer :list="imgList" ref="previewer"></previewer>
+    </div>
   </div>
 </template>
 
@@ -79,14 +88,31 @@ export default {
       page: 0,
       noDataText: '',
       searchValue: '', // 搜索的值
-      incoicList: []
+      incoicList: [],
+      imgList: [{
+        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
+        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
+        w: 800,
+        h: 400
+      },
+      {
+        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
+        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
+        w: 1200,
+        h: 900
+      }, {
+        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwwcynw2j20p00b4js9.jpg',
+        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwwcynw2j20p00b4js9.jpg'
+      }],
     };
   },
   methods: {
+    showImg() {
+      this.$refs.previewer.show(0)
+    },
     // 去编辑页面
     updateClick(item) {
       if (this.modifier) {
-        console.log('item', item);
         this.$store.commit('updateInvoicData', item)
         this.$router.push('/JobControl/CreatInvoic');
       }
@@ -236,5 +262,27 @@ export default {
 }
 .vux-x-icon {
   fill: #999999;
+}
+.img_icon {
+  display: flex;
+  font-size: 25px;
+  align-items: center;
+  justify-content: center;
+}
+
+.img_icon span {
+  display: block;
+  font-size: 12px;
+  color: #666666;
+  z-index: 2;
+}
+
+.img_icon:before {
+  position: absolute;
+  color: #07bc99;
+}
+
+.img_icon_no:before {
+  color: #C4C4C4 !important;
 }
 </style>

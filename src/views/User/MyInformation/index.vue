@@ -51,7 +51,6 @@ export default {
   methods: {
     // 系统消息详情
     clickInfo(index) {
-      console.log(`我点击了这条消息${index}`);
       this.$router.push(`/User/myInformation/systemInfo?id=${index}`);
     },
     // 获取留言信息

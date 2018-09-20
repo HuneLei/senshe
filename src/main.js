@@ -36,16 +36,12 @@ router.beforeEach((to, from, next) => {
     store.commit('updateEnteAnima', 'slideInRight flying')
     store.commit('updateLeaveAnima', 'slideOutLeft flying')
   }
-  console.log('router正在跳转')
   store.commit('updateLoadingStatus', { isLoading: true })
   next()
 })
 
 // 路由出去时关闭isLoading载入
 router.afterEach((to, from) => {
-  console.log('router关闭了')
-  console.log('to.path', to.path)
-  console.log('from.path', from.path)
   if (to.path === '/JobControl/ControlPlanItem' && from.path === '/JobControl/CreatPlan') {
     store.commit('updateModifier', true)
   } else if ((to.path !== '/JobControl/CreatPlan' && from.path !== '/JobControl/ControlPlanItem') &&

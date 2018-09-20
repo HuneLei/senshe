@@ -5,12 +5,12 @@
       <datetime v-model="dataValue" @on-change="changeValue" title="日期：" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
       <popup-picker v-if="isClient" title="客户：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name @on-show="showClient()"></popup-picker>
       <cell v-if="!isClient" title="客户：" value="暂无客户"></cell>
-      <x-input class="creat_invoic" title='进货：' v-model="stockValue"
-      :text-align='stockRight' type='number' @on-blur="() => { stockRight = 'right' }" @on-focus="() => { stockRight = 'left' }"></x-input>
-      <x-input class="creat_invoic" title='销售：' v-model="marketValue"
-      :text-align='marketRight' type='number' @on-blur="() => { marketRight = 'right' }" @on-focus="() => { marketRight = 'left' }"></x-input>
-      <x-input class="creat_invoic" title='库存：' v-model="repertoryValue"
-      :text-align='repertoryRight' type='number' @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
+      <x-input class="creat_invoic" title='进货：' v-model="stockValue" :text-align='stockRight'
+      type='number' @on-blur="() => { stockRight = 'right' }" @on-focus="() => { stockRight = 'left' }"></x-input>
+      <x-input class="creat_invoic" title='销售：' v-model="marketValue" :text-align='marketRight'
+      type='number' @on-blur="() => { marketRight = 'right' }" @on-focus="() => { marketRight = 'left' }"></x-input>
+      <x-input class="creat_invoic" title='库存：' v-model="repertoryValue" :text-align='repertoryRight'
+      type='number' @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
       </x-input>
       <cell v-model="listValue" text-align='right'>
         <div slot="title" class="update_img">
@@ -24,8 +24,10 @@
               <img v-if="item.src" class="previewer-demo-img" :src="item.src" alt="" style="box-shadow: 1px 0px 1px #ccc; border-radius: 10px;" @click="showImg(index)">
               <span v-if="item.src" class="img_span_show iconfont icon-jianshao" @click="deleteImage(index)"></span>
             </div>
-            <div v-transfer-dom>
-              <previewer :list="imgList" ref="previewer" @on-index-change="logIndexChange" :options="options"></previewer>
+            <div v-if="showPreviewer">
+              <div v-transfer-dom>
+                <previewer :list="imgList" ref="previewer" @on-close='onClose'></previewer>
+              </div>
             </div>
           </div>
         </div>
@@ -66,7 +68,6 @@ export default {
       this.repertoryValue = this.invoicData.inventory; // 库存
       this.listValue = ''; // 陈列
     }
-    console.log('invoicData', this.invoicData)
     this.getCustomList((data) => {
       const clientList = [];
       if (data.length) {
@@ -121,21 +122,6 @@ export default {
         src: '',
         msrc: '',
       }],
-      options: {
-        getThumbBoundsFn(index) {
-          // find thumbnail element
-          const thumbnail = document.querySelectorAll('.previewer-demo-img')[index];
-          // get window scroll Y
-          const pageYScroll = window.pageYOffset || document.documentElement.scrollTop;
-          // optionally get horizontal scroll
-          // get position of element relative to viewport
-          const rect = thumbnail.getBoundingClientRect();
-          // w = width
-          return { x: rect.left, y: rect.top + pageYScroll, w: rect.width };
-          // Good guide on how to get element coordinates:
-          // http://javascript.info/tutorial/coordinates
-        }
-      },
       // 日期
       dataValue: '',
       stockValue: '', // 进货
@@ -144,11 +130,12 @@ export default {
       listValue: '', // 陈列
       loginLoading: false, // 确定loading
       client: '', // 客户类型
+      showPreviewer: false,
     };
   },
   methods: {
-    onBlur() {
-      console.log(9999)
+    onClose() {
+      this.showPreviewer = false;
     },
     // 选择品种框的时候刷新
     showClient() {
@@ -172,7 +159,7 @@ export default {
     deleteImage(index) {
       const that = this
       this.$vux.confirm.show({
-        content: '确定删除此图片？',
+        content: '确定去除此图片？',
         onCancel() { },
         onConfirm() {
           if (that.imgList.length !== 1) {
@@ -196,10 +183,8 @@ export default {
       this.dataValue = ''
     },
     changeValue(value) {
-      console.log('change', value)
     },
     onConfirm(val) {
-      console.log('on-confirm arg', val)
     },
     // 确定提交按钮
     confirmClick() {
@@ -314,65 +299,58 @@ export default {
     },
     // 预览图片
     showImg(index) {
-      this.$refs.previewer.show(index)
+      this.showPreviewer = true;
+      const that = this;
+      this.$nextTick(() => {
+        that.$refs.previewer.show(index)
+      })
     },
     logIndexChange(arg) {
-      console.log(arg)
     },
     // 从相册中选择图片
     galleryImgsSelected() {
       const that = this;
       const imgList = [];
-      const e = {
-        files: ['https://2017051845.oss-cn-hangzhou.aliyuncs.com/d6f00435-e9ab-455a-85a5-6a81de6c2471..jpg']
-      }
-      for (let i = 0; i < e.files.length; i += 1) {
-        console.log('e.files[i]', e.files[i])
-        const imgObject = {
-          src: e.files[i],
-          msrc: e.files[i],
-        }
-        imgList.push(imgObject)
-      }
-      // imgList.push(that.imgList)
-      // imgList = [...that.imgList, ...imgList]
-      // for (let i = 0; i < that.imgList.length; i += 1) {
+      // const e = {
+      //   files: ['https://2017051845.oss-cn-hangzhou.aliyuncs.com/d6f00435-e9ab-455a-85a5-6a81de6c2471..jpg']
+      // }
+      // for (let i = 0; i < e.files.length; i += 1) {
+      //   console.log('e.files[i]', e.files[i])
       //   const imgObject = {
-      //     src: that.imgList[i].src,
-      //     msrc: that.imgList[i].src,
+      //     src: e.files[i],
+      //     msrc: e.files[i],
       //   }
       //   imgList.push(imgObject)
       // }
-      if (that.imgList.length === 1 && that.imgList[0].src === '') {
-        that.imgList = [];
-      }
-      that.imgList = [...that.imgList, ...imgList];
-      // window.mobileNative.galleryImgsSelected((e) => {
-      //   for (let i = 0; i < e.files.length; i += 1) {
-      //     console.log('e.files[i]', e.files[i])
-      //     const imgObject = {
-      //       src: e.files[i],
-      //       msrc: e.files[i],
-      //     }
-      //     imgList.push(imgObject)
-      //   }
-      //   for (let i = 0; i < that.imgList.length; i += 1) {
-      //     const imgObject = {
-      //       src: that.imgList[i].src,
-      //       msrc: that.imgList[i].src,
-      //     }
-      //     imgList.push(imgObject)
-      //   }
-      //   that.imgList = [{
-      //     src: '',
-      //     msrc: '',
-      //   }];
-      //   that.imgList = imgList;
-      // })
+      // if (that.imgList.length === 1 && that.imgList[0].src === '') {
+      //   that.imgList = [];
+      // }
+      // that.imgList = [...that.imgList, ...imgList]
+
+      window.mobileNative.galleryImgsSelected((e, error) => {
+        if (error) {
+          this.$vux.confirm.show({
+            showCancelButton: false,
+            title: '不能访问手机相册',
+            content: '请到手机系统的[设置]->[隐私]->[照片]中允许森舍访问你的手机相册'
+          })
+          return;
+        }
+        for (let i = 0; i < e.files.length; i += 1) {
+          const imgObject = {
+            src: e.files[i],
+            msrc: e.files[i],
+          }
+          imgList.push(imgObject)
+        }
+        if (that.imgList.length === 1 && that.imgList[0].src === '') {
+          that.imgList = [];
+        }
+        that.imgList = [...that.imgList, ...imgList];
+      })
     },
     // 选择触发
     selectChange(val, index) {
-      console.log('on change', val, index)
     },
   },
 };

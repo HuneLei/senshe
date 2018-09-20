@@ -19,16 +19,13 @@ var lfs = null;// 保留上次选择图片列表
 const galleryImgsSelected = (callBack) => {
   if (!window.plus) return
   // 从相册中选择图片
-  console.log('从相册中选择多张图片(限定最多选择3张)：');
   plus.gallery.pick(function (e) {
     lfs = e.files;
-    callBack(e)
+    callBack(e, null)
     // for (var i in e.files) {
-    //   console.log('e.files[i]', e.files[i])
     // }
   }, function (error) {
-    console.log('error', error)
-    console.log('取消选择图片');
+    callBack(null, error)
   }, {
       filter: 'image', multiple: true, system: false, onmaxed: function () {
         plus.nativeUI.alert('最多只能选择3张图片');
@@ -50,8 +47,6 @@ const createUpload = () => {
     }
   );
   task.addFile("_www/a.doc", { key: "testdoc" });
-  task.addData("string_key", "string_value");
-  //task.addEventListener( "statechanged", onStateChanged, false );
   task.start();
 }
 

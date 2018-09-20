@@ -105,7 +105,6 @@ export default {
   methods: {
     // tab页面切换的时候触发
     indexChange(e) {
-      console.log('e', e);
       let url = '';
       switch (e) {
         case 0:
@@ -125,8 +124,6 @@ export default {
     },
     // 点击右侧按钮时候触发
     rightClick(e) {
-      console.log('我点击了右侧按钮', e)
-      console.log('slotRight', this.slotRight[e].path)
       if (!this.slotRight[e].path) {
         this.$store.commit('updateModifier', !this.modifier)
       }
@@ -138,7 +135,6 @@ export default {
     },
     // 点击返回按钮触发
     onClickBack() {
-      console.log('route', this.$route.path)
       if (this.$route.path === '/JobControl/ControlPlanItem' && this.modifier) {
         // 显示
         const that = this

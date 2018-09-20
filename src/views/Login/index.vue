@@ -4,7 +4,7 @@
     <!-- 登录logo和文字 -->
     <div class="login_logo">
       <!-- <img src="../../assets/img/logo.jpg" alt=""> -->
-      <img src="../../assets/img/logo.jpg" alt="">
+      <img src="../../assets/img/logo.png" alt="">
       <div class="login_font">森舍会员登录</div>
     </div>
     <!-- 登录手机和密码 -->
@@ -31,7 +31,6 @@ let that = this;
 export default {
   beforeRouteEnter(to, from, next) {
     const token = config.getToken();
-    console.log('token', token)
     // if (token) next({ path: '/User', replace: true });
     next();
   },
@@ -53,7 +52,7 @@ export default {
   components: {},
   data() {
     return {
-      phone_value: '', // 手机号码
+      phone_value: config.getToken(), // 手机号码
       passwd_value: '', // 登录密码
       loginLoading: false, // 登录按钮loading
     };
@@ -61,7 +60,6 @@ export default {
   methods: {
     // 登录操作
     loginClick() {
-      console.log('登录操作');
       // 校验手机号
       if (!this.phone_value) {
         this.$vux.toast.text('请输入账号', 'middle');
@@ -98,6 +96,9 @@ export default {
           this.$vux.toast.text(data.message, 'middle');
           return;
         }
+        if (that.$plus) {
+          that.logCreate(data);
+        }
         that.$store.commit('updateShowSheet', false)
         that.$store.commit('updateUserInfo', data.result);
         that.$store.commit('updateUserFlush', false)
@@ -106,20 +107,20 @@ export default {
           that.$plus.navigator.setStatusBarStyle('light');
           that.$plus.navigator.setStatusBarBackground('#07BC99')
         }
-        config.setToken(data.result.id);
+        config.setToken(this.phone_value);
         config.setUserToken(data.result);
       })
       // })
     },
-    // 校验密码是否正确
-    checkPass(value, callBack) {
-      setTimeout(() => {
-        if (value !== '123') {
-          callBack(false)
-          return;
-        }
-        callBack(true)
-      }, 1000);
+    logCreate(data) {
+      const from = {
+        companyId: data.result.companyId || '',
+        companyName: data.result.companyName || '',
+        name: data.result.name || '',
+        jobName: data.result.jobName || '',
+        accessMode: that.$plus.os.name,
+      }
+      login.logCreate(from);
     },
     // 登录操作
     userLogin(username, password, callBack) {
@@ -135,7 +136,6 @@ export default {
     },
     // 忘记密码
     // forgetPass() {
-    //   console.log('忘记密码了');
     // }
   },
 };

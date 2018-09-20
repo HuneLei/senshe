@@ -31,7 +31,6 @@ export default {
     // 获取详情
     this.getMobileItem(id, (data) => {
       if (data.code === 0) {
-        console.log('result', data.result)
         that.messageList = data.result
       }
     })

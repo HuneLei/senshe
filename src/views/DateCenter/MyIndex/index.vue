@@ -104,7 +104,6 @@ export default {
     },
     // 点击切换指标时候
     IndexClick(index) {
-      console.log('index', index)
       this.selectIndex = index
       if (index === 1) {
         this.showIndex = true;

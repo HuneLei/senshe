@@ -21,7 +21,6 @@ export default {
   },
   watch: {
     // showSheet: (newVal, oldVal) => {
-    //   console.log(newVal, oldVal);
     //   // that.isSheet = newVal;
     // }
   },

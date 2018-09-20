@@ -1,6 +1,6 @@
 <!-- 客户详情 -->
 <template>
-  <scroller ref="ClintItem">
+  <scroller ref="ClintItem" class="clint_item">
     <group gutter='0'>
       <cell title="名称：">
         <div slot="title">
@@ -60,7 +60,6 @@ export default {
     clientItem(id) {
       dateCenter.customeritem(id).then((res) => {
         const data = res.data;
-        console.log('data', data)
         if (data.code === 0) {
           this.form = data.result
         }
@@ -86,3 +85,10 @@ export default {
   display: inline-flex;
 }
 </style>
+
+<style>
+  .clint_item .weui-cell{
+    align-items: baseline;
+  }
+</style>
+

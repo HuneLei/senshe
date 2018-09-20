@@ -16,7 +16,7 @@
       </group>
       <group gutter='0.26rem'>
         <cell @click.native="$store.commit('updateShowSheet', true)" class="go_login">
-          <div slot="title">退出登录</div>
+          <div slot="title" class="web-font">退出登录</div>
         </cell>
       </group>
       <!-- 底部白底 -->
@@ -36,7 +36,6 @@ export default {
     // 检测是否有保存过用户信息
     if (!Object.keys(this.UserInfo).length || this.UserFlush) {
       this.userinfo(config.getToken(), (data) => {
-        console.log('data', data.result.id);
         if (data.code !== 0) {
           this.$router.replace('/');
           return;
@@ -124,7 +123,6 @@ export default {
     // 点击router去向
     goRouter(name) {
       const pathname = name;
-      console.log(`我要去的是${pathname}`);
       this.$router.push(`/User/${pathname}?id=${this.userId}`);
     },
     // 获取用户信息

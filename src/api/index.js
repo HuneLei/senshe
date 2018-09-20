@@ -34,7 +34,6 @@ instance.interceptors.response.use(
     if (response.data.code === 401) {
       config.removeToken();
       config.removeUserToken();
-      console.log('Vue.$router', window.location.href)
       window.location.href = '/'
     }
     // if (response.data.code === 403) {

@@ -144,7 +144,6 @@ export default {
         this.from.month = this.monthPlan[1];
       }
       jobControl.add(this.from).then((res) => {
-        console.log(res.data.code)
         if (res.data.code === 0) {
           this.$store.commit('updatePlanDate', res.data)
           let clientType = 0;
@@ -165,7 +164,6 @@ export default {
     },
     // 点击确定按钮的时候
     confirmClick() {
-      console.log(this.yearPlan, this.monthPlan, this.productVar, this.clientVar)
       if (this.yearPlan.length === 0 && this.selectIndex === 1) {
         this.$vux.toast.text('请选择年度规划', 'middle');
         return;
@@ -183,11 +181,9 @@ export default {
         return;
       }
       this.addCreatPlan();
-      console.log('点击了确定按钮');
     },
     // 选择触发
     selectChange(val, index) {
-      console.log('on change', val, index)
     },
     // 获取商品下拉
     getListAll(callBack) {

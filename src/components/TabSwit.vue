@@ -58,7 +58,6 @@ export default {
   methods: {
     // 被点击tab的时候触发
     tabClick() {
-      console.log('我被点击了')
     },
   }
 };

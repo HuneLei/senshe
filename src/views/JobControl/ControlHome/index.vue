@@ -48,7 +48,6 @@ export default {
   methods: {
     // 去相应的客户页面
     goClient(data) {
-      console.log(`我点击了${data}`)
       this.$router.push(`/JobControl/${data}`);
     }
   },

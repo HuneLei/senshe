@@ -35,12 +35,10 @@ export default {
   methods: {
     // 确认提交
     submitClick() {
-      console.log('this.textValue', this.textValue)
       if (!this.textValue) {
         this.$vux.toast.text('请输入留言内容', 'middle');
       } else {
         user.msgcreate(this.textValue).then((res) => {
-          console.log('res', res.data)
           // 重新获取用户信息
           this.$store.commit('updatemsgFlush', true)
           this.$store.commit('updateUserFlush', true)

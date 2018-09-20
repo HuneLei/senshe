@@ -54,7 +54,6 @@ export default {
     // 去列表详情页面
     goCellItem(id) {
       this.$router.push(`/DateCenter/ClientItem?id=${id}`);
-      console.log(`点击的id是${id}`)
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {

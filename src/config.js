@@ -25,12 +25,11 @@ const setConfig = (base) => {
   // // 生产环境 （master）
   if (process.env.NODE_ENV && process.env.NODE_ENV === 'master') {
     // apiHost = 'http://172.18.91.113:9898/';
-    apiHost = 'http://195q4l5760.imwork.net:15359';
-    // apiHost = 'http://180.101.144.247:8010';
+    // apiHost = 'http://195q4l5760.imwork.net:15359';
+    apiHost = 'http://180.101.144.247:8010';
     uploadHost = 'http://api.master.iyaoling.com/manage/aliyun/upload';
     socketUrl = 'api.master.iyaoling.com'; // socket地址
   }
-  console.log('apiHost', apiHost);
 };
 
 const baseConfig = 'baseConfig';
@@ -62,7 +61,6 @@ const tokenUser = 'user_token';
 
 //  设置 当前用户的userinfo
 const setUserToken = (data) => {
-  console.log('data', data)
   if (window.plus) {
     plus.storage.setItem(tokenUser, JSON.stringify(data));
   }
@@ -72,7 +70,7 @@ const setUserToken = (data) => {
 //  获取 当前用户的userinfo
 const getUserToken = () => {
   if (window.plus) {
-    return plus.storage.getItem(tokenUser);
+    return JSON.parse(plus.storage.getItem(tokenUser));
   }
   return JSON.parse(sessionStorage.getItem(tokenUser));
 };
@@ -108,8 +106,6 @@ const removeToken = () => {
     plus.storage.removeItem(tokenName);
   }
 };
-
-console.log(process.env.NODE_ENV);
 
 export default {
   apiHost,

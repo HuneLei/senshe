@@ -29,7 +29,7 @@ export default {
     this.initImgsArr((data) => {
       if (data.code === 0) {
         for (let i = 0; i < data.result.length; i += 1) {
-          data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
+          data.result[i].src = '../../../assets/img/u1199.png'
         }
         if (data.result.length === 0) this.loadMore = true;
         that.imgsArr = data.result
@@ -68,7 +68,7 @@ export default {
         if (data.code === 0) {
           if (data.result.length === 0) this.loadMore = true;
           for (let i = 0; i < data.result.length; i += 1) {
-            data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
+            data.result[i].src = '../../../assets/img/u1199.png'
           }
           if (data.result.length !== 0) {
             that.imgsArr = that.imgsArr.concat(data.result)
@@ -93,7 +93,7 @@ export default {
         if (data.code === 0) {
           if (data.result.length === 0) this.loadMore = true;
           for (let i = 0; i < data.result.length; i += 1) {
-            data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
+            data.result[i].src = '../../../assets/img/u1199.png'
           }
           that.imgsArr = data.result;
         }
@@ -107,7 +107,7 @@ export default {
       this.initImgsArr((data) => {
         if (data.code === 0) {
           for (let i = 0; i < data.result.length; i += 1) {
-            data.result[i].src = 'http://2017051845.oss-cn-hangzhou.aliyuncs.com/2a9b6f4f-5359-41bb-b2fa-859f7aa7ce64..jpg'
+            data.result[i].src = ''
           }
           that.imgsArr = data.result;
         }

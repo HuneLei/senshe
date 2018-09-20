@@ -23,7 +23,6 @@ export default {
     // 获取详情
     this.getSysInfoItem(id, (data) => {
       if (data.code === 0) {
-        console.log('result', data.result)
         that.systeminfo = data.result
       }
     })

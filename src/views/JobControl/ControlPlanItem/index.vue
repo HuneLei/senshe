@@ -36,7 +36,6 @@ import jobControl from '../../../api/jobControl';
 export default {
   created() { },
   activated() {
-    console.log(666666);
     this.updateState = true;
     if (this.modifier) {
       // this.page = 1;
@@ -99,9 +98,7 @@ export default {
           salePlan: Number(this.planList[i].salePlan),
         })
       }
-      console.log('formList', formList)
       jobControl.updateplan(formList).then((res) => {
-        console.log('res', res);
         this.$vux.loading.hide()
         if (res.data.code === 0) {
           this.$vux.toast.text('保存成功', 'middle');
@@ -125,7 +122,6 @@ export default {
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log(6666666);
       this.page += 1;
       const self = this; // this指向问题
       this.getThreeItem((data) => {

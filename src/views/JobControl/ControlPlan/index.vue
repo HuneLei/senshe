@@ -58,7 +58,6 @@ export default {
   methods: {
     // 点击切换指标时候
     IndexClick(index) {
-      console.log('index', index)
       this.selectIndex = index
       if (index === 1) {
         this.showIndex = true;
@@ -68,7 +67,6 @@ export default {
     },
     // 点击指标查看详情
     CellClick(year, month) {
-      console.log('getPosition', this.$refs.planScroller.getPosition())
       this.$store.commit('updatePosition', this.$refs.planScroller.getPosition())
       this.$router.push(`/JobControl/ControlPlanList?year=${year}&month=${month || 0}`);
     },
