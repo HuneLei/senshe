@@ -24,13 +24,8 @@
               <td>{{item.sale}}</td>
               <td>{{item.inventory}}</td>
               <td class="table_img">
-                <!-- <div class="img_icon iconfont icon-zhaopian" @click="showImg()">
-                  <span>1</span>
-                </div> -->
-                <div class="img_icon img_icon_no iconfont icon-zhaopian">
-                  <!-- <span>1</span> -->
+                <div :class="`img_icon iconfont icon-zhaopian ${item.filePath || 'img_icon_no'}`" @click.stop="showImg(item.filePath)">
                 </div>
-
               </td>
               <td class="table_icon" v-if="modifier">
                 <x-icon type="ios-arrow-right"></x-icon>
@@ -48,6 +43,7 @@
 
 <script>
 import jobControl from '../../../api/jobControl';
+import config from '../../../config'
 
 export default {
   created() { },
@@ -89,26 +85,27 @@ export default {
       noDataText: '',
       searchValue: '', // 搜索的值
       incoicList: [],
-      imgList: [{
-        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
-        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwu9ze86j20m80b40t2.jpg',
-        w: 800,
-        h: 400
-      },
-      {
-        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
-        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwvqwuoaj20xc0p0t9s.jpg',
-        w: 1200,
-        h: 900
-      }, {
-        msrc: 'http://ww1.sinaimg.cn/thumbnail/663d3650gy1fplwwcynw2j20p00b4js9.jpg',
-        src: 'http://ww1.sinaimg.cn/large/663d3650gy1fplwwcynw2j20p00b4js9.jpg'
-      }],
+      imgList: [],
     };
   },
   methods: {
-    showImg() {
-      this.$refs.previewer.show(0)
+    showImg(path) {
+      if (!path) return
+      const that = this;
+      that.imgList = [];
+      const imgList = path.split(',');
+      imgList.forEach((item) => {
+        if (item) {
+          const imgObj = {
+            msrc: `${config.imgHost}${item}`,
+            src: `${config.imgHost}${item}`,
+          }
+          that.imgList.push(imgObj)
+        }
+      })
+      setTimeout(() => {
+        that.$refs.previewer.show(0)
+      }, 0)
     },
     // 去编辑页面
     updateClick(item) {
@@ -283,6 +280,6 @@ export default {
 }
 
 .img_icon_no:before {
-  color: #C4C4C4 !important;
+  color: #c4c4c4 !important;
 }
 </style>

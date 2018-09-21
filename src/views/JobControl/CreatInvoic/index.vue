@@ -13,7 +13,7 @@
       type='number' @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
       </x-input>
       <cell v-model="listValue" text-align='right'>
-        <div slot="title" class="update_img">
+        <!-- <div slot="title" class="update_img">
           <span class="update_img_span">陈列：</span>
           <div class="img_show">
             <div class="img_show_no" style="border: 1px solid #eaeaea; border-radius: 10px;" @click="galleryImgsSelected()">
@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </cell>
     </group>
     <!-- 提交操作 -->
@@ -48,6 +48,9 @@ export default {
   created() { },
   activated() {
     this.clientType = [];
+    this.stockRight = 'right';
+    this.marketRight = 'right';
+    this.repertoryRight = 'right';
     this.imgList = [{
       src: '',
       msrc: '',
@@ -67,6 +70,22 @@ export default {
       this.marketValue = this.invoicData.sale; // 销售
       this.repertoryValue = this.invoicData.inventory; // 库存
       this.listValue = ''; // 陈列
+      if (this.invoicData.filePath) {
+        const path = this.invoicData.filePath;
+        const that = this;
+        that.imgList = [];
+        const imgList = path.split(',');
+        imgList.forEach((item) => {
+          if (item) {
+            const imgObj = {
+              msrc: `${config.imgHost}${item}`,
+              src: `${config.imgHost}${item}`,
+              oldUrl: item,
+            }
+            that.imgList.push(imgObj)
+          }
+        })
+      }
     }
     this.getCustomList((data) => {
       const clientList = [];
@@ -131,6 +150,7 @@ export default {
       loginLoading: false, // 确定loading
       client: '', // 客户类型
       showPreviewer: false,
+      // task: {},
     };
   },
   methods: {
@@ -254,18 +274,37 @@ export default {
         clientType: this.clientList.clientType,
         productId: this.clientList.productId,
         commonName: this.clientList.commonName,
+        filePath: '',
         id: this.invoicData.id,
       }
       this.$vux.loading.show({
         text: '修改中...'
       })
-      jobControl.updateInventory(from, this.invoicData.id).then((res) => {
-        this.$vux.loading.hide()
-        if (res.data.code === 0) {
-          this.$vux.toast.text('修改成功', 'middle');
-          this.$router.back();
-        }
-      })
+      if (this.$plus) {
+        window.mobileNative.createUpload(this.imgList, (filePath) => {
+          from.filePath = filePath;
+          for (let i = 0; i < this.imgList.length; i += 1) {
+            if (this.imgList[i].oldUrl) {
+              from.filePath = `${from.filePath}${this.imgList[i].oldUrl},`
+            }
+          }
+          jobControl.updateInventory(from, this.invoicData.id).then((res) => {
+            this.$vux.loading.hide()
+            if (res.data.code === 0) {
+              this.$vux.toast.text('修改成功', 'middle');
+              this.$router.back();
+            }
+          })
+        });
+      } else {
+        jobControl.updateInventory(from, this.invoicData.id).then((res) => {
+          this.$vux.loading.hide()
+          if (res.data.code === 0) {
+            this.$vux.toast.text('修改成功', 'middle');
+            this.$router.back();
+          }
+        })
+      }
     },
     // 添加进销存
     addInvoic(addresses) {
@@ -284,18 +323,32 @@ export default {
         clientName: split[0],
         clientType: this.clientList.clientType,
         productId: this.clientList.productId,
-        commonName: this.clientList.commonName
+        commonName: this.clientList.commonName,
+        filePath: '',
       }
       this.$vux.loading.show({
         text: '录入中...'
       })
-      jobControl.createInventory(from).then((res) => {
-        this.$vux.loading.hide()
-        if (res.data.code === 0) {
-          this.$vux.toast.text('录入成功', 'middle');
-          this.$router.back();
-        }
-      })
+      if (this.$plus) {
+        window.mobileNative.createUpload(this.imgList, (filePath) => {
+          from.filePath = filePath;
+          jobControl.createInventory(from).then((res) => {
+            this.$vux.loading.hide()
+            if (res.data.code === 0) {
+              this.$vux.toast.text('录入成功', 'middle');
+              this.$router.back();
+            }
+          })
+        });
+      } else {
+        jobControl.createInventory(from).then((res) => {
+          this.$vux.loading.hide()
+          if (res.data.code === 0) {
+            this.$vux.toast.text('录入成功', 'middle');
+            this.$router.back();
+          }
+        })
+      }
     },
     // 预览图片
     showImg(index) {
@@ -311,29 +364,16 @@ export default {
     galleryImgsSelected() {
       const that = this;
       const imgList = [];
-      // const e = {
-      //   files: ['https://2017051845.oss-cn-hangzhou.aliyuncs.com/d6f00435-e9ab-455a-85a5-6a81de6c2471..jpg']
-      // }
-      // for (let i = 0; i < e.files.length; i += 1) {
-      //   console.log('e.files[i]', e.files[i])
-      //   const imgObject = {
-      //     src: e.files[i],
-      //     msrc: e.files[i],
-      //   }
-      //   imgList.push(imgObject)
-      // }
-      // if (that.imgList.length === 1 && that.imgList[0].src === '') {
-      //   that.imgList = [];
-      // }
-      // that.imgList = [...that.imgList, ...imgList]
-
       window.mobileNative.galleryImgsSelected((e, error) => {
-        if (error) {
+        if (error && error.code === 8) {
           this.$vux.confirm.show({
             showCancelButton: false,
             title: '不能访问手机相册',
             content: '请到手机系统的[设置]->[隐私]->[照片]中允许森舍访问你的手机相册'
           })
+          return;
+        }
+        if (error && error.code === -2) {
           return;
         }
         for (let i = 0; i < e.files.length; i += 1) {

@@ -4,31 +4,24 @@
 
 // 开发环境 (dev)
 let apiHost = `${location.protocol}//${location.host}/api/`;
-let uploadHost = '/api/upload/';
-let authServer = '';
-let authHost = '' || `${location.protocol}//${location.host}/`;
-let socketUrl = 'api.develop.iyaoling.com';
+let uploadHost = '';
+let imgHost = '';
 
 const setConfig = (base) => {
   apiHost = `${location.protocol}//${location.host}/api/`;
-  uploadHost = 'http://api.develop.iyaoling.com/manage/aliyun/upload';
-  authServer = base.SSO_SERVER;
-  authHost = base.SSO_SERVER || `${location.protocol}//${location.host}/`;
-
-  // 开发线上环境 (develop)
-  // if (process.env.NODE_ENV && process.env.NODE_ENV === 'develop') {
-  //   apiHost = 'http://api.develop.iyaoling.com/';
-  //   uploadHost = 'http://api.develop.iyaoling.com/manage/aliyun/upload';
-  //   socketUrl = 'api.develop.iyaoling.com'; // socket地址
-  // }
+  imgHost = 'http://195q4l5760.imwork.net:56573';
+  // imgHost = 'http://localhost:9898';
+  uploadHost = '';
 
   // // 生产环境 （master）
   if (process.env.NODE_ENV && process.env.NODE_ENV === 'master') {
     // apiHost = 'http://172.18.91.113:9898/';
-    // apiHost = 'http://195q4l5760.imwork.net:15359';
+    // apiHost = 'http://195q4l5760.imwork.net:56573';
+    // imgHost = 'http://195q4l5760.imwork.net:56573';
+    imgHost = 'http://180.101.144.247:8010';
     apiHost = 'http://180.101.144.247:8010';
-    uploadHost = 'http://api.master.iyaoling.com/manage/aliyun/upload';
-    socketUrl = 'api.master.iyaoling.com'; // socket地址
+    // uploadHost = 'http://195q4l5760.imwork.net:56573/mobile/fileUpload';
+    uploadHost = 'http://180.101.144.247:8010/mobile/fileUpload';
   }
 };
 
@@ -109,18 +102,15 @@ const removeToken = () => {
 
 export default {
   apiHost,
+  imgHost,
   tokenName,
-  refreshToken: 'refresh_token',
-  client_id: config.client_id || '',
   uploadHost,
-  resource_id: config.resource_id || null,
   baseConfig,
   getAuthServer, // 登录服务器
   getUploadHost, // 上传服务器
   setToken, //  设置 当前用户的access_token
   getToken, //  获取 当前用户的access_token
   removeToken, //  删除 当前用户的access_token
-  socketUrl, // socket地址
   getUserToken, // 获取 当前用户的userinfo
   setUserToken, // 设置 当前用户的userinfo
   removeUserToken, // 删除 当前用户的userinfo

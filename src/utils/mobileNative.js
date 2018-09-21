@@ -1,3 +1,5 @@
+import config from '../config';
+
 // 用于移动设备的公共方法
 /* eslint-disable */
 // 判断当前的运行平台
@@ -20,8 +22,8 @@ const galleryImgsSelected = (callBack) => {
   if (!window.plus) return
   // 从相册中选择图片
   plus.gallery.pick(function (e) {
-    lfs = e.files;
-    callBack(e, null)
+    // lfs = e.files;
+    callBack(e, { code: 0 })
     // for (var i in e.files) {
     // }
   }, function (error) {
@@ -34,19 +36,23 @@ const galleryImgsSelected = (callBack) => {
 }
 
 // 创建上传任务
-const createUpload = () => {
-  var task = plus.uploader.createUpload("http://www.test.com/upload.do",
+const createUpload = (imgList, callBack) => {
+  var task = plus.uploader.createUpload(config.uploadHost,
     { method: "POST", blocksize: 204800, priority: 100 },
     function (t, status) {
       // 上传完成
       if (status == 200) {
-        alert("Upload success: " + t.url);
+        callBack(t.responseText)
       } else {
-        alert("Upload failed: " + status);
+        alert("图片上传失败");
       }
     }
   );
-  task.addFile("_www/a.doc", { key: "testdoc" });
+  for (let i = 0; i < imgList.length; i += 1) {
+    const f = imgList[i];
+    if (f.oldUrl) continue;
+    task.addFile(f.src, { key: `uploadkey${i}` });
+  }
   task.start();
 }
 
@@ -62,6 +68,7 @@ const getGeocode = (callBack) => {
 
 export default {
   getGeocode,
+  createUpload,
   judgePlatform,
   galleryImgsSelected,
 };
