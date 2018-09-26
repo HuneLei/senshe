@@ -9,7 +9,7 @@ let imgHost = '';
 
 const setConfig = (base) => {
   apiHost = `${location.protocol}//${location.host}/api/`;
-  imgHost = 'http://195q4l5760.imwork.net:56573';
+  imgHost = 'http://180.101.144.247:8010';
   // imgHost = 'http://localhost:9898';
   uploadHost = '';
 

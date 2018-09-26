@@ -99,6 +99,8 @@ export default {
           const imgObj = {
             msrc: `${config.imgHost}${item}`,
             src: `${config.imgHost}${item}`,
+            w: 1200,
+            h: 900
           }
           that.imgList.push(imgObj)
         }

@@ -13,7 +13,7 @@
       type='number' @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
       </x-input>
       <cell v-model="listValue" text-align='right'>
-        <!-- <div slot="title" class="update_img">
+        <div slot="title" class="update_img">
           <span class="update_img_span">陈列：</span>
           <div class="img_show">
             <div class="img_show_no" style="border: 1px solid #eaeaea; border-radius: 10px;" @click="galleryImgsSelected()">
@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
       </cell>
     </group>
     <!-- 提交操作 -->
@@ -54,6 +54,8 @@ export default {
     this.imgList = [{
       src: '',
       msrc: '',
+      w: 1200,
+      h: 900
     }];
     this.client = this.clientList.clientType;
     // 日期
@@ -80,6 +82,8 @@ export default {
             const imgObj = {
               msrc: `${config.imgHost}${item}`,
               src: `${config.imgHost}${item}`,
+              w: 1200,
+              h: 900,
               oldUrl: item,
             }
             that.imgList.push(imgObj)
@@ -140,6 +144,8 @@ export default {
       imgList: [{
         src: '',
         msrc: '',
+        w: 1200,
+        h: 900
       }],
       // 日期
       dataValue: '',
@@ -178,20 +184,40 @@ export default {
     // 删除此照片
     deleteImage(index) {
       const that = this
-      this.$vux.confirm.show({
-        content: '确定去除此图片？',
-        onCancel() { },
-        onConfirm() {
-          if (that.imgList.length !== 1) {
-            that.imgList.splice(index, 1);
-          } else {
-            that.imgList = [{
-              src: '',
-              msrc: '',
-            }]
+      if (this.$plus) {
+        const bts = ['取消', '确定'];
+        this.$plus.nativeUI.confirm('确定去除此图片?', (e) => {
+          if (e.index === 1) {
+            if (that.imgList.length !== 1) {
+              that.imgList.splice(index, 1);
+            } else {
+              that.imgList = [{
+                src: '',
+                msrc: '',
+                w: 1200,
+                h: 900
+              }]
+            }
           }
-        }
-      })
+        }, '', bts)
+      } else {
+        this.$vux.confirm.show({
+          content: '确定去除此图片？',
+          onCancel() { },
+          onConfirm() {
+            if (that.imgList.length !== 1) {
+              that.imgList.splice(index, 1);
+            } else {
+              that.imgList = [{
+                src: '',
+                msrc: '',
+                w: 1200,
+                h: 900
+              }]
+            }
+          }
+        })
+      }
     },
     // 获取客户列表下拉
     getCustomList(callBack) {
@@ -380,6 +406,8 @@ export default {
           const imgObject = {
             src: e.files[i],
             msrc: e.files[i],
+            w: 1200,
+            h: 900
           }
           imgList.push(imgObject)
         }

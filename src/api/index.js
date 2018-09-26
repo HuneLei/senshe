@@ -45,7 +45,7 @@ instance.interceptors.response.use(
     return response;
   }, (error) => {
     Vue.$vux.loading.hide();
-    // Vue.$vux.toast.text('请检测网络', 'middle');
+    Vue.$vux.toast.text('系统出错了! 请检测网络', 'middle');
     return Promise.reject(error);
   }
 );

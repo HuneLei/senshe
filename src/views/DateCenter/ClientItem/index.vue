@@ -9,9 +9,16 @@
         </div>
         <span slot="icon" class="iconfont icon-gongsimingcheng- icon_slot"></span>
       </cell>
-      <cell>
+      <cell v-show="index == 100 || index == 200">
         <div slot="title">
           <span class="cell_title">联系电话：</span>
+          <span class="cell_span">{{form.phone}}</span>
+        </div>
+        <span slot="icon" class="icon iconfont icon-lianxidianhua icon_slot"></span>
+      </cell>
+      <cell v-show="index == 300">
+        <div slot="title">
+          <span class="cell_title">门店电话：</span>
           <span class="cell_span">{{form.phone}}</span>
         </div>
         <span slot="icon" class="icon iconfont icon-lianxidianhua icon_slot"></span>
@@ -20,6 +27,34 @@
         <div slot="title">
           <span class="cell_title">详细地址：</span>
           <span class="cell_span">{{form.address}}</span>
+        </div>
+        <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
+      </cell>
+      <cell align-items="flex-start" v-show="index == 200">
+        <div slot="title">
+          <span class="cell_title">采购部联系人：</span>
+          <span class="cell_span">{{form.purchaseDept}}</span>
+        </div>
+        <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
+      </cell>
+      <cell align-items="flex-start" v-show="index == 200">
+        <div slot="title">
+          <span class="cell_title">采购部电话：</span>
+          <span class="cell_span">{{form.purchaseDeptPhone}}</span>
+        </div>
+        <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
+      </cell>
+      <cell align-items="flex-start" v-show="index == 200">
+        <div slot="title">
+          <span class="cell_title">运营部联系人：</span>
+          <span class="cell_span">{{form.operationDept}}</span>
+        </div>
+        <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
+      </cell>
+      <cell align-items="flex-start" v-show="index == 200">
+        <div slot="title">
+          <span class="cell_title">运营部电话：</span>
+          <span class="cell_span">{{form.operationDeptPhone}}</span>
         </div>
         <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
       </cell>
@@ -33,6 +68,7 @@ import dateCenter from '../../../api/dateCenter';
 export default {
   created() { },
   activated() {
+    this.index = this.$route.query.index
     this.form = {};
     this.clientId = this.$route.query.id;
     this.clientItem(this.$route.query.id);
@@ -50,6 +86,7 @@ export default {
   components: {},
   data() {
     return {
+      index: 0, // 客户类型
       winTop: 0, // 自动固定时距离顶部的距离
       clientId: '', // 客户id
       form: {}, // 客户详情
@@ -75,12 +112,12 @@ export default {
   font-size: 15.5px;
 }
 .cell_title {
-  width: 80px;
+  width: 110px;
   display: inline-block;
 }
 
 .cell_span {
-  width: 240px;
+  width: 210px;
   color: #757575;
   display: inline-flex;
 }

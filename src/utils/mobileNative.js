@@ -66,9 +66,27 @@ const getGeocode = (callBack) => {
   }, { geocode: true });
 }
 
+// 修改状态栏的样式背景
+const setNavigator = (style, background) => {
+  if (!window.plus) return
+  plus.navigator.setStatusBarStyle(style);
+  plus.navigator.setStatusBarBackground(background)
+}
+
+// 检测是否在手机上运行
+const checkSystem = () => {
+  if (!window.plus) {
+    return false
+  } else {
+    return plus.os.name
+  }
+}
+
 export default {
   getGeocode,
   createUpload,
   judgePlatform,
   galleryImgsSelected,
+  setNavigator,
+  checkSystem,
 };

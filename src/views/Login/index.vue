@@ -40,10 +40,7 @@ export default {
   },
   computed: {},
   mounted() {
-    if (that.$plus) {
-      that.$plus.navigator.setStatusBarStyle('dark');
-      that.$plus.navigator.setStatusBarBackground('#F8F8F8')
-    }
+    window.mobileNative.setNavigator('dark', '#F8F8F8')
     // 屏幕高度设置
     this.$nextTick(() => {
       that.$refs.LoginCenter.style.height = `${that.$countHeight()}px`;
@@ -82,11 +79,6 @@ export default {
       //   }
       // this.$router.replace('/User?id=1');
       this.loginLoading = true;
-      // that.$router.push('/User?');
-      // if (that.$plus) {
-      //   that.$plus.navigator.setStatusBarStyle('light');
-      //   that.$plus.navigator.setStatusBarBackground('#07BC99')
-      // }
       this.$vux.loading.show({
         text: '登录中'
       })
@@ -96,29 +88,27 @@ export default {
           this.$vux.toast.text(data.message, 'middle');
           return;
         }
-        if (that.$plus) {
-          that.logCreate(data);
+        const checkSystem = window.mobileNative.checkSystem()
+        if (checkSystem) {
+          that.logCreate(data, checkSystem);
         }
         that.$store.commit('updateShowSheet', false)
         that.$store.commit('updateUserInfo', data.result);
         that.$store.commit('updateUserFlush', false)
         that.$router.push(`/User?id=${data.result.id}`);
-        if (that.$plus) {
-          that.$plus.navigator.setStatusBarStyle('light');
-          that.$plus.navigator.setStatusBarBackground('#07BC99')
-        }
+        window.mobileNative.setNavigator('light', '#07BC99')
         config.setToken(this.phone_value);
         config.setUserToken(data.result);
       })
       // })
     },
-    logCreate(data) {
+    logCreate(data, checkSystem) {
       const from = {
         companyId: data.result.companyId || '',
         companyName: data.result.companyName || '',
         name: data.result.name || '',
         jobName: data.result.jobName || '',
-        accessMode: that.$plus.os.name,
+        accessMode: checkSystem || '',
       }
       login.logCreate(from);
     },

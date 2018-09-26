@@ -138,14 +138,24 @@ export default {
       if (this.$route.path === '/JobControl/ControlPlanItem' && this.modifier) {
         // 显示
         const that = this
-        this.$vux.confirm.show({
-          content: '记录未保存是否退出?',
-          onCancel() { },
-          onConfirm() {
-            that.$store.commit('updateModifier', true)
-            that.$router.back()
-          }
-        })
+        if (this.$plus) {
+          const bts = ['取消', '确定'];
+          this.$plus.nativeUI.confirm('记录未保存是否退出?', (e) => {
+            if (e.index === 1) {
+              that.$store.commit('updateModifier', true)
+              that.$router.back()
+            }
+          }, '', bts)
+        } else {
+          this.$vux.confirm.show({
+            content: '记录未保存是否退出?',
+            onCancel() { },
+            onConfirm() {
+              that.$store.commit('updateModifier', true)
+              that.$router.back()
+            }
+          })
+        }
       } else {
         this.$router.back()
       }

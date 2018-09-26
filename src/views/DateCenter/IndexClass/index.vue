@@ -53,7 +53,7 @@ export default {
     },
     // 去列表详情页面
     goCellItem(id) {
-      this.$router.push(`/DateCenter/ClientItem?id=${id}`);
+      this.$router.push(`/DateCenter/ClientItem?id=${id}&index=${this.$route.query.index}`);
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
