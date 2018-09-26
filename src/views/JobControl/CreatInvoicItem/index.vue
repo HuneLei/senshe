@@ -183,6 +183,9 @@ export default {
   border-right: 0.02667rem solid #c7c7c7 !important;
 }
 .table_icon {
+  /*! autoprefixer: off */
+  -webkit-flex: 0.6!important;
+  /* autoprefixer: on */
   flex: 0.6 !important;
 }
 .table_icon svg {
@@ -190,15 +193,24 @@ export default {
   width: 18px;
 }
 .table_img {
+  /*! autoprefixer: off */
+  -webkit-flex: 1.3!important;
+  /* autoprefixer: on */
   flex: 1.3 !important;
 }
 
 .table_tbody tr {
   display: flex;
+  /*! autoprefixer: off */
+   display: -webkit-flex;
+  /* autoprefixer: on */
 }
 
 .table_tbody tr td {
   flex: 1;
+  /*! autoprefixer: off */
+  -webkit-flex: 1;
+  /* autoprefixer: on */
 }
 
 .table_tbody_active tr:active {
@@ -207,12 +219,18 @@ export default {
 
 .table_thead_longth {
   flex: 2.5 !important;
+  /*! autoprefixer: off */
+  -webkit-flex: 2.5 !important;
+  /* autoprefixer: on */
   padding: 0 10px;
   text-align: left;
 }
 
 .table_tbody_longth {
   flex: 2.5 !important;
+  /*! autoprefixer: off */
+  -webkit-flex: 2.5 !important;
+  /* autoprefixer: on */
   text-align: left;
   padding: 6px 10px;
 }
@@ -225,10 +243,17 @@ export default {
 .table_thead tr {
   display: flex;
   flex-wrap: wrap;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  flex-wrap: -webkit-wrap;
+  /* autoprefixer: on */
 }
 
 .table_thead tr th {
   flex: 1;
+  /*! autoprefixer: off */
+  -webkit-flex: 1;
+  /* autoprefixer: on */
   word-wrap: break-word;
   word-break: break-all;
 }
@@ -242,6 +267,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  /* autoprefixer: on */
 }
 
 /* 搜索 */
@@ -263,6 +293,11 @@ export default {
   fill: #999999;
 }
 .img_icon {
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  -webkit-justify-content: center;
+  /* autoprefixer: on */
   display: flex;
   font-size: 25px;
   align-items: center;

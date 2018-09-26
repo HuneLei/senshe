@@ -83,6 +83,10 @@ export default {
   padding-top: 10px;
   text-align: center;
   flex-wrap: wrap;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  /* autoprefixer: on */
 }
 
 .client_view {
@@ -90,6 +94,11 @@ export default {
   width: 33.33%;
   flex-direction: column;
   align-items: center;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  -webkit-flex-direction: column;
+  /* autoprefixer: on */
 }
 
 .client_amount {

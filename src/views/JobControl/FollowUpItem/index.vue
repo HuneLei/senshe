@@ -17,7 +17,7 @@
         <x-table :cell-bordered="false" class="index_table">
           <tbody class="table_tbody">
             <tr v-for="(item, index) in indexList" :key="index">
-              <td class="table_tbody_longth">{{item.clientName}}</td>
+              <td class="table_tbody_longth table_border">{{item.clientName}}</td>
               <td class="table_long">{{item.stock}}</td>
               <td>{{item.stockInventory}}</td>
               <td class="table_long">{{item.sale}}</td>
@@ -117,24 +117,40 @@ export default {
 .table_thead tr {
   display: flex;
   flex-wrap: wrap;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  /* autoprefixer: on */
 }
 
 .table_long {
   flex: 1.5 !important;
+  /*! autoprefixer: off */
+  -webkit-flex: 1.5 !important;
+  /* autoprefixer: on */
 }
 
 .table_thead tr th {
   flex: 1;
+  /*! autoprefixer: off */
+  -webkit-flex: 1;
+  /* autoprefixer: on */
   word-wrap: break-word;
   word-break: break-all;
 }
 
 .table_tbody tr {
   display: flex;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  /* autoprefixer: on */
 }
 
 .table_tbody tr td {
   flex: 1;
+  /*! autoprefixer: off */
+  -webkit-flex: 1;
+  /* autoprefixer: on */
 }
 
 .incoic_table table td {
@@ -143,6 +159,11 @@ export default {
   line-height: 22px;
   word-wrap: break-word;
   word-break: break-all;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  /* autoprefixer: on */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -153,12 +174,18 @@ export default {
 }
 .table_thead_longth {
   flex: 2.5 !important;
+  /*! autoprefixer: off */
+  -webkit-flex: 2.5 !important;
+  /* autoprefixer: on */
   padding: 0 6px;
   text-align: left;
 }
 
 .table_tbody_longth {
   flex: 2.5 !important;
+  /*! autoprefixer: off */
+  -webkit-flex: 2.5 !important;
+  /* autoprefixer: on */
   text-align: left;
   padding: 5px 6px;
 }

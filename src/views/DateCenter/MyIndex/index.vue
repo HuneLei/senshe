@@ -127,12 +127,14 @@ export default {
 
 .index_view {
   display: flex;
+  display: -webkit-flex;
   font-size: 15px;
   color: #6c6c6c;
   padding-top: 10px;
   padding-bottom: 10px;
   text-align: center;
   justify-content: space-around;
+  -webkit-justify-content: space-around;
   background-color: #ffffff;
 }
 

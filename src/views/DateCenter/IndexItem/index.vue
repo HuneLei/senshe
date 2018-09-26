@@ -166,6 +166,7 @@ export default {
 
 .table_thead tr {
   display: flex;
+  display: -webkit-flex;
   flex-wrap: wrap;
 }
 
@@ -182,6 +183,7 @@ export default {
 
 .table_tbody tr {
   display: flex;
+  display: -webkit-flex;
 }
 
 .table_tbody tr td {
@@ -212,8 +214,11 @@ export default {
   word-wrap: break-word;
   word-break: break-all;
   display: flex;
+  display: -webkit-flex;
   justify-content: center;
+  -webkit-justify-content: center;
   align-items: center;
+  -webkit-align-items: center;
 }
 </style>
 <style>

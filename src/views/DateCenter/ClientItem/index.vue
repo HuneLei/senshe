@@ -35,28 +35,28 @@
           <span class="cell_title">采购部联系人：</span>
           <span class="cell_span">{{form.purchaseDept}}</span>
         </div>
-        <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
+        <span slot="icon" class="icon iconfont icon-lianxiren icon_slot"></span>
       </cell>
       <cell align-items="flex-start" v-show="index == 200">
         <div slot="title">
           <span class="cell_title">采购部电话：</span>
           <span class="cell_span">{{form.purchaseDeptPhone}}</span>
         </div>
-        <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
+        <span slot="icon" class="icon iconfont icon-lianxidianhua icon_slot"></span>
       </cell>
       <cell align-items="flex-start" v-show="index == 200">
         <div slot="title">
           <span class="cell_title">运营部联系人：</span>
           <span class="cell_span">{{form.operationDept}}</span>
         </div>
-        <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
+        <span slot="icon" class="icon iconfont icon-lianxiren icon_slot"></span>
       </cell>
       <cell align-items="flex-start" v-show="index == 200">
         <div slot="title">
           <span class="cell_title">运营部电话：</span>
           <span class="cell_span">{{form.operationDeptPhone}}</span>
         </div>
-        <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
+        <span slot="icon" class="icon iconfont icon-lianxidianhua icon_slot"></span>
       </cell>
     </group>
   </scroller>

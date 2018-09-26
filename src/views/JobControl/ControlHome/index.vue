@@ -57,18 +57,27 @@ export default {
 <style scoped>
 .my_client {
   display: flex;
+  display: -webkit-flex;
   padding-top: 10px;
   text-align: center;
   flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
   background-color: #ffffff;
 }
 
 .client_view {
   width: 33.33%;
   display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
   padding-top: 15px;
   flex-direction: column;
   align-items: center;
+  /*! autoprefixer: off */
+  -webkit-flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-align-items: center;
+  /* autoprefixer: on */
 }
 
 .client_amount {

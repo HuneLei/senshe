@@ -170,6 +170,9 @@ export default {
 .plan_type {
   width: 160px;
   display: flex;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  /* autoprefixer: on */
   padding-left: 15px;
   color: #959595;
 }
@@ -177,6 +180,9 @@ export default {
 .client_type {
   width: 160px;
   display: flex;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  /* autoprefixer: on */
   padding-left: 15px;
   color: #222222;
   font-weight: 600;

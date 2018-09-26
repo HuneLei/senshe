@@ -132,6 +132,11 @@ export default {
   text-align: center;
   justify-content: space-around;
   background-color: #ffffff;
+  /*! autoprefixer: off */
+  display: -webkit-flex !important;
+  -webkit-justify-content: space-around;
+  -webkit-text-align: center;
+  /* autoprefixer: on */
 }
 
 .month_index {

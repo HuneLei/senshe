@@ -439,6 +439,9 @@ export default {
 /* 陈列图片上传 */
 .update_img {
   display: flex;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  /* autoprefixer: on */
 }
 
 .img_show div img {
@@ -447,6 +450,11 @@ export default {
   margin: 6px 0 5px 10px;
 }
 .img_show {
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  -webkit-flex: 1;
+  /* autoprefixer: on */
   display: flex;
   flex-wrap: wrap;
   flex: 1;

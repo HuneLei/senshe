@@ -164,5 +164,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  /* autoprefixer: on */
 }
 </style>

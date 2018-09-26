@@ -167,6 +167,10 @@ export default {
   display: flex !important;
   align-items: center;
   font-size: 13px !important;
+  /*! autoprefixer: off */
+  display: -webkit-flex !important;
+  -webkit-align-items: center;
+  /* autoprefixer: on */
 }
 .weui-search-bar__box .weui-search-bar__input {
   font-size: 14px !important;
@@ -195,6 +199,11 @@ export default {
   bottom: 2px !important;
   align-items: center;
   justify-content: center;
+  /*! autoprefixer: off */
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  display: -webkit-flex;
+  /* autoprefixer: on */
 }
 .vue-waterfall-easy-container .vue-waterfall-easy .over {
   font-size: 13px !important;
