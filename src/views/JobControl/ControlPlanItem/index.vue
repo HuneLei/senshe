@@ -36,6 +36,7 @@ import jobControl from '../../../api/jobControl';
 export default {
   created() { },
   activated() {
+    this.planList = [];
     this.updateState = true;
     if (this.modifier) {
       // this.page = 1;
@@ -63,6 +64,9 @@ export default {
     modifier() {
       return this.$store.getters.getModifier
     },
+    dataStata() {
+      return this.$store.getters.getDataState;
+    },
     // 新增的客户规划
     planDate() {
       return this.$store.getters.getPlanDate
@@ -73,6 +77,26 @@ export default {
       if (!newVal && this.planList.length !== 0 && this.updateState) {
         this.updatePlan()
       }
+    },
+    dataStata() {
+      this.$vux.loading.show({
+        text: '更新中...'
+      })
+      const form = {
+        clientType: this.$route.query.clientType,
+        productId: this.$route.query.productId,
+        year: this.$route.query.year,
+      }
+      if (this.$route.query.month !== '0') {
+        form.month = this.$route.query.month
+      }
+      jobControl.listupdate(form).then((res) => {
+        this.$vux.loading.hide()
+        if (res.data.code === 0) {
+          this.$refs.controlPlanItem.triggerPullToRefresh()
+          this.$vux.toast.text('更新成功', 'middle');
+        }
+      })
     }
   },
   components: {},

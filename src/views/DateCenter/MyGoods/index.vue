@@ -29,7 +29,11 @@ export default {
     this.initImgsArr((data) => {
       if (data.code === 0) {
         for (let i = 0; i < data.result.length; i += 1) {
-          data.result[i].src = '../../../assets/img/u1199.png'
+          if (data.result[i].photo) {
+            data.result[i].src = data.result[i].photo;
+          } else {
+            data.result[i].src = 'static/img/yaoping5.jpg';
+          }
         }
         if (data.result.length === 0) this.loadMore = true;
         that.imgsArr = data.result

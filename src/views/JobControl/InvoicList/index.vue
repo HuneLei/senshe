@@ -60,7 +60,6 @@ export default {
     getInvoiclist(callBack) {
       const from = {
         currentPage: this.page,
-        month: 0,
         year: 0,
       }
       jobControl.threelist(from).then((res) => {

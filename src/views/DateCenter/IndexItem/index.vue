@@ -2,9 +2,9 @@
 <template>
   <div class="scroller_rela" ref="myIndexItem">
     <search ref="IndexClassItem" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" id="indexSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
-    <x-table :cell-bordered="false" class="table_thead" ref="IndexItemThead" id="IndexItemThead">
+    <x-table :cell-bordered="true" class="table_thead" ref="IndexItemThead" id="IndexItemThead">
       <thead>
-        <tr>
+        <tr style="background-color: #F8F8F8">
           <th class="table_thead_longth">通用名</th>
           <th>流向类型</th>
           <th>指标</th>
@@ -14,7 +14,7 @@
     </x-table>
     <scroller ref="IndexItemScroller" :on-refresh="refresh" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新'>
       <div class="incoic_table">
-        <x-table :cell-bordered="false">
+        <x-table :cell-bordered="true">
           <tbody class="table_tbody">
             <tr v-for="(item, index) in indexList" :key="index">
               <td class="table_tbody_longth">{{item.sensheProduct.commonName}}</td>
@@ -38,6 +38,10 @@ export default {
     this.searchValue = '';
     this.indexList = [];
     this.$refs.IndexItemScroller.triggerPullToRefresh()
+    const month = this.$route.query.month
+    const year = this.$route.query.year
+    const title = month === '0' ? `${year}年度` : `${year}年${month}月`
+    this.$store.commit('updateIndexName', title)
   },
   mounted() {
     const that = this;
@@ -168,10 +172,17 @@ export default {
   display: flex;
   display: -webkit-flex;
   flex-wrap: wrap;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  /* autoprefixer: on */
 }
 
 .table_thead tr th {
   flex: 1;
+  /*! autoprefixer: off */
+  -webkit-flex: 1;
+  /* autoprefixer: on */
   word-wrap: break-word;
   word-break: break-all;
 }
@@ -183,11 +194,16 @@ export default {
 
 .table_tbody tr {
   display: flex;
+  /*! autoprefixer: off */
   display: -webkit-flex;
+  /* autoprefixer: on */
 }
 
 .table_tbody tr td {
   flex: 1;
+  /*! autoprefixer: off */
+  -webkit-flex: 1;
+  /* autoprefixer: on */
 }
 
 .incoic_table {
@@ -197,12 +213,20 @@ export default {
 
 .table_thead_longth {
   flex: 2 !important;
+  /*! autoprefixer: off */
+  -webkit-flex: 2 !important;
+  /* autoprefixer: on */
   padding: 0 10px;
   text-align: left;
 }
 
 .table_tbody_longth {
   flex: 2 !important;
+  justify-content: flex-start !important;
+  /*! autoprefixer: off */
+  -webkit-flex: 2 !important;
+  -webkit-justify-content: flex-start !important;
+  /* autoprefixer: on */
   text-align: left;
   padding: 6px 10px;
 }
@@ -214,11 +238,13 @@ export default {
   word-wrap: break-word;
   word-break: break-all;
   display: flex;
-  display: -webkit-flex;
   justify-content: center;
-  -webkit-justify-content: center;
   align-items: center;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-justify-content: center;
   -webkit-align-items: center;
+  /* autoprefixer: on */
 }
 </style>
 <style>

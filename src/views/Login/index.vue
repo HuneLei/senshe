@@ -209,6 +209,6 @@ export default {
 }
 
 .login_input .weui-cell:before {
-  border-top: 0;
+  border-top: 0 !important;
 }
 </style>

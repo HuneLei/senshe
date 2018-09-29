@@ -134,8 +134,10 @@ export default {
   padding-bottom: 10px;
   text-align: center;
   justify-content: space-around;
-  -webkit-justify-content: space-around;
   background-color: #ffffff;
+  /*! autoprefixer: off */
+  -webkit-justify-content: space-around;
+  /* autoprefixer: on */
 }
 
 .month_index {

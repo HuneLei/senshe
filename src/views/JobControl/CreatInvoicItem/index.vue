@@ -4,7 +4,7 @@
     <search placeholder="输入客户名称进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false' @on-submit="onSubmit" @on-cancel="onCancel" id="creatSearchView"></search>
     <x-table class="table_thead" :cell-bordered="false" ref="tableThead" id="tableThead">
       <thead>
-        <tr>
+        <tr style="background-color: #F8F8F8">
           <th class="table_thead_longth table_border">客户名称</th>
           <th>进货</th>
           <th>销售</th>
@@ -19,7 +19,7 @@
         <x-table :cell-bordered="false">
           <tbody :class="`table_tbody ${ !modifier || 'table_tbody_active'}`">
             <tr v-for="(item, index) in incoicList" :key="index" @click="updateClick(item)">
-              <td class="table_border table_tbody_longth">{{item.writeDate}}<br> {{item.clientName}}</td>
+              <td class="table_border table_tbody_longth">{{item.writeDate | convertNewDate}}<br v-show="item.writeDate"/> {{item.clientName}}</td>
               <td>{{item.stock}}</td>
               <td>{{item.sale}}</td>
               <td>{{item.inventory}}</td>
@@ -58,7 +58,7 @@ export default {
       if ((to.path === '/JobControl/CreatInvoicItem' && form.path === '/JobControl/InvoicList') || to.path === '/JobControl/CreatInvoicItem' && form.path === '/JobControl/CreatInvoic') {
         this.$refs.creatScroller.triggerPullToRefresh()
       }
-    }
+    },
   },
   mounted() {
     const that = this;
@@ -97,8 +97,8 @@ export default {
       imgList.forEach((item) => {
         if (item) {
           const imgObj = {
-            msrc: `${config.imgHost}${item}`,
-            src: `${config.imgHost}${item}`,
+            msrc: `${config.imgHost}${item}.thumb.jpg`,
+            src: `${config.imgHost}${item}.thumb.jpg`,
             w: 1200,
             h: 900
           }
@@ -202,7 +202,7 @@ export default {
 .table_tbody tr {
   display: flex;
   /*! autoprefixer: off */
-   display: -webkit-flex;
+  display: -webkit-flex;
   /* autoprefixer: on */
 }
 
@@ -228,8 +228,10 @@ export default {
 
 .table_tbody_longth {
   flex: 2.5 !important;
+  justify-content: flex-start !important;
   /*! autoprefixer: off */
   -webkit-flex: 2.5 !important;
+  -webkit-justify-content: flex-start !important;
   /* autoprefixer: on */
   text-align: left;
   padding: 6px 10px;

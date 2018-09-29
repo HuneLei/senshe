@@ -13,6 +13,7 @@ const ControlPlanItem = (resolve) => require(['@/views/JobControl/ControlPlanIte
 const FollowUp = (resolve) => require(['@/views/JobControl/FollowUp'], resolve);
 const FollowUpList = (resolve) => require(['@/views/JobControl/FollowUpList'], resolve);
 const FollowUpItem = (resolve) => require(['@/views/JobControl/FollowUpItem'], resolve);
+const SelectClient = (resolve) => require(['@/views/JobControl/SelectClient'], resolve);
 
 export default {
   path: '/',
@@ -41,6 +42,13 @@ export default {
           path: 'CreatInvoic',
           component: CreatInvoic,
           name: '进销存录入',
+          children: [
+            {
+              path: 'SelectClient',
+              component: SelectClient,
+              name: '客户选择',
+            },
+          ]
         },
         {
           path: 'CreatInvoicItem',

@@ -12,7 +12,6 @@ const setConfig = (base) => {
   imgHost = 'http://180.101.144.247:8010';
   // imgHost = 'http://localhost:9898';
   uploadHost = '';
-
   // // 生产环境 （master）
   if (process.env.NODE_ENV && process.env.NODE_ENV === 'master') {
     // apiHost = 'http://172.18.91.113:9898/';

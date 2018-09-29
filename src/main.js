@@ -28,13 +28,13 @@ router.beforeEach((to, from, next) => {
   const toLength = toPath.length - 1;
   const fromLength = fromPath.length - 1;
   if (toPath[toLength] === from.path && fromPath[fromLength] === to.path) {
-    store.commit('updateEnteAnima', 'slideInLeft flying')
-    store.commit('updateLeaveAnima', 'slideOutRight flying')
+    store.commit('updateEnteAnima', 'slideInLefts flying')
+    store.commit('updateLeaveAnima', 'slideOutRights flying')
     toPath.pop(); fromPath.pop();
   } else {
     toPath.push(to.path); fromPath.push(from.path);
-    store.commit('updateEnteAnima', 'slideInRight flying')
-    store.commit('updateLeaveAnima', 'slideOutLeft flying')
+    store.commit('updateEnteAnima', 'slideInRights flying')
+    store.commit('updateLeaveAnima', 'slideOutLefts flying')
   }
   store.commit('updateLoadingStatus', { isLoading: true })
   next()

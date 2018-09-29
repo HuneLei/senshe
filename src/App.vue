@@ -199,15 +199,30 @@ export default {
   bottom: 2px !important;
   align-items: center;
   justify-content: center;
-  /*! autoprefixer: off */
+  /* autoprefixer: on */
   -webkit-justify-content: center;
   -webkit-align-items: center;
   display: -webkit-flex;
-  /* autoprefixer: on */
 }
 .vue-waterfall-easy-container .vue-waterfall-easy .over {
   font-size: 13px !important;
 }
+
+/* 长按复制 */
+/*! autoprefixer: off */
+.contentBox,
+.weui-cell__ft,
+.msg_text,
+.vux-label,
+.weui-cell,
+.leave_smg_div,
+tr, td,{
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+/* autoprefixer: on */
 
 .weui-icon_toast.weui-loading {
   margin: 0.4rem 0 0;
@@ -233,4 +248,130 @@ export default {
 .weui-dialog {
   max-width: 8rem !important;
 }
+
+/*! autoprefixer: off */
+@-webkit-keyframes slideInRights {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInRights {
+  from {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideInRights {
+  -webkit-animation-name: slideInRights;
+  animation-name: slideInRights;
+}
+
+@-webkit-keyframes slideOutLefts {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes slideOutLefts {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+.slideOutLefts {
+  -webkit-animation-name: slideOutLefts;
+  animation-name: slideOutLefts;
+}
+
+@-webkit-keyframes slideInLefts {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes slideInLefts {
+  from {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+    visibility: visible;
+  }
+
+  to {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.slideInLefts {
+  -webkit-animation-name: slideInLefts;
+  animation-name: slideInLefts;
+}
+
+@-webkit-keyframes slideOutRights {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes slideOutRights {
+  from {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    visibility: hidden;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.slideOutRights {
+  -webkit-animation-name: slideOutRights;
+  animation-name: slideOutRights;
+}
+/* autoprefixer: on */
 </style>

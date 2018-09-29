@@ -2,11 +2,14 @@
 <template>
   <div style="background-color: white;" class="scroller_rela" ref="jobControl">
     <transition :enter-active-class="`animated ${enteAnima}`" :leave-active-class="`animated ${leaveAnima}`">
-      <!-- router链接 -->
-      <keep-alive>
+    <!-- router链接 -->
+    <keep-alive>
         <router-view></router-view>
       </keep-alive>
     </transition>
+    <!-- <keep-alive>
+      <router-view></router-view>
+    </keep-alive> -->
   </div>
 </template>
 

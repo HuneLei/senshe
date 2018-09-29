@@ -27,7 +27,8 @@ import jobControl from '../../../api/jobControl';
 
 export default {
   created() { },
-  mounted() {
+  mounted() {},
+  activated() {
     // 屏幕高度设置
     const that = this;
     that.page = 0;
@@ -43,7 +44,6 @@ export default {
     this.indexMonthList = [];
     this.$refs.planScroller.triggerPullToRefresh()
   },
-  activated() {},
   computed: {},
   components: {},
   data() {
@@ -138,8 +138,10 @@ export default {
   padding-bottom: 10px;
   text-align: center;
   justify-content: space-around;
-  -webkit-justify-content: space-around;
   background-color: #ffffff;
+  /*! autoprefixer: off */
+  -webkit-justify-content: space-around;
+  /* autoprefixer: on */
 }
 
 .month_index {

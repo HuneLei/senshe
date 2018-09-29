@@ -15,7 +15,7 @@
         </div>
       </div>
     </scroller>
-    <transition enter-active-class="animated slideInRight flying" leave-active-class="animated slideOutRight flying">
+    <transition enter-active-class="animated slideInRights flying" leave-active-class="animated slideOutRights flying">
       <!-- router链接 -->
       <keep-alive>
         <router-view></router-view>

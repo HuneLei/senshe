@@ -73,6 +73,21 @@ const setNavigator = (style, background) => {
   plus.navigator.setStatusBarBackground(background)
 }
 
+// 拍照上传
+const getImage = (callBack) => {
+  if (!window.plus) return
+  var cmr = plus.camera.getCamera();
+  cmr.captureImage(function (p) {
+    plus.io.resolveLocalFileSystemURL(p, function (entry) {
+      callBack(entry.toLocalURL(), null)
+    }, function (e) {
+      console.log('读取拍照文件错误：' + e.message);
+    });
+  }, function (e) {
+    callBack(null, e)
+  }, { filename: '_doc/camera/', index: 1 });
+}
+
 // 检测是否在手机上运行
 const checkSystem = () => {
   if (!window.plus) {
@@ -89,4 +104,5 @@ export default {
   galleryImgsSelected,
   setNavigator,
   checkSystem,
+  getImage,
 };

@@ -1,10 +1,10 @@
 <!-- 商品详情 -->
 <template>
   <scroller ref="myGoodsCard" class="my_goods_card">
+    <div class="goods_item">
+      <img :src="form.photo || 'static/img/yaoping5.jpg'">
+    </div>
     <group gutter='0' label-width="6em" label-margin-right="2em">
-      <div class="goods_card_img">
-        <img src="../../../assets/img/u1199.png" style="width:100%;display:block;">
-      </div>
       <cell title="通用名：" :value="form.commonName" value-align="left"></cell>
       <cell title="规格：" :value="form.module" value-align="left"></cell>
       <cell title="生产厂家：" :value="form.factory" value-align="left"></cell>
@@ -35,7 +35,7 @@ export default {
     this.$nextTick(() => {
       // const marginTop = document.querySelector('.vux-header').clientHeight;
       // that.$refs.myGoodsCard.$el.style.marginTop = `${marginTop}px`
-      that.$refs.myGoodsCard.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar'])}px`
+      that.$refs.myGoodsCard.$el.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {},
@@ -60,6 +60,11 @@ export default {
 .goods_card_img {
   padding: 10px;
   width: 355px;
+}
+.goods_item img {
+  width: 50%;
+  display: block;
+  padding: 0 30px;
 }
 </style>
 <style>

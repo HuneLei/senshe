@@ -4,8 +4,8 @@
     <!-- 导航顶部类型 -->
     <div v-if="headIndex == 0">
       <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name || indexName" @on-click-back='onClickBack'>
-        <span v-if="!modifier" slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
-        <span v-if="modifier" slot="right" v-for="(item, index) in slotRight" :key="index" class="right_name" @click="rightClick(index)">{{item.name}}</span>
+        <span v-if="!modifier && item.icon" slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
+        <span v-if="modifier" slot="right" v-for="(item, index) in slotRight" :key="index" class="right_name icon_view" @click="rightClick(index)">{{item.name}}</span>
       </x-header>
     </div>
     <!-- 带tab切换导航顶部类型 -->
@@ -17,6 +17,13 @@
             <tab-item active-class="tab_active" @on-item-click="itemTabClick(200)">连锁</tab-item>
             <tab-item active-class="tab_active" @on-item-click="itemTabClick(300)">门店</tab-item>
           </tab>
+        </div>
+        <div slot="right">
+          <div @click="selectDate()" class="date_value">
+            {{dateValue}}
+            <span v-show="shangla" class="icon-wite iconfont icon-shangla"></span>
+            <span v-show="!shangla" class="icon-wite iconfont icon-xiala"></span>
+          </div>
         </div>
       </x-header>
     </div>
@@ -91,9 +98,16 @@ export default {
     },
   },
   created() { },
-  mounted() { },
+  mounted() {
+    const myDate = new Date();
+    this.dateValue = `${myDate.getFullYear()}-${myDate.getMonth() + 1 > 9 ? myDate.getMonth() + 1 : `0${myDate.getMonth() + 1}`}`
+    this.$store.commit('updateDateValue', this.dateValue)
+  },
+  activated() {},
   data() {
     return {
+      shangla: false,
+      dateValue: '',
       // tab页面切换
       tabList: [
         { name: '我的商品', slot: 'myGoods', comslot: 'MyClient' },
@@ -125,13 +139,41 @@ export default {
     // 点击右侧按钮时候触发
     rightClick(e) {
       if (!this.slotRight[e].path) {
-        this.$store.commit('updateModifier', !this.modifier)
+        if (e === 1) {
+          this.$store.commit('updateModifier', !this.modifier)
+        }
+        if (e === 0) {
+          this.$store.commit('updateDataState')
+        }
       }
       this.$emit('right-click', e);
     },
     // tab切换的时候触发
     itemTabClick(index) {
       this.$store.commit('updateTabIndex', index)
+    },
+    // 选择日期
+    selectDate() {
+      // 组件内使用
+      const that = this
+      this.$vux.datetime.show({
+        value: that.dateValue, // 其他参数同 props
+        cancelText: '取消',
+        confirmText: '确定',
+        format: 'YYYY-MM',
+        yearRow: '{value}年',
+        monthRow: '{value}月',
+        onConfirm(val) {
+          that.dateValue = val;
+          that.$store.commit('updateDateValue', val)
+        },
+        onHide() {
+          that.shangla = false
+        },
+        onShow() {
+          that.shangla = true
+        }
+      })
     },
     // 点击返回按钮触发
     onClickBack() {
@@ -171,15 +213,31 @@ export default {
 .right_name {
   font-size: 16px;
 }
+.icon-wite {
+  color: #ffffff !important;
+  font-size: 11px;
+  padding-left: 5px;
+}
+.date_value {
+  font-size: 13px;
+  display: flex;
+  padding: 2px 0px 2px 4px;
+  align-items: center;
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  /* autoprefixer: on */
+}
 </style>
 <style>
 .incoic_item .vux-header-title-area,
 .vux-header .vux-header-title {
-  margin: 0 30px;
+  margin: 0 60px;
 }
 /* tab切换的背景颜色 */
 .incoic_item .vux-tab {
   background-color: #07bc99;
+  right: 20px;
 }
 /* tab选中下边条样式 */
 .incoic_item .vux-tab-ink-bar {

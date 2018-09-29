@@ -13,7 +13,15 @@ function plusReady() {
   plus.webview.currentWebview().setStyle({ scrollIndicator: 'none' });
   // Android处理返回键
   plus.key.addEventListener('backbutton', function () {
-    window.history.back(-1);
+    if (window.location.hash !== '#/login') {
+      window.history.back()
+    } else {
+      ('iOS' == plus.os.name) ? plus.nativeUI.confirm('确认退出？', function (e) {
+        if (e.index > 0) {
+          plus.runtime.quit();
+        }
+      }, '', ['取消', '确定']) : (confirm('确认退出？') && plus.runtime.quit());
+    }
   }, false);
   compatibleAdjust();
 }

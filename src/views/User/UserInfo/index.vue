@@ -31,6 +31,15 @@ import user from '../../../api/user';
 
 export default {
   created() { },
+  activated() {
+    const that = this;
+    // 屏幕高度设置
+    this.$nextTick(() => {
+      const marginTop = document.querySelector('.vux-header').clientHeight;
+      that.$refs.InfoScroller.$el.style.marginTop = `${marginTop}px`
+      that.$refs.InfoScroller.$el.style.height = `${that.$countHeight(['.vux-header', '.weui-tabbar'])}px`
+    })
+  },
   mounted() {
     const that = this;
     // 检测是否有保存过用户信息

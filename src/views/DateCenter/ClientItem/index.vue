@@ -12,21 +12,25 @@
       <cell v-show="index == 100 || index == 200">
         <div slot="title">
           <span class="cell_title">联系电话：</span>
-          <span class="cell_span">{{form.phone}}</span>
+          <a :href="`tel://${form.phone}`">
+            <span class="cell_span cell_phone">{{form.phone}}</span>
+          </a>
         </div>
         <span slot="icon" class="icon iconfont icon-lianxidianhua icon_slot"></span>
       </cell>
       <cell v-show="index == 300">
         <div slot="title">
           <span class="cell_title">门店电话：</span>
-          <span class="cell_span">{{form.phone}}</span>
+          <a :href="`tel://${form.phone}`">
+            <span class="cell_span cell_phone">{{form.phone}}</span>
+          </a>
         </div>
         <span slot="icon" class="icon iconfont icon-lianxidianhua icon_slot"></span>
       </cell>
       <cell align-items="flex-start">
         <div slot="title">
           <span class="cell_title">详细地址：</span>
-          <span class="cell_span">{{form.address}}</span>
+          <span class="cell_span contentBox">{{form.address}}</span>
         </div>
         <span slot="icon" class="icon iconfont icon-dizhi icon_slot"></span>
       </cell>
@@ -40,7 +44,9 @@
       <cell align-items="flex-start" v-show="index == 200">
         <div slot="title">
           <span class="cell_title">采购部电话：</span>
-          <span class="cell_span">{{form.purchaseDeptPhone}}</span>
+          <a :href="`tel://${form.purchaseDeptPhone}`">
+            <span class="cell_span cell_phone">{{form.purchaseDeptPhone}}</span>
+          </a>
         </div>
         <span slot="icon" class="icon iconfont icon-lianxidianhua icon_slot"></span>
       </cell>
@@ -54,7 +60,9 @@
       <cell align-items="flex-start" v-show="index == 200">
         <div slot="title">
           <span class="cell_title">运营部电话：</span>
-          <span class="cell_span">{{form.operationDeptPhone}}</span>
+          <a :href="`tel://${form.operationDeptPhone}`">
+            <span class="cell_span cell_phone">{{form.operationDeptPhone}}</span>
+          </a>
         </div>
         <span slot="icon" class="icon iconfont icon-lianxidianhua icon_slot"></span>
       </cell>
@@ -120,12 +128,22 @@ export default {
   width: 210px;
   color: #757575;
   display: inline-flex;
+  /*! autoprefixer: off */
+  display: -webkit-inline-flex;
+  /* autoprefixer: on */
+}
+
+.cell_phone {
+  color: #07BC99;
 }
 </style>
 
 <style>
-  .clint_item .weui-cell{
-    align-items: baseline;
-  }
+.clint_item .weui-cell {
+  align-items: baseline;
+  /*! autoprefixer: off */
+  -webkit-align-items: baseline;
+  /* autoprefixer: on */
+}
 </style>
 

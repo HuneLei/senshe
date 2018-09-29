@@ -1,8 +1,8 @@
 const state = {
   isLoading: false, // router切换loading
   winHeight: 0, // tab切换页的高度
-  enteAnima: 'slideInRight flying', // 进来时候的动画
-  leaveAnima: 'slideOutLeft flying', // 出去时候的动画
+  enteAnima: 'slideInRights flying', // 进来时候的动画
+  leaveAnima: 'slideOutLefts flying', // 出去时候的动画
   defaultPath: '/DateCenter/MyGoods', // 默认选中的tab
   userInfo: {}, // 用户信息
   userFlush: true, // 是否刷新用户信息
@@ -15,10 +15,17 @@ const state = {
   invoicData: {}, // 进销存修改记录
   indexName: '', // 商级名称
   tabIndex: 0, // 进销存tabIndex
+  dataStata: false, // 更新状态
+  dateValue: '', // 选择的日期
+  dataclient: {
+    name: '',
+    id: '',
+  }, // 选择的客户
 };
 
 const getters = {
   getTabIndex: (state) => state.tabIndex,
+  getDateValue: (state) => state.dateValue,
   getInvoicData: (state) => state.invoicData,
   getShowSheet: (state) => state.showSheet,
   getPosition: (state) => state.position,
@@ -34,11 +41,22 @@ const getters = {
   getMsgFlush: (state) => state.msgFlush,
   getClientList: (state) => state.clientList,
   getIndexName: (state) => state.indexName,
+  getDataState: (state) => state.dataStata,
+  getDataClient: (state) => state.dataclient,
 };
 
 const actions = {};
 
 const mutations = {
+  updateDateValue(state, date) {
+    state.dateValue = date;
+  },
+  updateDatacliente(state, data) {
+    state.dataclient = data;
+  },
+  updateDataState(state) {
+    state.dataStata = !state.dataStata;
+  },
   updateTabIndex(state, index) {
     state.tabIndex = index;
   },

@@ -19,21 +19,25 @@ const convertDate = (olddate) => {
 
 // 格式化日期-年月日
 const convertNewDate = (value) => {
-  const date = new Date(value)
-  const y = date.getFullYear();
-  let m = (date.getMonth() + 1).toString();
-  let d = date.getDate().toString();
-  let hh = date.getHours().toString();
-  if (m.length < 2) {
-    m = `0${m}`;
+  let ret = '';
+  if (value) {
+    const date = new Date(value)
+    const y = date.getFullYear();
+    let m = (date.getMonth() + 1).toString();
+    let d = date.getDate().toString();
+    let hh = date.getHours().toString();
+    if (m.length < 2) {
+      m = `0${m}`;
+    }
+    if (d.length < 2) {
+      d = `0${d}`;
+    }
+    if (hh.length < 2) {
+      hh = `0${hh}`;
+    }
+    ret = `${y}-${m}-${d}`;
   }
-  if (d.length < 2) {
-    d = `0${d}`;
-  }
-  if (hh.length < 2) {
-    hh = `0${hh}`;
-  }
-  return `${y}-${m}-${d}`;
+  return ret;
 };
 
 // 格式化日期-时分秒

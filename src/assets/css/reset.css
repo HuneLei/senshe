@@ -211,3 +211,40 @@ input::-webkit-input-placeholder {
 .table_border:after {
   border-right: 1px solid #c7c7c7 !important;
 }
+
+.vux-header .vux-header-left .left-arrow:before {
+  border: 2px solid #fff !important;
+  border-width: 2px 0 0 2px !important;
+}
+
+.weui-cell_access .weui-cell__ft:after {
+  border-width: 2px 2px 0 0 !important;
+}
+
+.weui-cell:before {
+  border-top: 1px solid #D9D9D9 !important;
+}
+
+.vux-1px-b:after {
+  border-bottom: 1px solid #C7C7C7 !important;
+}
+
+.weui-tabbar:before {
+  border-top: 1px solid #C0BFC4 !important;
+}
+
+.weui-cells:before {
+  border-top: 1px solid #D9D9D9 !important;
+}
+
+.vux-cell-box:not(:first-child):before {
+  border-top: 1px solid #D9D9D9 !important;
+}
+
+.vux-table td:after, .vux-table th:after {
+  border-right: 1px solid #C7C7C7 !important;
+}
+
+.vux-header {
+  top: -0.5px !important;
+}

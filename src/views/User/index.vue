@@ -47,10 +47,7 @@ export default {
     goLogin() {
       config.removeToken();
       config.removeUserToken();
-      if (that.$plus) {
-        that.$plus.navigator.setStatusBarStyle('dark');
-        that.$plus.navigator.setStatusBarBackground('#F8F8F8')
-      }
+      window.mobileNative.setNavigator('dark', '#F8F8F8')
       this.$router.replace('/');
     },
   },

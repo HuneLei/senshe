@@ -3,7 +3,7 @@
   <div class="scroller_rela" ref="followUpItem">
     <x-table class="table_thead" :cell-bordered="false" ref="followThead" id="followThead">
       <thead>
-        <tr>
+        <tr style="background-color: #F8F8F8">
           <th class="table_thead_longth table_border">客户名称</th>
           <th class="table_long">进货规划</th>
           <th>进度%</th>
@@ -183,8 +183,10 @@ export default {
 
 .table_tbody_longth {
   flex: 2.5 !important;
+  justify-content: flex-start !important;
   /*! autoprefixer: off */
   -webkit-flex: 2.5 !important;
+  -webkit-justify-content: flex-start !important;
   /* autoprefixer: on */
   text-align: left;
   padding: 5px 6px;

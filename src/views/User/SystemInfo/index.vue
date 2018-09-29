@@ -17,7 +17,7 @@ import user from '../../../api/user';
 
 export default {
   created() { },
-  mounted() {
+  activated() {
     const that = this;
     const id = this.$route.query.id;
     // 获取详情
@@ -27,6 +27,7 @@ export default {
       }
     })
   },
+  mounted() {},
   computed: {},
   components: {},
   data() {

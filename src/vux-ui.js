@@ -92,6 +92,7 @@ import {
   // Scroller,
   ConfirmPlugin,
   ToastPlugin,
+  DatetimePlugin,
 } from 'vux';
 
 import MyCom from './components'; // 引入公共组件
@@ -101,7 +102,8 @@ Vue.component('TabBar', MyCom.TabBar); // 底部导航组件
 
 Vue.use(ConfirmPlugin);
 Vue.use(ToastPlugin);
-Vue.use(VueScroller)
+Vue.use(VueScroller);
+Vue.use(DatetimePlugin);
 Vue.use(LoadingPlugin) // loading加载
 
 Vue.component('Actionsheet', Actionsheet); // 模态弹出框
@@ -200,6 +202,7 @@ if (window.plus) {
   Vue.prototype.$plus = plus;
 } 
 
+import upperPy from './utils/upperPy'; //  获取拼音缩写
 import convert from './utils/convert'; //  常用方法
 import validator from './utils/validator'; //  数据校验
 import mobileNative from './utils/mobileNative'; //  手机共用方法
@@ -209,5 +212,7 @@ Object.keys(convert).forEach(k => {
   Vue.filter(k, convert[k])
 })
 
+window.upperPy = upperPy
+window.convert = convert;
 window.validator = validator;
 window.mobileNative = mobileNative;

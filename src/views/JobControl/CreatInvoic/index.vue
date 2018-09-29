@@ -1,43 +1,56 @@
 <!-- 进销存录入 -->
 <template>
-  <scroller ref="creatInvoic">
-    <group gutter='0'>
-      <datetime v-model="dataValue" @on-change="changeValue" title="日期：" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
-      <popup-picker v-if="isClient" title="客户：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name @on-show="showClient()"></popup-picker>
-      <cell v-if="!isClient" title="客户：" value="暂无客户"></cell>
-      <x-input class="creat_invoic" title='进货：' v-model="stockValue" :text-align='stockRight'
-      type='number' @on-blur="() => { stockRight = 'right' }" @on-focus="() => { stockRight = 'left' }"></x-input>
-      <x-input class="creat_invoic" title='销售：' v-model="marketValue" :text-align='marketRight'
-      type='number' @on-blur="() => { marketRight = 'right' }" @on-focus="() => { marketRight = 'left' }"></x-input>
-      <x-input class="creat_invoic" title='库存：' v-model="repertoryValue" :text-align='repertoryRight'
-      type='number' @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
-      </x-input>
-      <cell v-model="listValue" text-align='right'>
-        <div slot="title" class="update_img">
-          <span class="update_img_span">陈列：</span>
-          <div class="img_show">
-            <div class="img_show_no" style="border: 1px solid #eaeaea; border-radius: 10px;" @click="galleryImgsSelected()">
-              <span class="iconfont icon-zhaopian1"></span>
-              <span class="img_show_font">上传照片</span>
-            </div>
-            <div class="img_show_view" v-for="(item, index) in imgList" :key="index">
-              <img v-if="item.src" class="previewer-demo-img" :src="item.src" alt="" style="box-shadow: 1px 0px 1px #ccc; border-radius: 10px;" @click="showImg(index)">
-              <span v-if="item.src" class="img_span_show iconfont icon-jianshao" @click="deleteImage(index)"></span>
-            </div>
-            <div v-if="showPreviewer">
-              <div v-transfer-dom>
-                <previewer :list="imgList" ref="previewer" @on-close='onClose'></previewer>
+  <div>
+    <scroller ref="creatInvoic">
+      <group gutter='0'>
+        <datetime v-model="dataValue" @on-change="changeValue" title="日期：" clear-text="清除" @on-clear="clearValue" @on-confirm="onConfirm"></datetime>
+        <!-- <popup-picker v-if="isClient" title="客户：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name @on-show="showClient()"></popup-picker> -->
+        <cell v-if="isClient" title="客户：" is-link @click.native="selectClient()" :value="clientData.name"></cell>
+        <cell v-if="!isClient" title="客户：" value="暂无客户"></cell>
+        <x-input class="creat_invoic" title='进货：' v-model="stockValue" :text-align='stockRight'
+        type='number' @on-blur="() => { stockRight = 'right' }" @on-focus="() => { stockRight = 'left' }"></x-input>
+        <x-input class="creat_invoic" title='销售：' v-model="marketValue" :text-align='marketRight'
+        type='number' @on-blur="() => { marketRight = 'right' }" @on-focus="() => { marketRight = 'left' }"></x-input>
+        <x-input class="creat_invoic" title='库存：' v-model="repertoryValue" :text-align='repertoryRight'
+        type='number' @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
+        </x-input>
+        <cell v-model="listValue" text-align='right'>
+          <div slot="title" class="update_img">
+            <span class="update_img_span">陈列：</span>
+            <div class="img_show">
+              <div class="img_show_no" style="border: 1px solid #eaeaea; border-radius: 10px;" @click="galleryImgsSelected()">
+                <span class="iconfont icon-tupian1"></span>
+                <span class="img_show_font">上传照片</span>
+              </div>
+              <div class="img_show_no" style="border: 1px solid #eaeaea; border-radius: 10px;" @click="photoImgsSelected()">
+                <span class="iconfont icon-zhaopian1"></span>
+                <span class="img_show_font">拍照上传</span>
+              </div>
+              <div class="img_show_view" v-for="(item, index) in imgList" :key="index">
+                <img v-if="item.src" class="previewer-demo-img" :src="item.src" alt="" style="box-shadow: 1px 0px 1px #ccc; border-radius: 10px;" @click="showImg(index)">
+                <span v-if="item.src" class="img_span_show iconfont icon-jianshao" @click="deleteImage(index)"></span>
+              </div>
+              <div v-if="showPreviewer">
+                <div v-transfer-dom>
+                  <previewer :list="imgList" ref="previewer" @on-close='onClose'></previewer>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </cell>
-    </group>
-    <!-- 提交操作 -->
-    <div class="confirm_button">
-      <x-button :show-loading="loginLoading" text="确定" @click.native="confirmClick" :disabled='!isClient'></x-button>
-    </div>
-  </scroller>
+        </cell>
+      </group>
+      <!-- 提交操作 -->
+      <div class="confirm_button">
+        <x-button :show-loading="loginLoading" text="确定" @click.native="confirmClick" :disabled='!isClient'></x-button>
+      </div>
+    </scroller>
+    <transition enter-active-class="animated slideInRights flying" leave-active-class="animated slideOutRights flying">
+      <!-- router链接 -->
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -60,18 +73,27 @@ export default {
     this.client = this.clientList.clientType;
     // 日期
     if (!Object.keys(this.invoicData).length) {
-      this.dataValue = '';
+      const nowDate = new Date()
+      this.dataValue = window.convert.convertNewDate(nowDate);
       this.stockValue = ''; // 进货
       this.marketValue = ''; // 销售
       this.repertoryValue = ''; // 库存
       this.listValue = ''; // 陈列
-      this.clientVar = [];
+      // this.clientVar = [];
+      this.$store.commit('updateDatacliente', {
+        name: '',
+        id: '',
+      })
     } else {
       this.dataValue = this.invoicData.writeDate;
       this.stockValue = this.invoicData.stock; // 进货
       this.marketValue = this.invoicData.sale; // 销售
       this.repertoryValue = this.invoicData.inventory; // 库存
       this.listValue = ''; // 陈列
+      this.$store.commit('updateDatacliente', {
+        name: this.invoicData.clientName,
+        id: this.invoicData.clientId,
+      })
       if (this.invoicData.filePath) {
         const path = this.invoicData.filePath;
         const that = this;
@@ -91,25 +113,25 @@ export default {
         })
       }
     }
-    this.getCustomList((data) => {
-      const clientList = [];
-      if (data.length) {
-        this.isClient = true;
-        for (let i = 0; i < data.length; i += 1) {
-          const client = {
-            name: data[i].name,
-            value: `${data[i].name}-${data[i].id}`
-          }
-          clientList.push(client)
-        }
-      } else {
-        this.isClient = false;
-      }
-      this.clientType.push(clientList)
-      if (Object.keys(this.invoicData).length) {
-        this.clientVar = [`${this.invoicData.clientName}-${this.invoicData.clientId}`];
-      }
-    })
+    // this.getCustomList((data) => {
+    //   const clientList = [];
+    //   if (data.length) {
+    //     this.isClient = true;
+    //     for (let i = 0; i < data.length; i += 1) {
+    //       const client = {
+    //         name: data[i].name,
+    //         value: `${data[i].name}-${data[i].id}`
+    //       }
+    //       clientList.push(client)
+    //     }
+    //   } else {
+    //     this.isClient = false;
+    //   }
+    //   this.clientType.push(clientList)
+    //   if (Object.keys(this.invoicData).length) {
+    //     this.clientVar = [`${this.invoicData.clientName}-${this.invoicData.clientId}`];
+    //   }
+    // })
   },
   mounted() {
     // 导航栏高度
@@ -119,6 +141,9 @@ export default {
     })
   },
   computed: {
+    clientData() {
+      return this.$store.getters.getDataClient
+    },
     userInfo() {
       return config.getUserToken();
     },
@@ -139,7 +164,7 @@ export default {
       marketRight: '',
       repertoryRight: '',
       isClient: true,
-      clientVar: [],
+      // clientVar: [],
       clientType: [],
       imgList: [{
         src: '',
@@ -162,6 +187,10 @@ export default {
   methods: {
     onClose() {
       this.showPreviewer = false;
+    },
+    // 选择客户
+    selectClient() {
+      this.$router.push(`/JobControl/CreatInvoic/SelectClient?client=${this.client}`);
     },
     // 选择品种框的时候刷新
     showClient() {
@@ -239,7 +268,7 @@ export default {
         this.$vux.toast.text('请选择日期', 'middle');
         return;
       }
-      if (this.clientVar.length === 0 && !this.clientVar[0]) {
+      if (!this.clientData.name) {
         this.$vux.toast.text('请选择客户', 'middle');
         return;
       }
@@ -284,7 +313,7 @@ export default {
     },
     // 更新进销存
     updataInvoic(addresses) {
-      const split = this.clientVar[0].split('-')
+      // const split = this.clientVar[0].split('-')
       const from = {
         companyId: this.userInfo.companyId,
         companyName: this.userInfo.companyName,
@@ -295,8 +324,8 @@ export default {
         inventory: this.repertoryValue,
         writeDate: this.dataValue,
         signAddress: addresses,
-        clientId: split[1],
-        clientName: split[0],
+        clientId: this.clientData.id,
+        clientName: this.clientData.name,
         clientType: this.clientList.clientType,
         productId: this.clientList.productId,
         commonName: this.clientList.commonName,
@@ -334,7 +363,7 @@ export default {
     },
     // 添加进销存
     addInvoic(addresses) {
-      const split = this.clientVar[0].split('-')
+      // const split = this.clientVar[0].split('-')
       const from = {
         companyId: this.userInfo.companyId,
         companyName: this.userInfo.companyName,
@@ -345,8 +374,8 @@ export default {
         inventory: this.repertoryValue,
         writeDate: this.dataValue,
         signAddress: addresses,
-        clientId: split[1],
-        clientName: split[0],
+        clientId: this.clientData.id,
+        clientName: this.clientData.name,
         clientType: this.clientList.clientType,
         productId: this.clientList.productId,
         commonName: this.clientList.commonName,
@@ -385,6 +414,35 @@ export default {
       })
     },
     logIndexChange(arg) {
+    },
+    // 拍照上传
+    photoImgsSelected() {
+      const that = this;
+      const imgList = [];
+      window.mobileNative.getImage((e, error) => {
+        // if (error && error.code === 8) {
+        //   this.$vux.confirm.show({
+        //     showCancelButton: false,
+        //     title: '不能访问手机相机',
+        //     content: '请到手机系统的[设置]->[隐私]->[相机]中允许森舍访问你的摄像头'
+        //   })
+        //   return;
+        // }
+        if (error && error.code === 2) {
+          return;
+        }
+        const imgObject = {
+          src: e,
+          msrc: e,
+          w: 1200,
+          h: 900
+        }
+        imgList.push(imgObject)
+        if (that.imgList.length === 1 && that.imgList[0].src === '') {
+          that.imgList = [];
+        }
+        that.imgList = [...that.imgList, ...imgList];
+      })
     },
     // 从相册中选择图片
     galleryImgsSelected() {

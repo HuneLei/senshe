@@ -37,7 +37,8 @@ const JobControl = {
   FollowUp: '/JobControl/FollowUp',
   FollowUpList: '/JobControl/FollowUpList',
   FollowUpItem: '/JobControl/FollowUpItem',
-  InvoicList: '/JobControl/InvoicList'
+  InvoicList: '/JobControl/InvoicList',
+  SelectClient: '/JobControl/CreatInvoic/SelectClient'
 }
 
 /**
@@ -140,6 +141,10 @@ const baseList = {
     isShowBack: true,
     headIndex: 0,
     slotRight: [{
+      icon: '',
+      path: '',
+      name: '更新',
+    }, {
       icon: 'iconfont icon-bianji',
       path: '',
       name: '保存',
@@ -164,6 +169,15 @@ const baseList = {
     isTab: true,
     isShowBack: true,
     slotRight: [],
+    headIndex: 0,
+  },
+  [JobControl.SelectClient]: {
+    name: '选择客户',
+    isTab: true,
+    isShowBack: true,
+    slotRight: [],
+    barIndex: 2,
+    isBar: false,
     headIndex: 0,
   },
   // 数据中心
@@ -216,7 +230,7 @@ const baseList = {
     headIndex: 0,
   },
   [DateCenter.IndexItem]: {
-    name: '指标详情',
+    name: '',
     isTab: true,
     isShowBack: true,
     slotRight: [],

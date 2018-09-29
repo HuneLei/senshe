@@ -1,9 +1,10 @@
 <!-- 进销存详情 -->
 <template>
   <div class="scroller_rela">
+    <search placeholder="输入客户名称进行搜索" v-model="searchValue" class="search_view" :auto-fixed='false' @on-submit="onSubmit" @on-cancel="onCancel" id="creatSearchView"></search>
     <x-table class="table_thead" :cell-bordered="false" ref="invoicThead" id="invoicThead">
       <thead>
-        <tr>
+        <tr style="background-color: #F8F8F8">
           <th class="table_thead_longth table_border">客户名称</th>
           <th>进货</th>
           <th>进度%</th>
@@ -18,7 +19,8 @@
         <x-table :cell-bordered="false">
           <tbody class="table_tbody">
             <tr v-for="(item, index) in incoicList" :key="index">
-              <td class="table_border table_tbody_longth">{{item.createTime | convertNewDate}}<br>{{item.clientName}}</td>
+              <td class="table_border table_tbody_longth">
+                {{item.createTime | convertNewDate}}<br v-show="item.createTime" />{{item.clientName}}</td>
               <td>{{item.stock}}</td>
               <td>{{item.stockInventory}}</td>
               <td>{{item.sale}}</td>
@@ -40,15 +42,19 @@ export default {
   activated() {
     this.incoicList = [];
     this.page = 0;
-    this.$refs.queryInvoicItem.triggerPullToRefresh()
+    this.year = Number(this.dateValue.split('-')[0]);
+    this.month = Number(this.dateValue.split('-')[1]);
+    this.$refs.queryInvoicItem.triggerPullToRefresh();
   },
   mounted() {
     // 导航栏高度
     const that = this;
     this.$nextTick(() => {
       const Top = document.querySelector('#invoicThead').clientHeight;
-      that.$refs.queryInvoicItem.$el.style.top = `${Top}px`;
-      that.$refs.queryInvoicItem.$el.style.height = `${that.$countHeight(['.vux-tab-container', '#invoicThead'])}px`;
+      const theadTop = document.querySelector('#creatSearchView').clientHeight;
+      that.$refs.invoicThead.$el.style.top = `${theadTop}px`;
+      that.$refs.queryInvoicItem.$el.style.top = `${Top + theadTop}px`;
+      that.$refs.queryInvoicItem.$el.style.height = `${that.$countHeight(['.vux-tab-container', '#creatSearchView', '#invoicThead'])}px`;
     })
   },
   watch: {
@@ -56,11 +62,19 @@ export default {
       this.page = 0;
       this.incoicList = [];
       this.$refs.queryInvoicItem.triggerPullToRefresh()
+    },
+    dateValue(newVal, oldVal) {
+      this.year = Number(newVal.split('-')[0]);
+      this.month = Number(newVal.split('-')[1]);
+      this.$refs.queryInvoicItem.triggerPullToRefresh()
     }
   },
   computed: {
     tabIndex() {
       return this.$store.getters.getTabIndex
+    },
+    dateValue() {
+      return this.$store.getters.getDateValue
     }
   },
   components: {},
@@ -68,13 +82,31 @@ export default {
     return {
       page: 0, // 当前页数
       noDataText: '',
-      incoicList: []
+      searchValue: '', // 搜索的值
+      incoicList: [],
+      year: 0, // 查询年份
+      month: 0, // 查询月份
     };
   },
   methods: {
+    // 搜索的时候触发
+    onSubmit() {
+      const that = this;
+      this.page = 1;
+      this.getLnventorylast((data) => {
+        if (data.code === 0) {
+          this.incoicList = data.result.listData;
+        }
+      })
+    },
+    // 点击取消的时候触发
+    onCancel() {
+      this.searchValue = '';
+      this.$refs.queryInvoicItem.triggerPullToRefresh()
+    },
     // 获取详情
     getLnventorylast(callBack) {
-      jobControl.inventorylast(this.page, this.tabIndex, this.$route.query.productId).then((res) => {
+      jobControl.inventorylast(this.page, this.tabIndex, this.$route.query.productId, this.searchValue, this.year, this.month).then((res) => {
         callBack(res.data)
       })
     },
@@ -116,6 +148,11 @@ export default {
 </script>
 
 <style scoped>
+/* 搜索 */
+.search_view {
+  font-size: 15px;
+  position: absolute !important;
+}
 .table_thead {
   font-size: 15px;
   position: absolute;
@@ -182,8 +219,10 @@ export default {
 
 .table_tbody_longth {
   flex: 2.4 !important;
+  justify-content: flex-start !important;
   /*! autoprefixer: off */
-  -webkit-flex: 2.4!important;
+  -webkit-flex: 2.4 !important;
+  -webkit-justify-content: flex-start !important;
   /* autoprefixer: on */
   text-align: left;
   padding: 5px 5px;
