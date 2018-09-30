@@ -100,7 +100,7 @@ export default {
         name: '一级商',
         value: '100',
       }, {
-        name: '二级商',
+        name: '二级连锁',
         value: '200',
       }, {
         name: '终端门店',
@@ -145,12 +145,12 @@ export default {
       jobControl.add(this.from).then((res) => {
         if (res.data.code === 0) {
           this.$store.commit('updatePlanDate', res.data)
-          let clientType = 0;
-          let productId = 0;
-          if (res.data.result.listData.length) {
-            clientType = res.data.result.listData[0].clientType;
-            productId = res.data.result.listData[0].productId;
-          }
+          const clientType = this.clientVar[0];
+          const productId = this.productVar[0];
+          // if (res.data.result.listData.length) {
+          //   clientType = res.data.result.listData[0].clientType;
+          //   productId = res.data.result.listData[0].productId;
+          // }
           this.$vux.loading.hide()
           this.$router.push(`/JobControl/ControlPlanItem?clientType=${clientType}&productId=${productId}&year=${this.from.year}&month=${this.from.month || 0}`);
         }

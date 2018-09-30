@@ -22,9 +22,9 @@
               <td class="table_border table_tbody_longth">
                 {{item.createTime | convertNewDate}}<br v-show="item.createTime" />{{item.clientName}}</td>
               <td>{{item.stock}}</td>
-              <td>{{item.stockInventory}}</td>
+              <td>{{item.stockInventory | twoFloatUp}}</td>
               <td>{{item.sale}}</td>
-              <td>{{item.saleInventory}}</td>
+              <td>{{item.saleInventory | twoFloatUp}}</td>
               <td>{{item.inventory}}</td>
             </tr>
           </tbody>

@@ -15,11 +15,11 @@
           <cell v-for="(item, index) in planList" :key="index" :title="item.clientName" class="plan_name">
             <div class="plan_type">
               <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.salePlan'
-              type='number' :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
+              type="tel" keyboard="number" :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
               </x-input>
               <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.salePlan}}</div>
               <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.stockPlan'
-              type='number' :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
+              type="tel" keyboard="number" :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
               </x-input>
               <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.stockPlan}}</div>
             </div>
@@ -219,6 +219,7 @@ export default {
   width: 100px;
   text-align: right;
   word-break: break-all;
+  color: #666666 !important;
   padding-right: 5px !important;
 }
 
@@ -232,6 +233,7 @@ export default {
 <style>
 .control_plan_two .weui-cell {
   /* padding-right: 10px; */
+  color: #666666 !important;
 }
 
 .plan_type .weui-cell:before {

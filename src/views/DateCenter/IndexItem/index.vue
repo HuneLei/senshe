@@ -20,7 +20,7 @@
               <td class="table_tbody_longth">{{item.sensheProduct.commonName}}</td>
               <td>{{flowType[item.flowType]}}</td>
               <td>{{item.stand}}</td>
-              <td>{{item.rate}}</td>
+              <td>{{item.rate | twoFloatUp}}</td>
             </tr>
           </tbody>
         </x-table>

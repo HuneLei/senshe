@@ -19,12 +19,13 @@
         <x-table :cell-bordered="false">
           <tbody :class="`table_tbody ${ !modifier || 'table_tbody_active'}`">
             <tr v-for="(item, index) in incoicList" :key="index" @click="updateClick(item)">
-              <td class="table_border table_tbody_longth">{{item.writeDate | convertNewDate}}<br v-show="item.writeDate"/> {{item.clientName}}</td>
+              <td class="table_border table_tbody_longth">{{item.writeDate | convertNewDate}}<br v-show="item.writeDate" /> {{item.clientName}}</td>
               <td>{{item.stock}}</td>
               <td>{{item.sale}}</td>
               <td>{{item.inventory}}</td>
               <td class="table_img">
-                <div :class="`img_icon iconfont icon-zhaopian ${item.filePath || 'img_icon_no'}`" @click.stop="showImg(item.filePath)">
+                <div :class="`img_icon ${item.filePath || 'img_icon_no'}`" @click.stop="showImg(item.filePath)">
+                  <span :class="`img_icon iconfont icon-zhaopian ${item.filePath || 'img_icon_no'}`"></span>
                 </div>
               </td>
               <td class="table_icon" v-if="modifier">
@@ -184,7 +185,7 @@ export default {
 }
 .table_icon {
   /*! autoprefixer: off */
-  -webkit-flex: 0.6!important;
+  -webkit-flex: 0.6 !important;
   /* autoprefixer: on */
   flex: 0.6 !important;
 }
@@ -194,9 +195,15 @@ export default {
 }
 .table_img {
   /*! autoprefixer: off */
-  -webkit-flex: 1.3!important;
+  -webkit-flex: 1.3 !important;
+  -webkit-justify-content: center;
+  -webkit-align-items: center;
+  display: -webkit-flex;
   /* autoprefixer: on */
   flex: 1.3 !important;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 .table_tbody tr {
@@ -301,16 +308,12 @@ export default {
   -webkit-justify-content: center;
   /* autoprefixer: on */
   display: flex;
-  font-size: 25px;
   align-items: center;
   justify-content: center;
 }
 
 .img_icon span {
-  display: block;
-  font-size: 12px;
-  color: #666666;
-  z-index: 2;
+  font-size: 25px;
 }
 
 .img_icon:before {

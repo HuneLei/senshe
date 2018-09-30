@@ -7,12 +7,12 @@
         <!-- <popup-picker v-if="isClient" title="客户：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name @on-show="showClient()"></popup-picker> -->
         <cell v-if="isClient" title="客户：" is-link @click.native="selectClient()" :value="clientData.name"></cell>
         <cell v-if="!isClient" title="客户：" value="暂无客户"></cell>
-        <x-input class="creat_invoic" title='进货：' v-model="stockValue" :text-align='stockRight'
-        type='number' @on-blur="() => { stockRight = 'right' }" @on-focus="() => { stockRight = 'left' }"></x-input>
-        <x-input class="creat_invoic" title='销售：' v-model="marketValue" :text-align='marketRight'
-        type='number' @on-blur="() => { marketRight = 'right' }" @on-focus="() => { marketRight = 'left' }"></x-input>
-        <x-input class="creat_invoic" title='库存：' v-model="repertoryValue" :text-align='repertoryRight'
-        type='number' @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
+        <x-input class="creat_invoic" title='进货：' v-model.number="stockValue" :text-align='stockRight'
+        keyboard="number" type="tel" @on-blur="() => { stockRight = 'right' }" @on-focus="() => { stockRight = 'left' }"></x-input>
+        <x-input class="creat_invoic" title='销售：' v-model.number="marketValue" :text-align='marketRight'
+        keyboard="number" type="tel" @on-blur="() => { marketRight = 'right' }" @on-focus="() => { marketRight = 'left' }"></x-input>
+        <x-input class="creat_invoic" title='库存：' v-model.number="repertoryValue" :text-align='repertoryRight'
+        keyboard="number" type="tel" @on-blur="() => { repertoryRight = 'right' }" @on-focus="() => { repertoryRight = 'left' }">
         </x-input>
         <cell v-model="listValue" text-align='right'>
           <div slot="title" class="update_img">
@@ -85,7 +85,7 @@ export default {
         id: '',
       })
     } else {
-      this.dataValue = this.invoicData.writeDate;
+      this.dataValue = window.convert.convertNewDate(this.invoicData.writeDate);
       this.stockValue = this.invoicData.stock; // 进货
       this.marketValue = this.invoicData.sale; // 销售
       this.repertoryValue = this.invoicData.inventory; // 库存
@@ -113,25 +113,6 @@ export default {
         })
       }
     }
-    // this.getCustomList((data) => {
-    //   const clientList = [];
-    //   if (data.length) {
-    //     this.isClient = true;
-    //     for (let i = 0; i < data.length; i += 1) {
-    //       const client = {
-    //         name: data[i].name,
-    //         value: `${data[i].name}-${data[i].id}`
-    //       }
-    //       clientList.push(client)
-    //     }
-    //   } else {
-    //     this.isClient = false;
-    //   }
-    //   this.clientType.push(clientList)
-    //   if (Object.keys(this.invoicData).length) {
-    //     this.clientVar = [`${this.invoicData.clientName}-${this.invoicData.clientId}`];
-    //   }
-    // })
   },
   mounted() {
     // 导航栏高度
@@ -319,9 +300,9 @@ export default {
         companyName: this.userInfo.companyName,
         memberId: this.userInfo.id,
         memberName: this.userInfo.name,
-        stock: this.stockValue,
-        sale: this.marketValue,
-        inventory: this.repertoryValue,
+        stock: Number(this.stockValue),
+        sale: Number(this.marketValue),
+        inventory: Number(this.repertoryValue),
         writeDate: this.dataValue,
         signAddress: addresses,
         clientId: this.clientData.id,

@@ -85,7 +85,43 @@ const convertSecondTime = (olddate) => {
   return ret;
 };
 
+// 保留两位小数点，四舍五入
+const twoFloatUp = (number) => {
+  let newNumber = number
+  newNumber = Math.round(parseFloat(newNumber) * 100) / 100;
+  const setNumber = newNumber.toString().split('.');
+  if (setNumber.length === 1) {
+    newNumber = `${newNumber.toString()}.00`;
+  }
+  if (setNumber.length > 1) {
+    if (setNumber[1].length < 2) {
+      newNumber = `${newNumber.toString()}0`;
+    }
+  }
+  return newNumber;
+}
+
+// 保留两位小数点，不四舍五入
+const twoFloatDown = (number) => {
+  let newNumber = number
+  const setNumber = newNumber.toString().split('.');
+  if (setNumber.length === 1) {
+    newNumber = `${newNumber.toString()}.00`;
+  }
+  if (setNumber.length > 1) {
+    if (setNumber[1].length < 2) {
+      newNumber = `${newNumber.toString()}0`;
+    }
+    if (setNumber[1].length > 2) {
+      newNumber = `${setNumber[0]}.${setNumber[1].substring(2, 0)}`;
+    }
+  }
+  return newNumber;
+}
+
 export default {
+  twoFloatUp,
+  twoFloatDown,
   convertDate,
   convertNewDate,
   convertTime,

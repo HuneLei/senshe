@@ -18,10 +18,10 @@
           <tbody class="table_tbody">
             <tr v-for="(item, index) in indexList" :key="index">
               <td class="table_tbody_longth table_border">{{item.clientName}}</td>
-              <td class="table_long">{{item.stock}}</td>
-              <td>{{item.stockInventory}}</td>
               <td class="table_long">{{item.sale}}</td>
-              <td>{{item.saleInventory}}</td>
+              <td>{{item.saleInventory | twoFloatUp}}</td>
+              <td class="table_long">{{item.stock}}</td>
+              <td>{{item.stockInventory | twoFloatUp}}</td>
             </tr>
           </tbody>
         </x-table>
