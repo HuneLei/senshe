@@ -15,7 +15,11 @@ const path = {
   monthall: 'mobile/customer/plan/month/list/all', // 客户规划月度指标
   yearall: 'mobile/customer/plan/year/list/all', // 客户规划年度指标
   listupdate: 'mobile/customer/plan/list/update', // 更新
+  productlistall: 'mobile/myproduct/product/list/all', // 进销存录入查询
 };
+
+// 进销存录入查询
+const productlistall = () => api.get(path.productlistall, {});
 
 // 客户计划月度指标
 const monthall = () => api.get(path.monthall, {});
@@ -111,4 +115,5 @@ export default {
   planinventory,
   inventorylast,
   listupdate,
+  productlistall,
 };

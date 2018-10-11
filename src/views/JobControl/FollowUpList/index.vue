@@ -58,6 +58,7 @@ export default {
       const from = {
         currentPage: this.page,
         year: this.$route.query.year,
+        month: 0,
       }
       if (this.$route.query.month !== '0') {
         from.month = this.$route.query.month;

@@ -61,7 +61,7 @@ export default {
       const from = {
         currentPage: this.page,
         year: this.$route.query.year,
-        // month: 0,
+        month: 0,
         clientType: this.$route.query.clientType,
         productId: this.$route.query.productId,
       }

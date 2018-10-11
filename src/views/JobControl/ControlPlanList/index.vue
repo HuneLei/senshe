@@ -58,6 +58,7 @@ export default {
       const form = {
         currentPage: this.page,
         year: this.$route.query.year,
+        month: 0,
       }
       if (this.$route.query.month !== '0') {
         form.month = this.$route.query.month

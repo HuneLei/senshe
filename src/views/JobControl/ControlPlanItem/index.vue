@@ -136,6 +136,7 @@ export default {
         clientType: this.$route.query.clientType,
         productId: this.$route.query.productId,
         year: this.$route.query.year,
+        month: 0,
       }
       if (this.$route.query.month !== '0') {
         form.month = this.$route.query.month

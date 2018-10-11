@@ -134,6 +134,7 @@ export default {
       })
       this.from = {
         currentPage: 1,
+        month: 0,
         year: this.yearPlan[0],
         productId: this.productVar[0],
         clientType: this.clientVar[0],

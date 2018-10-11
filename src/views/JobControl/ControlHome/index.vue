@@ -34,7 +34,7 @@ export default {
         path: 'FollowUp',
       }, {
         icon: 'iconfont icon-chaxun',
-        title: '进销存查询',
+        title: '末次进销存查询',
         color: '#E68A07',
         path: 'QueryInvoic',
       }, {
