@@ -34,10 +34,22 @@ const clientType = {
   300: '终端门店',
 };
 
+const standType = {
+  100: '按品种',
+  200: '按标签',
+};
+
+const commissionType = {
+  100: '按数量',
+  200: '按金额',
+};
+
 export default {
   regCart,
   regPhone,
   browser,
   flowType,
+  standType,
   clientType,
+  commissionType,
 };

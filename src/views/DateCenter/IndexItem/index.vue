@@ -1,12 +1,13 @@
 <!-- 指标详情 -->
 <template>
   <div class="scroller_rela" ref="myIndexItem">
-    <search ref="IndexClassItem" :auto-fixed='false' placeholder="输入通用名进行搜索" v-model="searchValue" class="search_view" id="indexSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
+    <search ref="IndexClassItem" :auto-fixed='false' placeholder="输入类型名称进行搜索" v-model="searchValue" class="search_view" id="indexSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
     <x-table :cell-bordered="true" class="table_thead" ref="IndexItemThead" id="IndexItemThead">
       <thead>
         <tr style="background-color: #F8F8F8">
-          <th class="table_thead_longth">通用名</th>
-          <th>流向类型</th>
+          <th class="table_thead_longth">类型名称</th>
+          <th class="table_tbody_medth">流向类型</th>
+          <th class="table_tbody_medth">提成类型</th>
           <th>指标</th>
           <th>进度(%)</th>
         </tr>
@@ -17,8 +18,9 @@
         <x-table :cell-bordered="true">
           <tbody class="table_tbody">
             <tr v-for="(item, index) in indexList" :key="index">
-              <td class="table_tbody_longth">{{item.sensheProduct.commonName}}</td>
-              <td>{{flowType[item.flowType]}}</td>
+              <td class="table_tbody_longth">{{item.typeName}}</td>
+              <td class="table_tbody_medth">{{flowType[item.flowType]}}</td>
+              <td class="table_tbody_medth">{{commissionType[item.commissionType]}}</td>
               <td>{{item.stand}}</td>
               <td>{{item.rate | twoFloatUp}}</td>
             </tr>
@@ -57,6 +59,12 @@ export default {
   computed: {
     flowType() {
       return window.validator.flowType
+    },
+    standType() {
+      return window.validator.standType
+    },
+    commissionType() {
+      return window.validator.commissionType
     }
   },
   components: {},
@@ -188,7 +196,7 @@ export default {
 }
 
 .table_thead {
-  font-size: 15px;
+  font-size: 14px;
   position: absolute;
 }
 
@@ -211,20 +219,27 @@ export default {
   background-color: #ffffff;
 }
 
-.table_thead_longth {
-  flex: 2 !important;
+.table_tbody_medth {
+  flex: 1.2 !important;
   /*! autoprefixer: off */
-  -webkit-flex: 2 !important;
+  -webkit-flex: 1.2 !important;
+  /* autoprefixer: on */
+}
+
+.table_thead_longth {
+  flex: 1.4 !important;
+  /*! autoprefixer: off */
+  -webkit-flex: 1.4 !important;
   /* autoprefixer: on */
   padding: 0 10px;
   text-align: left;
 }
 
 .table_tbody_longth {
-  flex: 2 !important;
+  flex: 1.4 !important;
   justify-content: flex-start !important;
   /*! autoprefixer: off */
-  -webkit-flex: 2 !important;
+  -webkit-flex: 1.4 !important;
   -webkit-justify-content: flex-start !important;
   /* autoprefixer: on */
   text-align: left;
@@ -233,7 +248,7 @@ export default {
 
 .incoic_table table td {
   color: #666666;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 22px;
   word-wrap: break-word;
   word-break: break-all;

@@ -70,11 +70,11 @@ export default {
       })
     },
     // 点击指标查看详情
-    CellClick(id, type, clientName) {
+    CellClick(id, type, commonName) {
       const list = {
         productId: id,
         clientType: type,
-        clientName,
+        commonName,
       }
       this.$store.commit('updateClientList', list);
       this.$router.push(`/JobControl/CreatInvoicItem?id=${id}`);

@@ -12,7 +12,7 @@
       <popup-picker v-show="yearShow" title="选择年度：" :data="planlist" v-model="yearPlan" @on-change="val => selectChange(val, 1)" show-name></popup-picker>
       <popup-picker v-show="!yearShow" title="选择月度：" :data="monthlist" v-model="monthPlan" @on-change="val => selectChange(val, 1)" show-name></popup-picker>
       <popup-picker title="选择品种：" :data="productlist" v-model="productVar" @on-change="val => selectChange(val, 3)" show-name @on-show="showProduct()"></popup-picker>
-      <popup-picker title="选择客户类型：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name></popup-picker>
+      <popup-picker title="选择客户类型：" :data="clientType" v-model="clientVar" @on-change="val => selectChange(val, 2)" show-name @on-show="showClient()"></popup-picker>
     </group>
     <!-- 提交操作 -->
     <div class="confirm_button">
@@ -84,6 +84,15 @@ export default {
       }
       this.productlist.push(data)
     })
+    // 客户列表
+    this.getClientAll((data) => {
+      this.clientType = [];
+      for (let i = 0; i < data.length; i += 1) {
+        data[i].name = window.validator.clientType[data[i].clientType];
+        data[i].value = `${data[i].clientType}`;
+      }
+      this.clientType.push(data)
+    })
   },
   computed: {},
   components: {},
@@ -116,6 +125,18 @@ export default {
     };
   },
   methods: {
+    // 选择客户类型的时候刷新
+    showClient() {
+      // 客户类型列表
+      this.getClientAll((data) => {
+        this.clientType = [];
+        for (let i = 0; i < data.length; i += 1) {
+          data[i].name = window.validator.clientType[data[i].clientType];
+          data[i].value = `${data[i].clientType}`;
+        }
+        this.clientType.push(data)
+      })
+    },
     // 选择品种框的时候刷新
     showProduct() {
       // 品种列表
@@ -189,6 +210,14 @@ export default {
     getListAll(callBack) {
       dateCenter.productlistall().then((res) => {
         const data = res.data;
+        callBack(data)
+      })
+    },
+    // 获取客户类型下拉
+    getClientAll(callBack) {
+      dateCenter.authdata().then((res) => {
+        const data = res.data;
+        data.sort((i, n) => (i.clientType - n.clientType))
         callBack(data)
       })
     },

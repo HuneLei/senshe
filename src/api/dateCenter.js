@@ -13,6 +13,7 @@ const path = {
   productlistall: 'mobile/myproduct/list/all', // 商品下拉列表
   monthall: 'mobile/myindex/month/list/all', // 客户计划月度指标
   yearall: 'mobile/myindex/year/list/all', // 客户计划年度指标
+  authdata: 'mobile/customer/list/auth/data', // 客户类型下拉
 };
 
 // 客户计划月度指标
@@ -91,8 +92,12 @@ const monthitem = (id) => api.get(path.monthitem, {
 // 商品下拉列表
 const productlistall = () => api.get(path.productlistall, {});
 
+// 客户类型下拉列表
+const authdata = () => api.get(path.authdata, {});
+
 export default {
   list,
+  authdata,
   yearall,
   monthall,
   listcount,
