@@ -38,7 +38,12 @@ import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
-  activated() { },
+  activated() {
+    const month = this.$route.query.month
+    const year = this.$route.query.year
+    const title = month === '0' ? `${year}年度` : `${year}年${month}月`
+    this.$store.commit('updateIndexName', title)
+  },
   watch: {
     $route(to, form) {
       if (to.path === '/DateCenter/IndexItem' && form.path === '/DateCenter/MyIndex') {
@@ -52,10 +57,6 @@ export default {
     this.searchValue = '';
     this.indexList = [];
     this.$refs.IndexItemScroller.triggerPullToRefresh()
-    const month = this.$route.query.month
-    const year = this.$route.query.year
-    const title = month === '0' ? `${year}年度` : `${year}年${month}月`
-    this.$store.commit('updateIndexName', title)
     // 屏幕高度设置
     this.$nextTick(() => {
       const theadTop = document.querySelector('#indexSearchView').clientHeight;
