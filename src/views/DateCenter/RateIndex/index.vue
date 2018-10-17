@@ -17,7 +17,7 @@
             <tr v-for="(item, index) in indexList" :key="index">
               <td class="table_tbody_longth">{{item.clientName}}</td>
               <td class="table_tbody_medth">
-                <span :class='!$route.query.month ? "" : "route_span"' @click="amountLink(item)">{{item.num}}</span>
+                <span :class='$route.query.month == 0 ? "route_span" : ""' @click="amountLink(item)">{{item.num}}</span>
               </td>
               <td class="table_tbody_medth">{{item.money | twoFloatDown}}</td>
             </tr>
@@ -47,7 +47,7 @@ export default {
       }
     }
   },
-  activated() {},
+  activated() { },
   mounted() {
     const that = this;
     // 屏幕高度设置
@@ -72,6 +72,9 @@ export default {
   methods: {
     // 数量详情
     amountLink(e) {
+      if (this.$route.query.month !== '0') {
+        return;
+      }
       this.$router.push(`/DateCenter/AmountItem?year=${this.$route.query.year}&month=${this.$route.query.month}&clientName=${e.clientName}`);
     },
     // 进度详情查询
@@ -210,7 +213,7 @@ export default {
   padding: 10px;
 }
 .total_view {
-  background-color: #ffffc8
+  background-color: #ffffc8;
 }
 </style>
 <style>
