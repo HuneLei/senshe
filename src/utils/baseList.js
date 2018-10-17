@@ -20,7 +20,9 @@ const DateCenter = {
   MyGoodsItem: '/DateCenter/MyGoodsItem',
   MyGoods: '/DateCenter/MyGoods',
   MyClient: '/DateCenter/MyClient',
-  MyIndex: '/DateCenter/MyIndex'
+  MyIndex: '/DateCenter/MyIndex',
+  RateIndex: '/DateCenter/RateIndex',
+  AmountItem: '/DateCenter/AmountItem'
 }
 
 // 工作管理
@@ -221,6 +223,14 @@ const baseList = {
     barIndex: 0,
     headIndex: 2,
   },
+  [DateCenter.AmountItem]: {
+    name: '',
+    isTab: true,
+    isShowBack: true,
+    slotRight: [],
+    barIndex: 0,
+    headIndex: 0,
+  },
   [DateCenter.IndexClass]: {
     name: '',
     isTab: true,
@@ -230,6 +240,14 @@ const baseList = {
     headIndex: 0,
   },
   [DateCenter.IndexItem]: {
+    name: '',
+    isTab: true,
+    isShowBack: true,
+    slotRight: [],
+    barIndex: 0,
+    headIndex: 0,
+  },
+  [DateCenter.RateIndex]: {
     name: '',
     isTab: true,
     isShowBack: true,

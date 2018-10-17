@@ -60,7 +60,14 @@ const createUpload = (imgList, callBack) => {
 const getGeocode = (callBack) => {
   if (!window.plus) return
   plus.geolocation.getCurrentPosition(function (position) {
-    callBack(position.addresses, null);
+    let ads = position.address
+    let address = ads.province ? ads.province : '';
+    address += ads.city ? ads.city : '';
+    address += ads.district ? ads.district : '';
+    address += ads.street ? ads.street : '';
+    address += ads.streetNum ? ads.streetNum : '';
+    address += ads.poiName ? ads.poiName : '';
+    callBack(address, null);
   }, function (e) {
     callBack('', e.message);
   }, { geocode: true });

@@ -22,7 +22,9 @@
               <td class="table_tbody_medth">{{flowType[item.flowType]}}</td>
               <td class="table_tbody_medth">{{commissionType[item.commissionType]}}</td>
               <td>{{item.stand}}</td>
-              <td>{{item.rate | twoFloatUp}}</td>
+              <td>
+                <span class="route_span" @click="rateClick(item)">{{item.rate | twoFloatUp}}</span>
+              </td>
             </tr>
           </tbody>
         </x-table>
@@ -36,7 +38,17 @@ import dateCenter from '../../../api/dateCenter';
 
 export default {
   created() { },
-  activated() {
+  activated() { },
+  watch: {
+    $route(to, form) {
+      if (to.path === '/DateCenter/IndexItem' && form.path === '/DateCenter/MyIndex') {
+        this.indexList = [];
+        this.$refs.IndexItemScroller.triggerPullToRefresh()
+      }
+    }
+  },
+  mounted() {
+    const that = this;
     this.searchValue = '';
     this.indexList = [];
     this.$refs.IndexItemScroller.triggerPullToRefresh()
@@ -44,9 +56,6 @@ export default {
     const year = this.$route.query.year
     const title = month === '0' ? `${year}年度` : `${year}年${month}月`
     this.$store.commit('updateIndexName', title)
-  },
-  mounted() {
-    const that = this;
     // 屏幕高度设置
     this.$nextTick(() => {
       const theadTop = document.querySelector('#indexSearchView').clientHeight;
@@ -77,6 +86,10 @@ export default {
     };
   },
   methods: {
+    // 进度详情
+    rateClick(e) {
+      this.$router.push(`/DateCenter/RateIndex?year=${e.year}&month=${e.month || 0}`);
+    },
     // 年指标列表
     yearList(year, callBack) {
       const that = this;
@@ -260,6 +273,10 @@ export default {
   -webkit-justify-content: center;
   -webkit-align-items: center;
   /* autoprefixer: on */
+}
+.route_span {
+  color: #0ea5f3;
+  text-decoration: underline;
 }
 </style>
 <style>

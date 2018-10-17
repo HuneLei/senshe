@@ -9,19 +9,19 @@
         </div>
       </cell>
     </group>
-    <scroller ref="controlPlanItem" :on-infinite="infinite" :noDataText='noDataText' refreshText='下拉刷新' :on-refresh="refresh">
+    <scroller ref="controlPlanItem" :on-infinite="infinite" :noDataText='noDataText' :refreshText='refreshText' :on-refresh="refresh">
       <div class="control_plan_two">
         <group gutter='0'>
           <cell v-for="(item, index) in planList" :key="index" :title="item.clientName" class="plan_name">
             <div class="plan_type">
-              <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.salePlan'
-              type="tel" keyboard="number" :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
-              </x-input>
-              <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.salePlan}}</div>
-              <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.stockPlan'
-              type="tel" keyboard="number" :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
+              <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.stockPlan' type="tel"
+              keyboard="number" :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
               </x-input>
               <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.stockPlan}}</div>
+              <x-input title=" " label-width='0' placeholder='' v-show="modifier" slot="value" v-model='item.salePlan' type="tel"
+              keyboard="number" :class="modifier ? 'client_stock' : 'client_stock_may'" :show-clear='false' text-align='right' :disabled='!modifier'>
+              </x-input>
+              <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.salePlan}}</div>
             </div>
           </cell>
         </group>
@@ -39,9 +39,15 @@ export default {
     this.planList = [];
     this.updateState = true;
     if (this.modifier) {
-      // this.page = 1;
-      this.$refs.controlPlanItem.triggerPullToRefresh()
-      // this.planList = this.planDate.result.listData;
+      this.refreshText = ' ';
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getThreeItem((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.planList = data.result.listData;
+        }
+      })
       if (this.planList.length === 0) {
         this.noDataText = '暂无数据';
       }
@@ -75,7 +81,10 @@ export default {
   watch: {
     modifier(newVal, oldVal) {
       if (!newVal && this.planList.length !== 0 && this.updateState) {
+        this.refreshText = '下拉刷新';
         this.updatePlan()
+      } else {
+        this.refreshText = '';
       }
     },
     dataStata() {
@@ -105,7 +114,8 @@ export default {
       page: 0,
       noDataText: '',
       // 规划列表
-      planList: []
+      planList: [],
+      refreshText: '下拉刷新'
     };
   },
   methods: {
@@ -170,15 +180,20 @@ export default {
     },
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      const self = this; // this指向问题
-      self.page = 1;
-      this.getThreeItem((data) => {
-        if (data.code === 0) {
-          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
-          self.planList = data.result.listData;
-        }
+      if (!this.modifier) {
+        this.refreshText = '下拉刷新';
+        const self = this; // this指向问题
+        self.page = 1;
+        this.getThreeItem((data) => {
+          if (data.code === 0) {
+            self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+            self.planList = data.result.listData;
+          }
+          done()
+        })
+      } else {
         done()
-      })
+      }
     }
   },
 };

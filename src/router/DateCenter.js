@@ -7,6 +7,8 @@ const MyGoodsItem = (resolve) => require(['@/views/DateCenter/MyGoodsItem'], res
 const MyGoods = (resolve) => require(['@/views/DateCenter/MyGoods'], resolve);
 const MyClient = (resolve) => require(['@/views/DateCenter/MyClient'], resolve);
 const MyIndex = (resolve) => require(['@/views/DateCenter/MyIndex'], resolve);
+const RateIndex = (resolve) => require(['@/views/DateCenter/RateIndex'], resolve);
+const AmountItem = (resolve) => require(['@/views/DateCenter/AmountItem'], resolve);
 
 export default {
   path: '/',
@@ -50,6 +52,16 @@ export default {
           path: 'MyGoodsItem',
           component: MyGoodsItem,
           name: '商品详情',
+        },
+        {
+          path: 'RateIndex',
+          component: RateIndex,
+          name: '进度详情',
+        },
+        {
+          path: 'AmountItem',
+          component: AmountItem,
+          name: '数量详情',
         },
       ]
     },

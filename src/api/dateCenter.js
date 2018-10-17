@@ -14,7 +14,13 @@ const path = {
   monthall: 'mobile/myindex/month/list/all', // 客户计划月度指标
   yearall: 'mobile/myindex/year/list/all', // 客户计划年度指标
   authdata: 'mobile/customer/list/auth/data', // 客户类型下拉
+  listgroup: 'mobile/myindex/year/list/group', // 进度详情
 };
+
+// 进度详情
+const listgroup = (from) => api.get(path.listgroup, {
+  params: from
+});
 
 // 客户计划月度指标
 const monthall = () => api.get(path.monthall, {});
@@ -97,6 +103,7 @@ const authdata = () => api.get(path.authdata, {});
 
 export default {
   list,
+  listgroup,
   authdata,
   yearall,
   monthall,
