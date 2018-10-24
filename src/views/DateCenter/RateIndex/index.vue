@@ -35,6 +35,7 @@
 </template>
 
 <script>
+/* eslint-disable */ 
 import dateCenter from '../../../api/dateCenter';
 
 export default {
@@ -75,17 +76,12 @@ export default {
       if (this.$route.query.month !== '0') {
         return;
       }
-      this.$router.push(`/DateCenter/AmountItem?year=${this.$route.query.year}&month=${this.$route.query.month}&clientName=${e.clientName}`);
+      this.$router.push(`/DateCenter/AmountItem?year=${this.$route.query.year}&month=${this.$route.query.month}&clientName=${e.clientName}&tagName=${this.$route.query.tagName}&productName=${this.$route.query.productName}&standType=${this.$route.query.standType}&flowType=${this.$route.query.flowType}`);
     },
     // 进度详情查询
     rateList(callBack) {
-      const year = this.$route.query.year;
-      const month = this.$route.query.month;
-      const from = {
-        year,
-        month,
-        clientName: '',
-      }
+      const from = this.$route.query;
+      from.clientName = '';
       dateCenter.listgroup(from).then((res) => {
         const data = res.data;
         callBack(data)

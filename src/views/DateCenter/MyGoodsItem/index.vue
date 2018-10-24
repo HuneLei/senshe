@@ -2,7 +2,7 @@
 <template>
   <scroller ref="myGoodsCard" class="my_goods_card">
     <div class="goods_item">
-      <img :src="form.photo || 'static/img/yaoping5.jpg'">
+      <img :src="list[0].src" @click="showImg()">
     </div>
     <group gutter='0' label-width="6em" label-margin-right="2em">
       <cell title="通用名：" :value="form.commonName" value-align="left"></cell>
@@ -12,6 +12,9 @@
       <cell title="箱规格：" :value="form.boxModule" value-align="left"></cell>
       <cell title="零售价：" :value="form.retailPrice" value-align="left"></cell>
     </group>
+    <div v-transfer-dom>
+      <previewer :list="list" ref="previewer"></previewer>
+    </div>
   </scroller>
 </template>
 
@@ -26,6 +29,15 @@ export default {
         data.result.unit = data.result.sensheProduct.unit;
         data.result.boxModule = data.result.sensheProduct.boxModule;
         data.result.retailPrice = `${data.result.sensheProduct.retailPrice}元`;
+        const ImgObj = new Image();
+        ImgObj.src = data.result.photo;
+        if (data.result.photo && (ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0))) {
+          this.$set(this.list[0], 'msrc', data.result.photo);
+          this.$set(this.list[0], 'src', data.result.photo);
+        } else {
+          this.$set(this.list[0], 'msrc', 'static/img/yaoping5.jpg');
+          this.$set(this.list[0], 'src', 'static/img/yaoping5.jpg');
+        }
         this.form = data.result;
       }
     });
@@ -43,9 +55,19 @@ export default {
   data() {
     return {
       form: {}, // 商品详情
+      list: [{
+        msrc: '',
+        src: '',
+        w: 800,
+        h: 400
+      }],
     };
   },
   methods: {
+    // 展示图片
+    showImg(index) {
+      this.$refs.previewer.show(0)
+    },
     // 获取产品详情
     getProductItem(callBack) {
       dateCenter.productitem(this.$route.query.id).then((res) => {

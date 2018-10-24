@@ -89,7 +89,9 @@ export default {
   methods: {
     // 进度详情
     rateClick(e) {
-      this.$router.push(`/DateCenter/RateIndex?year=${e.year}&month=${e.month || 0}`);
+      const productName = e.sensheProduct ? e.sensheProduct.id : '';
+      const tagName = e.sensheTag ? e.sensheTag.id : '';
+      this.$router.push(`/DateCenter/RateIndex?year=${e.year}&month=${e.month || 0}&tagName=${tagName}&productName=${productName}&standType=${e.standType}&flowType=${e.flowType}`);
     },
     // 年指标列表
     yearList(year, callBack) {

@@ -17,6 +17,7 @@ const state = {
   tabIndex: 0, // 进销存tabIndex
   dataStata: false, // 更新状态
   dateValue: '', // 选择的日期
+  selectIndex: 1, // 选择的指标
   dataclient: {
     name: '',
     id: '',
@@ -43,11 +44,15 @@ const getters = {
   getIndexName: (state) => state.indexName,
   getDataState: (state) => state.dataStata,
   getDataClient: (state) => state.dataclient,
+  getSelectIndex: (state) => state.selectIndex,
 };
 
 const actions = {};
 
 const mutations = {
+  updateSelectIndex(state, index) {
+    state.selectIndex = index;
+  },
   updateDateValue(state, date) {
     state.dateValue = date;
   },

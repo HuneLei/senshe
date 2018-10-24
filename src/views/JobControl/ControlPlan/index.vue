@@ -3,8 +3,8 @@
   <div ref="controlplan" class="scroller_rela">
     <div class="my_index" id="myIndex">
       <div class="index_view vux-1px-b">
-        <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度指标</div>
-        <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度指标</div>
+        <div :class="`year_index ${selectIndex == 1? 'select_view' : ''}`" :style="`border: ${selectIndex == 2? '1' : '0'}px solid #ECECEC`" @click="IndexClick(1)">年度规划</div>
+        <div :class="`month_index ${selectIndex == 2? 'select_view' : ''}`" :style="`border: ${selectIndex == 1? '1' : '0'}px solid #ECECEC`" @click="IndexClick(2)">月度规划</div>
       </div>
     </div>
     <scroller ref="planScroller" style="background-color: #ffffff;" :on-refresh="refresh" refreshText='下拉刷新'>
@@ -58,6 +58,7 @@ export default {
   methods: {
     // 点击切换指标时候
     IndexClick(index) {
+      this.$store.commit('updateSelectIndex', index)
       this.selectIndex = index
       if (index === 1) {
         this.showIndex = true;

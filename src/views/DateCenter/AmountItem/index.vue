@@ -69,11 +69,7 @@ export default {
       const year = this.$route.query.year;
       const month = this.$route.query.month;
       const clientName = this.$route.query.clientName;
-      const from = {
-        year,
-        month,
-        clientName,
-      }
+      const from = this.$route.query;
       dateCenter.listgroup(from).then((res) => {
         const data = res.data;
         callBack(data)

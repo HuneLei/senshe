@@ -38,6 +38,8 @@ export default {
         this.clientVar = [];
         this.yearShow = true;
       }
+      this.selectIndex = this.storeSelectIndex;
+      this.yearShow = this.selectIndex === 1;
     }
   },
   mounted() {
@@ -93,8 +95,14 @@ export default {
       }
       this.clientType.push(data)
     })
+    this.selectIndex = this.storeSelectIndex;
+    this.yearShow = this.selectIndex === 1;
   },
-  computed: {},
+  computed: {
+    storeSelectIndex() {
+      return this.$store.getters.getSelectIndex;
+    },
+  },
   components: {},
   data() {
     return {
