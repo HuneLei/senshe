@@ -200,7 +200,7 @@ Vue.prototype.$countHeight = (array) => {
 
 if (window.plus) {
   Vue.prototype.$plus = plus;
-} 
+}
 
 import upperPy from './utils/upperPy'; //  获取拼音缩写
 import convert from './utils/convert'; //  常用方法

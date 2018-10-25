@@ -5,7 +5,7 @@
       <div class="my_goods_list">
         <div class="my_goods_view" v-for="(item, index) in imgsArr" :key="index" @click="clickFn(item)">
           <div>
-            <img :src="item.photo" alt="" class="my_goods_img" onerror="static/img/yaoping5.jpg">
+            <img :src="item.photo || 'static/img/yaoping5.jpg'" class="my_goods_img" @error="imgError($event)">
             <div class="img-info">
               {{item.commonName}}
             </div>
@@ -51,6 +51,10 @@ export default {
     }
   },
   methods: {
+    // 图片出错
+    imgError(e) {
+      e.target.src = 'static/img/yaoping5.jpg';
+    },
     // 获取图片数据
     initImgsArr(callBack) {
       const arr = [];
@@ -60,7 +64,6 @@ export default {
     },
     // 每当向上滑动的时候就让页数加1
     infinite(done) {
-      console.log(2222222)
       this.page += 1;
       const self = this;
       this.initImgsArr((data) => {
@@ -73,47 +76,25 @@ export default {
             } else if (self.page !== 1 && self.imgsArr.length === 0) {
               self.noDataText = '暂无数据';
             }
-            for (let i = 0; i < data.result.length; i += 1) {
-              const ImgObjs = new Image();
-              ImgObjs.src = data.result[i].photo;
-              if (data.result[i].photo && (ImgObjs.fileSize > 0 || (ImgObjs.width > 0 && ImgObjs.height > 0))) {
-                self.$set(data.result[i], 'src', data.result[i].photo);
-              } else {
-                self.$set(data.result[i], 'src', 'static/img/yaoping5.jpg');
-              }
-            }
             if (data.result.length !== 0) {
-              self.imgsArr = self.imgsArr.concat(data.result.listData);
+              self.imgsArr = self.imgsArr.concat(data.result);
             }
             done(true)
             return
           }
-          self.imgsArr = self.imgsArr.concat(data.result.listData);
+          self.imgsArr = self.imgsArr.concat(data.result);
         }
         done()
       })
     },
     // 这是向下滑动的时候请求最新的数据
     refresh(done) {
-      console.log(111111)
       const self = this;
       self.page = 1;
       this.initImgsArr((data) => {
         if (data.code === 0) {
           if (data.result.length === 0) {
             self.noDataText = data.result.length === 0 ? '暂无数据' : ''
-          }
-          for (let i = 0; i < data.result.length; i += 1) {
-            const ImgObj = new Image();
-            ImgObj.src = data.result[i].photo;
-            console.log('ImgObj.src', ImgObj.src)
-            console.log('ImgObj.width', ImgObj.width)
-            if (data.result[i].photo && (ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0))) {
-              console.log(3333)
-              self.$set(data.result[i], 'src', data.result[i].photo);
-            } else {
-              self.$set(data.result[i], 'src', 'static/img/yaoping5.jpg');
-            }
           }
           if (data.result.length !== 0) {
             self.imgsArr = data.result
@@ -135,15 +116,6 @@ export default {
       this.initImgsArr((data) => {
         if (data.code === 0) {
           if (data.result.length === 0) this.loadMore = true;
-          for (let i = 0; i < data.result.length; i += 1) {
-            const ImgObj = new Image();
-            ImgObj.src = data.result[i].photo;
-            if (data.result[i].photo && (ImgObj.fileSize > 0 || (ImgObj.width > 0 && ImgObj.height > 0))) {
-              that.$set(data.result[i], 'src', data.result[i].photo);
-            } else {
-              that.$set(data.result[i], 'src', 'static/img/yaoping5.jpg');
-            }
-          }
           that.imgsArr = data.result;
         }
       })
