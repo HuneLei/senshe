@@ -137,6 +137,10 @@ export default {
   border-radius: 10px 10px 0px 0px !important;
 }
 .my_goods_list {
+  /*! autoprefixer: off */
+  display: -webkit-flex;
+  -webkit-flex-wrap: wrap;
+  /* autoprefixer: on */
   display: flex;
   flex-wrap: wrap;
 }

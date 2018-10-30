@@ -93,6 +93,7 @@ import {
   ConfirmPlugin,
   ToastPlugin,
   DatetimePlugin,
+  AlertPlugin,
 } from 'vux';
 
 import MyCom from './components'; // 引入公共组件
@@ -101,6 +102,7 @@ Vue.component('TabSwit', MyCom.TabSwit); // Tab页面切换组件
 Vue.component('TabBar', MyCom.TabBar); // 底部导航组件
 
 Vue.use(ConfirmPlugin);
+Vue.use(AlertPlugin);
 Vue.use(ToastPlugin);
 Vue.use(VueScroller);
 Vue.use(DatetimePlugin);

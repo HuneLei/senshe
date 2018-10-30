@@ -31,6 +31,16 @@ export default {
         data.result.retailPrice = `${data.result.sensheProduct.retailPrice}元`;
         this.$set(this.list[0], 'msrc', data.result.photo || 'static/img/yaoping5.jpg');
         this.$set(this.list[0], 'src', data.result.photo || 'static/img/yaoping5.jpg');
+        const img = new Image()
+        let height = img.height;
+        let width = img.width;
+        img.src = data.result.photo || 'static/img/yaoping5.jpg'
+        if (img.width < 700) {
+          height = 700 / img.width * img.height
+          width = 700;
+        }
+        this.$set(this.list[0], 'w', width);
+        this.$set(this.list[0], 'h', height);
         this.form = data.result;
       }
     });
@@ -51,8 +61,8 @@ export default {
       list: [{
         msrc: '',
         src: '',
-        w: 800,
-        h: 400
+        w: 0,
+        h: 0,
       }],
     };
   },
@@ -62,6 +72,8 @@ export default {
       e.target.src = 'static/img/yaoping5.jpg';
       this.$set(this.list[0], 'src', 'static/img/yaoping5.jpg');
       this.$set(this.list[0], 'msrc', 'static/img/yaoping5.jpg');
+      this.$set(this.list[0], 'w', 700);
+      this.$set(this.list[0], 'h', 700);
     },
     // 展示图片
     showImg(index) {
@@ -78,14 +90,15 @@ export default {
 </script>
 
 <style scoped>
-.goods_card_img {
-  padding: 10px;
-  width: 355px;
-}
-.goods_item img {
+.goods_item {
   width: 50%;
   display: block;
-  padding: 0 30px;
+  padding: 15px 15px;
+}
+
+.goods_item img {
+  width: 100%;
+  display: block;
 }
 </style>
 <style>
