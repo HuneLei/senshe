@@ -4,8 +4,8 @@
     <!-- 登录logo和文字 -->
     <div class="login_logo">
       <!-- <img src="../../assets/img/logo.jpg" alt=""> -->
-      <img src="../../assets/img/logo.png" alt="">
-      <div class="login_font">森舍会员登录</div>
+      <img src="../../assets/img/yaoding.jpg" alt="">
+      <div class="login_font">药丁会员登录</div>
     </div>
     <!-- 登录手机和密码 -->
     <div class="login_input" v-if="!noteShow">

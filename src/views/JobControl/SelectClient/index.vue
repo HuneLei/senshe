@@ -1,6 +1,8 @@
 <!-- 选择客户 -->
 <template>
   <div class="scroller_rela">
+    <!-- <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索" v-model="searchValue"
+    class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search> -->
     <scroller style="background-color: #ffffff;" ref="selectclientscroller">
       <div class="search-box">
         <div class="left" id="left">
@@ -43,6 +45,12 @@ export default {
     const that = this;
     this.$nextTick(() => {
       const Top = document.querySelector('.vux-header').clientHeight;
+      // const SearchTop = document.querySelector('#clientSearchView').clientHeight;
+      const SearchTop = 0
+      that.$refs.selectclientul.style.top = `${SearchTop}px`;
+      that.$refs.selectclientscroller.$el.style.top = `${SearchTop}px`;
+      // that.$refs.selectclientscroller.$el.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView'])}px`;
+      // that.$refs.selectclientul.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView'])}px`
       that.$refs.selectclientscroller.$el.style.height = `${that.$countHeight(['.vux-header'])}px`;
       that.$refs.selectclientul.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
@@ -55,12 +63,63 @@ export default {
   components: {},
   data() {
     return {
+      searchValue: '', // 搜索的值
       letter: [],
       cityList: [],
       client: '', // 客户类型
     };
   },
   methods: {
+    // 搜索的时候触发
+    onSubmit() {
+      this.cityList = [];
+      this.getCustomList((data) => {
+        const arr = [];
+        const arrlist = [];
+        for (let i = 0; i < this.letter.length; i += 1) {
+          const a = {
+            title: this.letter[i],
+            list: [],
+          };
+          for (let j = 0; j < data.length; j += 1) {
+            const upperPy = window.upperPy.makePy(data[j].name)[0].charAt(0)
+            if (upperPy === this.letter[i]) {
+              a.list.push(data[j]);
+            }
+          }
+          if (a.list.length) {
+            arrlist.push(a)
+          }
+          arr.push(a);
+        }
+        this.cityList = arrlist;
+      })
+    },
+    // 点击取消的时候触发
+    onCancel() {
+      this.cityList = [];
+      this.getCustomList((data) => {
+        const arr = [];
+        const arrlist = [];
+        for (let i = 0; i < this.letter.length; i += 1) {
+          const a = {
+            title: this.letter[i],
+            list: [],
+          };
+          for (let j = 0; j < data.length; j += 1) {
+            const upperPy = window.upperPy.makePy(data[j].name)[0].charAt(0)
+            if (upperPy === this.letter[i]) {
+              a.list.push(data[j]);
+            }
+          }
+          if (a.list.length) {
+            arrlist.push(a)
+          }
+          arr.push(a);
+        }
+        this.cityList = arrlist;
+      })
+    },
     // 初始配置
     init() {
       // 26个字母
@@ -123,6 +182,11 @@ export default {
 </style>
 
 <style scoped>
+.search_view {
+  z-index: 100;
+  font-size: 15px;
+  position: absolute !important;
+}
 .title {
   padding: 5px 10px;
   color: #999999;

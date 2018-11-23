@@ -23,13 +23,18 @@ export default {
     return {
       // 工作管理列表
       clientList: [{
+        icon: 'iconfont icon-xinxiluru',
+        title: '进销存录入',
+        color: '#3477E5',
+        path: 'InvoicList',
+      }, {
         icon: 'iconfont icon-guihuaxiangmu',
-        title: '客户规划',
+        title: '客户规划设置',
         color: '#07bc99',
         path: 'ControlPlan',
       }, {
         icon: 'iconfont icon-banlijinduchaxun',
-        title: '进度查询',
+        title: '规划进度查询',
         color: '#07A5BC',
         path: 'FollowUp',
       }, {
@@ -37,11 +42,6 @@ export default {
         title: '末次进销存查询',
         color: '#E68A07',
         path: 'QueryInvoic',
-      }, {
-        icon: 'iconfont icon-xinxiluru',
-        title: '进销存录入',
-        color: '#3477E5',
-        path: 'InvoicList',
       }]
     };
   },

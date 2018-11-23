@@ -95,7 +95,7 @@ const baseList = {
     headIndex: 0,
   },
   [JobControl.ControlPlan]: {
-    name: '客户规划',
+    name: '客户规划设置',
     isTab: true,
     isShowBack: true,
     slotRight: [{
@@ -131,14 +131,14 @@ const baseList = {
     headIndex: 0
   },
   [JobControl.ControlPlanList]: {
-    name: '客户规划',
+    name: '客户规划设置',
     isTab: true,
     isShowBack: true,
     slotRight: [],
     headIndex: 0,
   },
   [JobControl.ControlPlanItem]: {
-    name: '客户规划',
+    name: '客户规划设置',
     isTab: true,
     isShowBack: true,
     headIndex: 0,
@@ -153,21 +153,21 @@ const baseList = {
     }]
   },
   [JobControl.FollowUp]: {
-    name: '进度查询',
+    name: '规划进度查询',
     isTab: true,
     isShowBack: true,
     slotRight: [],
     headIndex: 0,
   },
   [JobControl.FollowUpList]: {
-    name: '进度查询',
+    name: '规划进度查询',
     isTab: true,
     isShowBack: true,
     slotRight: [],
     headIndex: 0,
   },
   [JobControl.FollowUpItem]: {
-    name: '进度查询',
+    name: '规划进度查询',
     isTab: true,
     isShowBack: true,
     slotRight: [],

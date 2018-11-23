@@ -1,8 +1,10 @@
 <!-- 客户规划三级 -->
 <template>
   <div ref="conplanItem" class="scroller_rela">
+    <!-- <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索"
+    v-model="searchValue" class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search> -->
     <group gutter='0' class="absolute_group">
-      <cell title="客户名称" class="common_name" id="conplanitem">
+      <cell title="客户名称" class="common_name" id="conplanitem" ref="commonname">
         <div class="client_type">
           <div slot="value" class="client_stock">进货规划</div>
           <div slot="value" class="client_stock">销售规划</div>
@@ -24,6 +26,12 @@
               <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.salePlan}}</div>
             </div>
           </cell>
+          <!-- <cell class="plan_name total_view" title="合计：" v-if="(planList.length == totals) && (totals != 0)">
+            <div class="plan_type">
+              <div slot="value" class='client_stock_may'>{{totals}}</div>
+              <div slot="value" class='client_stock_may'>{{totals}}</div>
+            </div>
+          </cell> -->
         </group>
       </div>
     </scroller>
@@ -61,8 +69,12 @@ export default {
   mounted() {
     const that = this;
     this.$nextTick(() => {
+      // const SearchTop = document.querySelector('#clientSearchView').clientHeight;
+      const SearchTop = 0;
       const marginTop = document.querySelector('#conplanitem').clientHeight;
-      that.$refs.controlPlanItem.$el.style.marginTop = `${marginTop}px`
+      that.$refs.commonname.$el.style.marginTop = `${SearchTop}px`;
+      that.$refs.controlPlanItem.$el.style.marginTop = `${marginTop + SearchTop}px`
+      // that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header', '#conplanitem', '#clientSearchView'])}px`
       that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header', '#conplanitem'])}px`
     })
   },
@@ -111,6 +123,8 @@ export default {
   components: {},
   data() {
     return {
+      totals: '', // 总数量
+      searchValue: '', // 搜索的值
       page: 0,
       noDataText: '',
       // 规划列表
@@ -119,6 +133,29 @@ export default {
     };
   },
   methods: {
+    // 搜索的时候触发
+    onSubmit() {
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getThreeItem((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.planList = data.result.listData;
+        }
+      })
+    },
+    // 点击取消的时候触发
+    onCancel() {
+      const self = this; // this指向问题
+      self.page = 1;
+      this.searchValue = '';
+      this.getThreeItem((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.planList = data.result.listData;
+        }
+      })
+    },
     // 更新客户计划
     updatePlan() {
       this.$vux.loading.show({
@@ -152,6 +189,7 @@ export default {
         form.month = this.$route.query.month
       }
       jobControl.threeitem(form).then((res) => {
+        this.totals = res.data.result.totals;
         callBack(res.data);
       })
     },
@@ -200,12 +238,20 @@ export default {
 </script>
 
 <style scoped>
+.search_view {
+  z-index: 999;
+  font-size: 15px;
+  position: absolute !important;
+}
 .common_name {
   font-weight: 600;
   color: #222222;
 }
 .plan_name {
   color: #959595;
+}
+.total_view {
+  background-color: #ffffc8;
 }
 .plan_type {
   width: 160px;
@@ -253,7 +299,7 @@ export default {
 }
 
 .plan_type .weui-cell:before {
-  border-top: 0;
+  border-top: 0 !important;
 }
 
 .client_stock .weui-input {

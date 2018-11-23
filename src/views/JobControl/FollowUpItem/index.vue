@@ -1,6 +1,8 @@
 <!-- 进度查询详情 -->
 <template>
   <div class="scroller_rela" ref="followUpItem">
+    <!-- <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索" v-model="searchValue"
+    class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search> -->
     <x-table class="table_thead" :cell-bordered="false" ref="followThead" id="followThead">
       <thead>
         <tr style="background-color: #F8F8F8">
@@ -23,6 +25,13 @@
               <td class="table_long">{{item.sale}}</td>
               <td>{{item.saleInventory | twoFloatUp}}</td>
             </tr>
+            <!-- <tr class="total_view" v-if="(indexList.length == totals) && (totals != 0)">
+              <td class="table_tbody_longth">合计：</td>
+              <td class="table_long">{{indexList.length}}</td>
+              <td>{{totals}}</td>
+              <td class="table_long"></td>
+              <td></td>
+            </tr> -->
           </tbody>
         </x-table>
       </div>
@@ -42,7 +51,11 @@ export default {
     const that = this;
     this.$nextTick(() => {
       const Top = document.querySelector('#followThead').clientHeight;
-      that.$refs.followScroller.$el.style.top = `${Top}px`;
+      // const SearchTop = document.querySelector('#clientSearchView').clientHeight;
+      // that.$refs.followThead.$el.style.top = `${SearchTop}px`;
+      const SearchTop = 0
+      that.$refs.followScroller.$el.style.top = `${Top + SearchTop}px`;
+      // that.$refs.followScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#followThead', '#clientSearchView'])}px`;
       that.$refs.followScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#followThead'])}px`;
     })
   },
@@ -50,12 +63,37 @@ export default {
   components: {},
   data() {
     return {
+      totals: '', // 总数量
+      searchValue: '', // 搜索的值
       indexList: [], // 列表
       page: 0, // 当前页数
       noDataText: '',
     };
   },
   methods: {
+    // 搜索的时候触发
+    onSubmit() {
+      const self = this; // this指向问题
+      self.page = 1;
+      this.getInvenItem((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.indexList = data.result.listData;
+        }
+      })
+    },
+    // 点击取消的时候触发
+    onCancel() {
+      const self = this; // this指向问题
+      self.page = 1;
+      this.searchValue = '';
+      this.getInvenItem((data) => {
+        if (data.code === 0) {
+          self.noDataText = data.result.listData.length === 0 ? '暂无数据' : ''
+          self.indexList = data.result.listData;
+        }
+      })
+    },
     // 获取进度列表
     getInvenItem(callBack) {
       const from = {
@@ -69,6 +107,7 @@ export default {
         from.month = this.$route.query.month;
       }
       jobControl.planinventory(from).then((res) => {
+        this.totals = res.data.result.totals;
         callBack(res.data);
       })
     },
@@ -110,6 +149,11 @@ export default {
 </script>
 
 <style scoped>
+.search_view {
+  font-size: 15px;
+  position: absolute !important;
+}
+
 .table_thead {
   font-size: 15px;
   position: absolute;
@@ -191,6 +235,10 @@ export default {
   /* autoprefixer: on */
   text-align: left;
   padding: 5px 6px;
+}
+
+.total_view {
+  background-color: #ffffc8;
 }
 </style>
 <style>
