@@ -1,8 +1,8 @@
 <!-- 进度查询详情 -->
 <template>
   <div class="scroller_rela" ref="followUpItem">
-    <!-- <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索" v-model="searchValue"
-    class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search> -->
+    <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索" v-model="searchValue"
+    class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
     <x-table class="table_thead" :cell-bordered="false" ref="followThead" id="followThead">
       <thead>
         <tr style="background-color: #F8F8F8">
@@ -25,13 +25,13 @@
               <td class="table_long">{{item.sale}}</td>
               <td>{{item.saleInventory | twoFloatUp}}</td>
             </tr>
-            <!-- <tr class="total_view" v-if="(indexList.length == totals) && (totals != 0)">
+            <tr class="total_view" v-if="(indexList.length == totals) && (totals != 0)">
               <td class="table_tbody_longth">合计：</td>
-              <td class="table_long">{{indexList.length}}</td>
-              <td>{{totals}}</td>
-              <td class="table_long"></td>
-              <td></td>
-            </tr> -->
+              <td class="table_long">{{countStock || 0}}</td>
+              <td>{{inventoryStock || 0 | twoFloatUp}}</td>
+              <td class="table_long">{{countSale || 0}}</td>
+              <td>{{inventorySale || 0 | twoFloatUp}}</td>
+            </tr>
           </tbody>
         </x-table>
       </div>
@@ -44,6 +44,7 @@ import jobControl from '../../../api/jobControl';
 
 export default {
   activated() {
+    this.searchValue = '';
     this.$refs.followScroller.triggerPullToRefresh()
   },
   created() { },
@@ -51,12 +52,12 @@ export default {
     const that = this;
     this.$nextTick(() => {
       const Top = document.querySelector('#followThead').clientHeight;
-      // const SearchTop = document.querySelector('#clientSearchView').clientHeight;
-      // that.$refs.followThead.$el.style.top = `${SearchTop}px`;
-      const SearchTop = 0
+      const SearchTop = document.querySelector('#clientSearchView').clientHeight;
+      that.$refs.followThead.$el.style.top = `${SearchTop}px`;
+      // const SearchTop = 0
       that.$refs.followScroller.$el.style.top = `${Top + SearchTop}px`;
-      // that.$refs.followScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#followThead', '#clientSearchView'])}px`;
-      that.$refs.followScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#followThead'])}px`;
+      that.$refs.followScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#followThead', '#clientSearchView'])}px`;
+      // that.$refs.followScroller.$el.style.height = `${that.$countHeight(['.vux-header', '#followThead'])}px`;
     })
   },
   computed: {},
@@ -68,6 +69,10 @@ export default {
       indexList: [], // 列表
       page: 0, // 当前页数
       noDataText: '',
+      countSale: '',
+      countStock: '',
+      inventorySale: '',
+      inventoryStock: '',
     };
   },
   methods: {
@@ -97,6 +102,7 @@ export default {
     // 获取进度列表
     getInvenItem(callBack) {
       const from = {
+        clientName: this.searchValue,
         currentPage: this.page,
         year: this.$route.query.year,
         month: 0,
@@ -108,6 +114,10 @@ export default {
       }
       jobControl.planinventory(from).then((res) => {
         this.totals = res.data.result.totals;
+        this.countSale = res.data.result.countSale;
+        this.countStock = res.data.result.countStock;
+        this.inventorySale = res.data.result.inventorySale;
+        this.inventoryStock = res.data.result.inventoryStock;
         callBack(res.data);
       })
     },

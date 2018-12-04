@@ -137,7 +137,7 @@ video {
 }
 
 .weui-search-bar__box {
-  border: 1px solid #E2E2E2 !important;
+  border: 1px solid rgba(217, 217, 217, 0.6) !important;
   background: #FFFFFF !important;
 }
 

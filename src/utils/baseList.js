@@ -146,6 +146,7 @@ const baseList = {
       icon: '',
       path: '',
       name: '更新',
+      iconShow: true
     }, {
       icon: 'iconfont icon-bianji',
       path: '',

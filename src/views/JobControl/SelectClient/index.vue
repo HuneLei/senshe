@@ -1,8 +1,8 @@
 <!-- 选择客户 -->
 <template>
   <div class="scroller_rela">
-    <!-- <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索" v-model="searchValue"
-    class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search> -->
+    <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索" v-model="searchValue"
+    class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
     <scroller style="background-color: #ffffff;" ref="selectclientscroller">
       <div class="search-box">
         <div class="left" id="left">
@@ -45,14 +45,14 @@ export default {
     const that = this;
     this.$nextTick(() => {
       const Top = document.querySelector('.vux-header').clientHeight;
-      // const SearchTop = document.querySelector('#clientSearchView').clientHeight;
-      const SearchTop = 0
+      const SearchTop = document.querySelector('#clientSearchView').clientHeight;
+      // const SearchTop = 0
       that.$refs.selectclientul.style.top = `${SearchTop}px`;
       that.$refs.selectclientscroller.$el.style.top = `${SearchTop}px`;
-      // that.$refs.selectclientscroller.$el.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView'])}px`;
-      // that.$refs.selectclientul.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView'])}px`
-      that.$refs.selectclientscroller.$el.style.height = `${that.$countHeight(['.vux-header'])}px`;
-      that.$refs.selectclientul.style.height = `${that.$countHeight(['.vux-header'])}px`
+      that.$refs.selectclientscroller.$el.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView'])}px`;
+      that.$refs.selectclientul.style.height = `${that.$countHeight(['.vux-header', '#clientSearchView'])}px`
+      // that.$refs.selectclientscroller.$el.style.height = `${that.$countHeight(['.vux-header'])}px`;
+      // that.$refs.selectclientul.style.height = `${that.$countHeight(['.vux-header'])}px`
     })
   },
   computed: {
@@ -98,6 +98,7 @@ export default {
     // 点击取消的时候触发
     onCancel() {
       this.cityList = [];
+      this.searchValue = '';
       this.getCustomList((data) => {
         const arr = [];
         const arrlist = [];
@@ -130,7 +131,7 @@ export default {
     },
     // 获取客户列表下拉
     getCustomList(callBack) {
-      jobControl.customerlist(this.$route.query.client).then((res) => {
+      jobControl.customerlist(this.$route.query.client, this.searchValue).then((res) => {
         callBack(res.data);
       })
     },

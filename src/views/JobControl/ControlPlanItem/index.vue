@@ -1,8 +1,8 @@
 <!-- 客户规划三级 -->
 <template>
   <div ref="conplanItem" class="scroller_rela">
-    <!-- <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索"
-    v-model="searchValue" class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search> -->
+    <search ref="clientClassItem" :auto-fixed='false' placeholder="输入客户名进行搜索"
+    v-model="searchValue" class="search_view" id="clientSearchView" @on-submit="onSubmit" @on-cancel="onCancel"></search>
     <group gutter='0' class="absolute_group">
       <cell title="客户名称" class="common_name" id="conplanitem" ref="commonname">
         <div class="client_type">
@@ -26,12 +26,12 @@
               <div v-show="!modifier" slot="value" class='client_stock_may'>{{item.salePlan}}</div>
             </div>
           </cell>
-          <!-- <cell class="plan_name total_view" title="合计：" v-if="(planList.length == totals) && (totals != 0)">
+          <cell class="plan_name total_view" title="合计：" v-if="(planList.length == totals) && (totals != 0)">
             <div class="plan_type">
-              <div slot="value" class='client_stock_may'>{{totals}}</div>
-              <div slot="value" class='client_stock_may'>{{totals}}</div>
+              <div slot="value" class='client_stock_may'>{{countStock}}</div>
+              <div slot="value" class='client_stock_may'>{{countSale}}</div>
             </div>
-          </cell> -->
+          </cell>
         </group>
       </div>
     </scroller>
@@ -44,6 +44,8 @@ import jobControl from '../../../api/jobControl';
 export default {
   created() { },
   activated() {
+    this.totals = '';
+    this.searchValue = '';
     this.planList = [];
     this.updateState = true;
     if (this.modifier) {
@@ -69,13 +71,13 @@ export default {
   mounted() {
     const that = this;
     this.$nextTick(() => {
-      // const SearchTop = document.querySelector('#clientSearchView').clientHeight;
-      const SearchTop = 0;
+      const SearchTop = document.querySelector('#clientSearchView').clientHeight;
+      // const SearchTop = 0;
       const marginTop = document.querySelector('#conplanitem').clientHeight;
       that.$refs.commonname.$el.style.marginTop = `${SearchTop}px`;
       that.$refs.controlPlanItem.$el.style.marginTop = `${marginTop + SearchTop}px`
-      // that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header', '#conplanitem', '#clientSearchView'])}px`
-      that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header', '#conplanitem'])}px`
+      that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header', '#conplanitem', '#clientSearchView'])}px`
+      // that.$refs.controlPlanItem.$el.style.height = `${that.$countHeight(['.vux-header', '#conplanitem'])}px`
     })
   },
   computed: {
@@ -123,7 +125,9 @@ export default {
   components: {},
   data() {
     return {
-      totals: '', // 总数量
+      totals: '',
+      countSale: '', // 总数量
+      countStock: '', // 总数量
       searchValue: '', // 搜索的值
       page: 0,
       noDataText: '',
@@ -173,12 +177,14 @@ export default {
         this.$vux.loading.hide()
         if (res.data.code === 0) {
           this.$vux.toast.text('保存成功', 'middle');
+          this.$refs.controlPlanItem.triggerPullToRefresh()
         }
       })
     },
     // 客户计划详情查询
     getThreeItem(callBack) {
       const form = {
+        clientName: this.searchValue,
         currentPage: this.page,
         clientType: this.$route.query.clientType,
         productId: this.$route.query.productId,
@@ -189,6 +195,8 @@ export default {
         form.month = this.$route.query.month
       }
       jobControl.threeitem(form).then((res) => {
+        this.countSale = res.data.result.countSale;
+        this.countStock = res.data.result.countStock;
         this.totals = res.data.result.totals;
         callBack(res.data);
       })

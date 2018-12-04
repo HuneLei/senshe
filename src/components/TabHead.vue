@@ -4,8 +4,8 @@
     <!-- 导航顶部类型 -->
     <div v-if="headIndex == 0">
       <x-header :left-options="{backText: '', preventGoBack: isBack, showBack: isShowBack}" :title="header_name || indexName" @on-click-back='onClickBack'>
-        <span v-if="!modifier && item.icon" slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
-        <span v-if="modifier" slot="right" v-for="(item, index) in slotRight" :key="index" class="right_name icon_view" @click="rightClick(index)">{{item.name}}</span>
+        <span v-if="!modifier && item.icon && !item.iconShow" slot="right" v-for="(item, index) in slotRight" :key="index" :class="`icon ${item.icon} icon_view`" @click="rightClick(index)"></span>
+        <span v-if="modifier && !item.iconShow" slot="right" v-for="(item, index) in slotRight" :key="index" class="right_name icon_view" @click="rightClick(index)">{{item.name}}</span>
       </x-header>
     </div>
     <!-- 带tab切换导航顶部类型 -->

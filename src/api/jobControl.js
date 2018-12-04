@@ -46,9 +46,10 @@ const productlist = (currentPage) => api.get(path.productlist, {
   }
 })
 // 客户列表下拉
-const customerlist = (clientType) => api.get(path.customerlist, {
+const customerlist = (clientType, clientName) => api.get(path.customerlist, {
   params: {
     clientType,
+    clientName,
   }
 });
 
